@@ -14,24 +14,24 @@
     <div class="row">
         <div class="col-lg-2">{{ form_label(filterForm.recherche) }}</div>
         <div class="col-lg-2">{{ form_widget(filterForm.recherche) }}</div>
-        <div class="col-lg-2">{{ form_widget(filterForm.organisateur) }}</div>
-        <div class="col-lg-2">{{ form_label(filterForm.organisateur) }}</div>
+        <div class="col-lg-6 offset-lg-2">{{ form_widget(filterForm.organisateur) }}</div>
     </div>
     <div class="row">
-        <div class="">{{ form_widget(filterForm.inscrit) }}{{ form_label(filterForm.inscrit) }}</div>
+        <div class="col-lg-4 offset-lg-6">{{ form_widget(filterForm.inscrit) }}</div>
+        <div class="col-lg-1"><button>rechercher</button></div>
     </div>
     <div class="row">
-        <div class="col-lg-2">{{ form_label(filterForm.dateDebut) }}</div>
+        <div class="col-lg-1">{{ form_label(filterForm.dateDebut) }}</div>
         <div class="col-lg-2">{{ form_widget(filterForm.dateDebut) }}</div>
-        <div class="col-lg-2">{{ form_label(filterForm.dateFin) }}</div>
+        <div class="col-lg-1">{{ form_label(filterForm.dateFin) }}</div>
         <div class="col-lg-2">{{ form_widget(filterForm.dateFin) }}</div>
-        <div class="col-lg-2">{{ form_widget(filterForm.nonInscrit) }}{{ form_label(filterForm.nonInscrit) }}</div>
+        <div class="col-lg-6">{{ form_widget(filterForm.nonInscrit) }}</div>
     </div>
     <div class="row">
-        <div class="">{{ form_widget(filterForm.sortiesPassees) }}{{ form_label(filterForm.sortiesPassees) }}</div>
+        <div class="col-lg-6 offset-lg-6">{{ form_widget(filterForm.sortiesPassees) }}</div>
     </div>
 
-    <button>rechercher</button>
+
     {{ form_end(filterForm) }}
 </div>
 {% endblock %}

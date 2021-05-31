@@ -30,19 +30,30 @@ class FilterType extends AbstractType
                 'label' => 'et'
             ])
             ->add('organisateur', ChoiceType::class, [
-                'choice_label'=> 'Sorties dont je suis l\'organisateur/trice',
+                'choices' => [
+                    'Sorties dont je suis l\'organisateur/trice' => true
+                ],
                 'expanded' => true,
                 'multiple' => false
             ])
             ->add('inscrit', ChoiceType::class, [
+                'choices' => [
+                    'Sorties auxquelles je suis inscrit/e' => true
+                ],
                 'expanded' => true,
                 'multiple' => false
             ])
             ->add('nonInscrit', ChoiceType::class, [
+                'choices' => [
+                    'Sorties auxquelles je ne suis pas inscrit/e' => true
+                ],
                 'expanded' => true,
                 'multiple' => false
             ])
             ->add('sortiesPassees', ChoiceType::class, [
+                'choices' => [
+                    'Sorties passée' => true
+                ],
                 'expanded' => true,
                 'multiple' => false
             ]);
