@@ -16,11 +16,11 @@
 
         <label class="offset-5" for="inputPseudo">Identifiant :</label>
         <input class="m-4" type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control"
-               autocomplete="username" required autofocus>
+               autocomplete="pseudo" required autofocus>
         <br>
         <label class="offset-5" for="inputPassword">Mot de passe : </label>
-        <input type="password" name="password" id="inputPassword" autocomplete="current-password"
-               required>
+        <input  class="m-1" type="password" name="password" id="inputPassword" class="form-control"
+               autocomplete="current-password" required>
 
         <input type="hidden" name="_csrf_token"
                value="{{ csrf_token('authenticate') }}" >
