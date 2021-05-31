@@ -8,10 +8,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class MainController
+ * @Route ("/", name="main_")
+ */
 class MainController extends AbstractController
 {
+
     /**
-     * @Route("/index", name="main_index")
+     * @Route("", name="home")
+     */
+    public function home(): Response
+    {
+        return $this -> render("main/home.html.twig");
+    }
+
+    /**
+     * @Route("index", name="index")
      */
     public function index(): Response
     {

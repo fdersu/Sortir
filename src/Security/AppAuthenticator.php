@@ -47,14 +47,17 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
 
     public function getCredentials(Request $request)
     {
+        dump('username : '.$request->request->get('username'));
+        dump('password : '.$request->request->get('password'));
+
         $credentials = [
-            'pseudo' => $request->request->get('pseudo'),
+            'username' => $request->request->get('username'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['pseudo']
+            $credentials['username']
         );
 
         return $credentials;
@@ -67,10 +70,10 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['pseudo' => $credentials['pseudo']]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['pseudo' => $credentials['username']]);
 
         if (!$user) {
-            throw new UsernameNotFoundException('Pseudo could not be found.');
+            throw new UsernameNotFoundException('Username could not be found.');
         }
 
         return $user;
@@ -96,6 +99,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
         }
 
         return new RedirectResponse($this->urlGenerator->generate('main_index'));
+
     }
 
     protected function getLoginUrl()

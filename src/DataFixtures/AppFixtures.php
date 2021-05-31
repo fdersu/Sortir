@@ -12,13 +12,20 @@ use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class AppFixtures extends Fixture
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
-
         $generator = Faker\Factory::create('fr_FR');
 
         for ($i = 0; $i <= 10; $i++){
@@ -77,7 +84,8 @@ class AppFixtures extends Fixture
             $user->setPrenom($generator->firstName);
             $user->setNom($generator->lastName);
             $user->setPseudo($user->getPrenom().$generator->numberBetween(1,9));
-            $user->setPassword($generator->password);
+            $password = $this->encoder->encodePassword($user, 'pass_1234');
+            $user->setPassword($password);
             $user->setMail($generator->email);
             $user->setTelephone($generator->phoneNumber);
             $user->setActif($generator->boolean);

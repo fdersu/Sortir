@@ -1,0 +1,16 @@
+<nav>
+    <div class="topnav">
+        <ul class="nav ulNav" id="menu">
+            <li><a class="navLink" href="{{ path('main_index') }}" title="Home">Accueil</a></li>
+            <li><a class="navLink" href="{{ path('sortie') }}" title="Mes sorties">Mes sorties</a></li>
+            {% if (app.user) %}
+                <li><a class="navLink" href="#" title="Ajouter une sortie">Ajouter une sortie</a></li>
+                <li><a class="navLink" href="{{ path('app_logout') }}" title="Deconnexion">Déconnexion ({{ app.user.username }})</a></li>
+            {% else %}
+                <li><a class="navLink" href="{{ path('app_login') }}" title="login">Connexion</a></li>
+                <li><a class="navLink" href="{{ path('app_register') }}" title="register">S'enregistrer</a></li>
+            {% endif %}
+            <li><a class="navLink" href="#" title="About us">About Us</a></li>
+        </ul>
+    </div>
+</nav>
