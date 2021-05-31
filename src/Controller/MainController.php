@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\FilterType;
+use App\Form\Model\Filter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,14 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/home", name="home_sortie")
+     * @Route("/", name="main_index")
      */
-    public function home(): Response
+    public function index(): Response
     {
-        return $this->render('main/home.html.twig', [
-
+        $filter = new Filter();
+        $filterForm = $this->createForm(FilterType::class, $filter);
+        return $this->render('main/index.html.twig', [
+            'filterForm' => $filterForm->createView(),
         ]);
     }
-
-
 }
