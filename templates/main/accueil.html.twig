@@ -87,11 +87,15 @@
                                             {% set bool = true %}
                                         {% endif %}
                                     {% endfor %}
+                                    {% if sortie.organisateur != app.user %}
                                     {% if bool and sortie.dateDebut > "now" %}
                                         <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}">Se
                                             désister</a>
                                     {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > "now" %}
                                         <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
+                                        {% else %}
+                                        <a></a>
+                                    {% endif %}
                                     {% endif %}
                                 </div>
                             </div>
