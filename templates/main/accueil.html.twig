@@ -80,7 +80,7 @@
 
                                 <div class="col-lg-1"><span>{{ sortie.organisateur.pseudo }}</span></div>
                                 <div class="col-lg-2">
-                                    <a>Afficher</a>
+                                    <a href="{{ path('sortie_sortie', {sortie_id: sortie.id}) }}">Afficher</a>
                                     {% set bool = false %}
                                     {% for ins in sortie.inscriptions %}
                                         {% if ins.participant.id == app.user.id %}
