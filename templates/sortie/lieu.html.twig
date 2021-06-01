@@ -6,11 +6,13 @@
 
     <h1>Proposer une sortie</h1>
 
-    {{ form_start(sortieForm) }}
 
-    {{ form_widget(sortieForm) }}
 
-    <button type="submit" class="btn">Ajouter la sortie</button>
+
+            {{ form_row(sortieForm.dateCloture) }}
+        </div>
+    </div>
+    <button type="submit" class="btn">Ajouter</button>
     {{ form_end(sortieForm) }}
 
 
