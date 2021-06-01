@@ -13,13 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/sortie", name="sortie")
+     * @Route("/sortie", name="sortie_sortie")
      */
-    public function index(): Response
+    public function detail(): Response
     {
-        return $this->render('sortie/home.html.twig', [
-            'controller_name' => 'SortieController',
-        ]);
+
     }
 
     /**
@@ -55,4 +53,5 @@ class SortieController extends AbstractController
         ]);
 
     }
+
 }
