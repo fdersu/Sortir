@@ -9,7 +9,6 @@ use App\Form\Model\Filter;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +24,8 @@ class FilterType extends AbstractType
                 'class' => Site::class,
                 'choice_label' => 'nom',
                 'expanded' => false,
-                'multiple' => false
+                'multiple' => false,
+                'required' => false
             ])
             ->add('recherche', TextType::class, [
                 'label' => 'Le nom de la sortie contient :',
