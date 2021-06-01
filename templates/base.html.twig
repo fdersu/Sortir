@@ -19,7 +19,10 @@
 
 <header>
     <h1><img src="{{ asset('img/Logo-sortie.png') }}" alt="Sortie !"></h1>
-    {% include 'menu/nav.html.twig' %}
+
+    {% if app.user %}
+        {% include 'menu/nav.html.twig' %}
+    {% endif %}
 
 </header>
 {% block body %}{% endblock %}
