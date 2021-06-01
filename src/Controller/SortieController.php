@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Sortie;
+use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,11 +14,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/sortie", name="sortie_sortie")
+     * @Route("/sortie/{sortie_id}", name="sortie_sortie", requirements={"sortie_id"="\d+"})
      */
-    public function detail(): Response
+    public function detail(SortieRepository $sortieRepository, $sortie_id): Response
     {
-
+        $sortie = $sortieRepository->find($sortie_id);
+        $nbPlaces = $sortie->getNbInscriptionsMax() - $sortie->getInscriptions()->count();
+        return $this->render('sortie/detail.html.twig', [
+            'sortie' => $sortie,
+            'nbPlaces' => $nbPlaces
+        ]);
     }
 
     /**

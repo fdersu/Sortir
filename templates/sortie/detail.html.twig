@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail Sortie{% endblock %}
+
+{% block body %}
+    <div class="sortie">
+        <div class="pad"></div>
+        <div class="row align-items-center">
+            <div class="col-lg-4">
+                {% if sortie.urlPhoto %}
+                    <img class="photo" src="{{ asset('img/') ~ sortie.urlPhoto }}">
+                {% else %}
+                    <img class="photo" src="{{ asset('img/default_picture.png') }}">
+                {% endif %}
+            </div>
+            <div class="col-lg-8">
+                <div class="row pad odd left">
+                    <div class="col-lg-4"><strong>Nom de la sortie:</strong></div>
+                    <div class="col-lg-4">{{ sortie.nom }}</div>
+                    <div class="col-lg-2"><strong>Ville organisatrice:</strong></div>
+                    <div class="col-lg-2">{{ sortie.site.nom }}</div>
+                </div>
+                <div class="row pad even left">
+                    <div class="col-lg-4"><strong>Date et heure de la
+                            sortie:</strong></div>
+                    <div class="col-lg-4">{{ sortie.dateDebut|date("\\l\\e d/m/Y \\à H:i") }}</div>
+                    <div class="col-lg-2"><strong>Lieu:</strong></div>
+                    <div class="col-lg-2">{{ sortie.lieu.nom }}</div>
+                </div>
+                <div class="row pad odd left">
+                    <div class="col-lg-4"><strong>Date limite
+                            d'inscription:</strong></div>
+                    <div class="col-lg-4">{{ sortie.dateCloture|date("\\l\\e d/m/Y \\à H:i") }}</div>
+                    <div class="col-lg-2"><strong>Rue:</strong></div>
+                    <div class="col-lg-2">{{ sortie.lieu.rue }}</div>
+                </div>
+                <div class="row pad even left">
+                    <div class="col-lg-4"><strong>Nombre de places:</strong></div>
+                    <div class="col-lg-4">{{ nbPlaces }}</div>
+                    <div class="col-lg-2"><strong>Code Postal:</strong></div>
+                    <div class="col-lg-2">{{ sortie.lieu.ville.codePostal }}</div>
+                </div>
+                <div class="row pad odd left">
+                    <div class="col-lg-4"><strong>Durée:</strong></div>
+                    <div class="col-lg-4">{{ sortie.duree }} minutes</div>
+                    {% if sortie.lieu.latitude %}
+                        <div class="col-lg-2"><strong>Latitude:</strong></div>
+                        <div class="col-lg-2">{{ sortie.lieu.latitude }}</div>
+                    {% endif %}
+                </div>
+                <div class="row pad even left">
+                    <div class="col-lg-4"><strong>Description et infos:</strong></div>
+                    <div class="col-lg-4">{{ sortie.description }}</div>
+                    {% if sortie.lieu.longitude %}
+                        <div class="col-lg-2"><strong>Longitude:</strong></div>
+                        <div class="col-lg-2">{{ sortie.lieu.longitude }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2 offset-lg-6"><strong>Participants</strong></div>
+    </div>
+    <div class="participants">
+        <div class="row">
+            <div class="col-lg-4 offset-lg-4"><strong>Pseudo</strong></div>
+            <div class="col-lg-2"><strong>Nom</strong></div>
+        </div>
+        {% for insc in sortie.inscriptions %}
+            {% if loop.index is even %}
+            <div class="row">
+                <div class="col-lg-4 offset-lg-4 even left"><a>{{ insc.participant.pseudo }}</a></div>
+                <div class="col-lg-2 even right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
+            </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-lg-4 offset-lg-4 odd left"><a>{{ insc.participant.pseudo }}</a></div>
+                    <div class="col-lg-2 odd right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+{% endblock %}
+
+{% block style %}
+    <style type="text/css">
+        body{
+            background: linear-gradient(to bottom, #4e5382, #d6f3ff);
+        }
+        .photo {
+            width: 30vw;
+            border-radius: 1vw;
+        }
+        .pad{
+            margin-bottom: 5vh;
+        }
+        .even{
+            background: linear-gradient(to bottom, rgba(114, 59, 255, 0.5), #ffffff);
+        }
+        .odd{
+            background: linear-gradient(to bottom, rgba(51, 91, 255, 0.5), #ffffff);
+        }
+        .left{
+            border-bottom-left-radius: 1vw;
+            border-top-left-radius: 1vw;
+        }
+        .right{
+            border-top-right-radius: 1vw;
+            border-bottom-right-radius: 1vw;
+        }
+    </style>
+{% endblock %}

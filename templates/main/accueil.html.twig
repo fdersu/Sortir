@@ -42,9 +42,9 @@
                     <div class="row align-items-center">
                         <div class="col-lg-2">
                             {% if sortie.urlPhoto %}
-                                <img class="photoSortie" src="{{ asset('img/') ~ sortie.urlPhoto }}" alt="photo">
+                                <a href="{{ path('sortie_sortie', {sortie_id: sortie.id}) }}"><img class="photoSortie" src="{{ asset('img/') ~ sortie.urlPhoto }}" alt="photo"></a>
                             {% else %}
-                                <img class="photoSortie" src="{{ asset('img/default_picture.png') }}" alt="photo">
+                                <a href="{{ path('sortie_sortie', {sortie_id: sortie.id}) }}"><img class="photoSortie" src="{{ asset('img/default_picture.png') }}" alt="photo"></a>
                             {% endif %}
                         </div>
                         <div class="col-lg-10">
