@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+
+<div class="main">
+    {{ form_start(filterForm, {'attr': {'class': 'filterForm'}}) }}
+    <div class="row">
+        <div class="col-lg-3">{{ form_label(filterForm.site) }}</div>
+        <div class="col-lg-2">{{ form_widget(filterForm.site) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">{{ form_label(filterForm.recherche) }}</div>
+        <div class="col-lg-1">{{ form_widget(filterForm.recherche) }}</div>
+        <div class="col-lg-6 offset-lg-2">{{ form_widget(filterForm.organisateur) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 offset-lg-6">{{ form_widget(filterForm.inscrit) }}</div>
+        <div class="col-lg-1"><button>rechercher</button></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-1">{{ form_label(filterForm.dateDebut) }}</div>
+        <div class="col-lg-2">{{ form_widget(filterForm.dateDebut) }}</div>
+        <div class="col-lg-1">{{ form_label(filterForm.dateFin) }}</div>
+        <div class="col-lg-2">{{ form_widget(filterForm.dateFin) }}</div>
+        <div class="col-lg-6">{{ form_widget(filterForm.nonInscrit) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 offset-lg-6">{{ form_widget(filterForm.sortiesPassees) }}</div>
+    </div>
+
+
+    {{ form_end(filterForm) }}
+
+    <div>
+        {% for sortie in sorties %}
+    <div class="sortie">
+        <div class="row">
+            <div class="col-lg-11 offset-lg-1">{{ sortie.nom }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11 offset-lg-1">{{ sortie.description }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11 offset-lg-1">{{ sortie.site.nom }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11 offset-lg-1">inscrits: {{ sortie.nbInscriptionsMax }}/{{ sortie.inscriptions|length }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11 offset-lg-1">{{ sortie.dateDebut|date('d/m/Y') }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11 offset-lg-1">{{ sortie.organisateur.pseudo }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11 offset-lg-1">{{ sortie.etat.libelle }}</div>
+        </div>
+    </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
+
+{% block style %}
+    <style type="text/css">
+        .main{
+            margin-left: 5vw;
+            margin-right: 5vw;
+        }
+        .sortie{
+            margin-bottom: 3vh;
+            border: 1px solid black;
+            border-radius: 1vw;
+        }
+        .filterForm{
+            margin-bottom: 3vh;
+            padding: 3vh;
+            border: 1px solid black;
+            border-radius: 1vw;
+        }
+        input[type=text], input[type=date], select{
+            border: 1px solid black;
+            border-radius: 0.5vw;
+            text-align: center;
+        }
+        button{
+            border: 1px solid black;
+            border-radius: 0.5vw;
+        }
+        input[type=checkbox]{
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 1.5vh;
+            height: 1.5vh;
+            margin-right: 1vw;
+            border: 1px solid black;
+            border-radius: 50%;
+        }
+        input[type=checkbox]:checked{
+            background-color: #00a6ff;
+        }
+    </style>
+{% endblock %}

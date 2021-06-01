@@ -27,18 +27,19 @@ class FilterType extends AbstractType
                 'expanded' => false,
                 'multiple' => false
             ])
-            ->add('recherche', TextType::class)
-            ->add('dateDebut', DateTimeType::class,[
-                'label' => 'Entre',
-                'html5' => true,
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text'
+            ->add('recherche', TextType::class, [
+                'label' => 'Le nom de la sortie contient :',
+                'required' => false
             ])
-            ->add('dateFin', DateTimeType::class, [
-                'label' => 'et',
-                'html5' => true,
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text'
+            ->add('dateDebut', DateType::class,[
+                'label' => 'Entre le',
+                'widget' => 'single_text',
+                'required' => false
+            ])
+            ->add('dateFin', DateType::class, [
+                'label' => 'et le',
+                'widget' => 'single_text',
+                'required' => false
             ])
             ->add('organisateur', ChoiceType::class, [
                 'choices' => [
