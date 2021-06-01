@@ -2,9 +2,12 @@
 
 namespace App\Form;
 
+use App\Entity\Site;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -24,7 +27,7 @@ class UserType extends AbstractType
             ->add('prenom', TextType::class)
             ->add('nom', TextType::class)
             ->add('telephone', TextType::class)
-            ->add('mail')
+            ->add('mail', TextType::class)
             ->add('password', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'required' => true,
@@ -32,15 +35,15 @@ class UserType extends AbstractType
                     new NotBlank(),
                     new Length(array('min' => 6)),
                 ),
-                'first_options'  => array('label' => 'label.password'),
-                'second_options' => array('label' => 'label.passwordConfirmation'),
+                'first_options' => array('label' => 'Mot de passe :'),
+                'second_options' => array('label' => 'Confirmation :'),
             ))
-            ->add('ville', ChoiceType::class, [
-                'choices' => [
-                    'Rennes' => 'rennes',
-                    'Quimper' => 'quimper',
-                    'Nantes' => 'nantes',
-                ]])
+            ->add('site', EntityType::class, [
+                'class' => Site::class,
+                'choice_label' => 'nom',
+                'expanded' => false,
+                'multiple' => false
+            ])
             ->add('actif');
     }
 

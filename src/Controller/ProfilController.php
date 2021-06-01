@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class ProfilController extends AbstractController
 {
@@ -17,7 +18,8 @@ class ProfilController extends AbstractController
      */
     public function edit($id, UserRepository $userRepository,
                          Request $request,
-                         EntityManagerInterface $entityManager): Response
+                         EntityManagerInterface $entityManager,
+                         UserPasswordEncoderInterface $passwordEncoder): Response
     {
 
         $user = $userRepository->find($id);
@@ -29,7 +31,13 @@ class ProfilController extends AbstractController
         $userForm->handleRequest($request);
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
-            if($user ->get)
+            // encode the plain password
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $userForm->get('password')->getData()
+                ));
+
             $entityManager->persist($user);
             $entityManager->flush();
         }
