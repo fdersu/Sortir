@@ -78,7 +78,7 @@ class SortieRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
         }
-        return $this->findBy([], ['dateDebut' => 'ASC']);
+        return $this->findWithinLastMonth();
     }
 
     // /**
