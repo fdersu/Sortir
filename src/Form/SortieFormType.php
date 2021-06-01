@@ -2,11 +2,13 @@
 
 namespace App\Form;
 
-use App\Entity\Lieu;
 use App\Entity\Sortie;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,19 +18,26 @@ class SortieFormType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('dateDebut')
-            ->add('duree')
+            ->add('dateDebut', DateTimeType::class, [
+                'html5' => true,
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text'
+            ])
+            ->add('duree', NumberType::class)
             ->add('lieu', CollectionType::class, [
-                'entry_type' => Lieu::class,
+                'entry_type' => LieuFormType::class,
                 'entry_options' => [
-                    'label' => 'nom'],
+                    'label' => 'false'],
                 'allow_add' => true,
             ])
 
             ->add('description')
             ->add('nbInscriptionsMax')
-            ->add('dateCloture')
-
+            ->add('dateCloture', DateTimeType::class, [
+                'html5' => true,
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text'
+            ])
         ;
     }
 

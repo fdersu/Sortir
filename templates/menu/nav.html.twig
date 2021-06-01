@@ -3,7 +3,7 @@
         <ul class="nav ulNav" id="menu">
             {% if (app.user) %}
                 <li><a class="navLink" href="{{ path('main_accueil') }}" title="Home">Accueil</a></li>
-                <li><a class="navLink" href="#" title="Ajouter une sortie">Ajouter une sortie</a></li>
+                <li><a class="navLink" href="{{ path('sortie_add') }}" title="Ajouter une sortie">Ajouter une sortie</a></li>
                 {% if is_granted("ROLE_ADMIN") %}
                 <li><a class="navLink" href="{{ path('app_register') }}" title="register">Enregistrer un utilisateur</a></li>
                 {% endif %}
