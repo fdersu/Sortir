@@ -60,12 +60,11 @@ class SortieRepository extends ServiceEntityRepository
                 $qb->andWhere('s.dateDebut < :val7')
                     ->setParameter('val7', new \DateTime());
             }
-            return $qb->orderBy('s.dateDebut', 'DESC')
-                ->setMaxResults(10)
+            return $qb->orderBy('s.dateDebut', 'ASC')
                 ->getQuery()
                 ->getResult();
         }
-        return $this->findBy([], ['dateDebut' => 'DESC']);
+        return $this->findBy([], ['dateDebut' => 'ASC']);
     }
 
     // /**
