@@ -19,15 +19,15 @@ class MainController extends AbstractController
 {
 
     /**
-     * @Route("", name="home")
+     * @Route("/", name="home")
      */
     public function home(): Response
     {
-        return $this -> render("security/login.html.twig");
+        return $this -> redirectToRoute("app_login");
     }
 
     /**
-     * @Route("/accueil", name="accueil")
+     * @Route("accueil", name="accueil")
      */
     public function accueil(SortieRepository $sortieRepository, Request $request): Response
     {
