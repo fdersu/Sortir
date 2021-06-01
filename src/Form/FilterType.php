@@ -63,7 +63,7 @@ class FilterType extends AbstractType
             ])
             ->add('sortiesPassees', ChoiceType::class, [
                 'choices' => [
-                    'Sorties passée' => true
+                    'Sorties passées' => true
                 ],
                 'expanded' => true,
                 'multiple' => true

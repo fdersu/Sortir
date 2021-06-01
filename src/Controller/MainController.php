@@ -20,7 +20,7 @@ class MainController extends AbstractController
      */
     public function home(): Response
     {
-        return $this -> render("main/home.html.twig");
+        return $this -> render("security/login.html.twig");
     }
 
     /**
