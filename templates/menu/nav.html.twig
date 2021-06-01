@@ -1,16 +1,19 @@
 <nav>
     <div class="topnav">
         <ul class="nav ulNav" id="menu">
-            {% if (app.user) %}
-                <li><a class="navLink" href="{{ path('main_accueil') }}" title="Home">Accueil</a></li>
-                <li><a class="navLink" href="#" title="Ajouter une sortie">Ajouter une sortie</a></li>
-                {% if is_granted("ROLE_ADMIN") %}
-                <li><a class="navLink" href="{{ path('app_register') }}" title="register">Enregistrer un utilisateur</a></li>
-                {% endif %}
-                <li><a class="navLink" href="{{ path('app_logout') }}" title="Deconnexion">Déconnexion ({{ app.user.username }})</a></li>
-            {% else %}
-                <li><a class="navLink" href="{{ path('app_login') }}" title="login">Connexion</a></li>
+            <li><a class="navLink" href="{{ path('main_index') }}" title="Home">Accueil</a></li>
+            <li><a class="navLink" href="#" title="Mes sorties">Mes sorties</a></li>
+
+            <li><a class="navLink" href="{{ path('profil_edit', {'id' : app.user.id}) }}" title="Mon Profil">Mon Profil
+                    ({{ app.user.username }})</a></li>
+            <li><a class="navLink" href="#" title="Ajouter une sortie">Ajouter une sortie</a></li>
+            <li><a class="navLink" href="{{ path('app_logout') }}" title="Deconnexion">Déconnexion</a></li>
+            {% if is_granted("ROLE_ADMIN") %}
+                <li><a class="navLink" href="{{ path('app_register') }}" title="register">Enregistrer un utilisateur</a>
+                </li>
             {% endif %}
+            <li><a class="navLink" href="#" title="About us">About Us</a></li>
+
         </ul>
     </div>
 </nav>
