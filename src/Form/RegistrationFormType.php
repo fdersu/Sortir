@@ -55,6 +55,7 @@ class RegistrationFormType extends AbstractType
                 'expanded' => true,
                 'multiple' => true
             ])
+
             ->add('actif', ChoiceType::class, [
                 'choices' => [
                     'Actif' => true
