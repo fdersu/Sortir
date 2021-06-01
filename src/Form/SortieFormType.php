@@ -43,14 +43,21 @@ class SortieFormType extends AbstractType
             ])
 
            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-               $ville = $event->getData();
-               $builder = $event->getForm();
+               $sortie = $event->getData();
+               $form = $event->getForm();
+               $ville = $form->get('ville')->getData();
+
+               dump($ville);
+               dump($sortie);
+
                $lieux = $this->entityManager->getRepository(Lieu::class)->findBy(['ville' => $ville]);
 
-               $builder->add('lieu', ChoiceType::class, [
+               $form->add('lieu', ChoiceType::class, [
                    'choices' => $lieux,
                    'choice_label' => 'nom'
                    ]);
+
+               $event->setData($sortie);
             })
 
             ->add('description', TextareaType::class)
