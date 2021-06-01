@@ -5,93 +5,143 @@
 {% block body %}
 
 
-<div class="main">
-    {{ form_start(filterForm, {'attr': {'class': 'filterForm'}}) }}
-    <div class="row">
-        <div class="col-lg-3">{{ form_label(filterForm.site) }}</div>
-        <div class="col-lg-2">{{ form_widget(filterForm.site) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-lg-3">{{ form_label(filterForm.recherche) }}</div>
-        <div class="col-lg-1">{{ form_widget(filterForm.recherche) }}</div>
-        <div class="col-lg-6 offset-lg-2">{{ form_widget(filterForm.organisateur) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4 offset-lg-6">{{ form_widget(filterForm.inscrit) }}</div>
-        <div class="col-lg-1"><button>rechercher</button></div>
-    </div>
-    <div class="row">
-        <div class="col-lg-1">{{ form_label(filterForm.dateDebut) }}</div>
-        <div class="col-lg-2">{{ form_widget(filterForm.dateDebut) }}</div>
-        <div class="col-lg-1">{{ form_label(filterForm.dateFin) }}</div>
-        <div class="col-lg-2">{{ form_widget(filterForm.dateFin) }}</div>
-        <div class="col-lg-6">{{ form_widget(filterForm.nonInscrit) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6 offset-lg-6">{{ form_widget(filterForm.sortiesPassees) }}</div>
-    </div>
+    <div class="main">
+        {{ form_start(filterForm, {'attr': {'class': 'filterForm'}}) }}
+        <div class="row">
+            <div class="col-lg-3">{{ form_label(filterForm.site) }}</div>
+            <div class="col-lg-2">{{ form_widget(filterForm.site) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">{{ form_label(filterForm.recherche) }}</div>
+            <div class="col-lg-1">{{ form_widget(filterForm.recherche) }}</div>
+            <div class="col-lg-6 offset-lg-2">{{ form_widget(filterForm.organisateur) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 offset-lg-6">{{ form_widget(filterForm.inscrit) }}</div>
+            <div class="col-lg-1">
+                <button>rechercher</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1">{{ form_label(filterForm.dateDebut) }}</div>
+            <div class="col-lg-2">{{ form_widget(filterForm.dateDebut) }}</div>
+            <div class="col-lg-1">{{ form_label(filterForm.dateFin) }}</div>
+            <div class="col-lg-2">{{ form_widget(filterForm.dateFin) }}</div>
+            <div class="col-lg-6">{{ form_widget(filterForm.nonInscrit) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 offset-lg-6">{{ form_widget(filterForm.sortiesPassees) }}</div>
+        </div>
 
 
-    {{ form_end(filterForm) }}
+        {{ form_end(filterForm) }}
 
-    <div>
-        {% for sortie in sorties %}
-    <div class="sortie">
-        <div class="row">
-            <div class="col-lg-11 offset-lg-1">{{ sortie.nom }}</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-11 offset-lg-1">{{ sortie.description }}</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-11 offset-lg-1">{{ sortie.site.nom }}</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-11 offset-lg-1">inscrits: {{ sortie.nbInscriptionsMax }}/{{ sortie.inscriptions|length }}</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-11 offset-lg-1">{{ sortie.dateDebut|date('d/m/Y') }}</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-11 offset-lg-1">{{ sortie.organisateur.pseudo }}</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-11 offset-lg-1">{{ sortie.etat.libelle }}</div>
-        </div>
-    </div>
-        {% endfor %}
-    </div>
+        <div>
+            {% for sortie in sorties %}
+                <div class="sortie">
+                    <div class="row align-items-center">
+                        <div class="col-lg-2">
+                            {% if sortie.urlPhoto %}
+                                <img class="photoSortie" src="{{ asset('img/') ~ sortie.urlPhoto }}" alt="photo">
+                            {% else %}
+                                <img class="photoSortie" src="{{ asset('img/default_picture.png') }}" alt="photo">
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="row">
+                                <div class="col-lg-3"><strong>Nom</strong></div>
+                                <div class="col-lg-1"><strong>Date</strong></div>
+                                <div class="col-lg-1"><strong>Clôture</strong></div>
+                                <div class="col-lg-2"><strong>Inscrits/places</strong></div>
+                                <div class="col-lg-1"><strong>Etat</strong></div>
+                                <div class="col-lg-1"><strong>Inscrit</strong></div>
+                                <div class="col-lg-1"><strong>Organisateur</strong></div>
+                                <div class="col-lg-1"><strong>Action</strong></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3"><span>{{ sortie.nom }}</span></div>
+                                <div class="col-lg-1"><span>{{ sortie.dateDebut|date('d/m/Y') }}</span></div>
+                                <div class="col-lg-1"><span>{{ sortie.dateCloture|date('d/m/Y') }}</span></div>
+                                <div class="col-lg-2">
+                                    <span>{{ sortie.inscriptions|length }}/{{ sortie.nbInscriptionsMax }}</span></div>
+                                <div class="col-lg-1"><span>{{ sortie.etat.libelle }}</span></div>
 
-</div>
+                                {% set bool = false %}
+                                {% for ins in sortie.inscriptions %}
+                                    {% if ins.participant.id == app.user.id %}
+                                        {% set bool = true %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if bool %}
+                                    <div class="col-lg-1" id="inscrit"></div>
+                                {% else %}
+                                    <div class="col-lg-1" id="nonInscrit"></div>
+                                {% endif %}
+
+                                <div class="col-lg-1"><span>{{ sortie.organisateur.pseudo }}</span></div>
+                                <div class="col-lg-2">
+                                    <a>Afficher</a>
+                                    {% set bool = false %}
+                                    {% for ins in sortie.inscriptions %}
+                                        {% if ins.participant.id == app.user.id %}
+                                            {% set bool = true %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if sortie.organisateur != app.user %}
+                                    {% if bool and sortie.dateDebut > "now" %}
+                                        <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}">Se
+                                            désister</a>
+                                    {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > "now" %}
+                                        <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
+                                        {% else %}
+                                        <a></a>
+                                    {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
 {% endblock %}
 
 {% block style %}
     <style type="text/css">
-        .main{
+        .main {
             margin-left: 5vw;
             margin-right: 5vw;
         }
-        .sortie{
+
+        .sortie {
             margin-bottom: 3vh;
             border: 1px solid black;
             border-radius: 1vw;
         }
-        .filterForm{
+
+        .filterForm {
+            margin-top: 3vh;
             margin-bottom: 3vh;
             padding: 3vh;
             border: 1px solid black;
             border-radius: 1vw;
         }
-        input[type=text], input[type=date], select{
+
+        input[type=text], input[type=date], select {
             border: 1px solid black;
             border-radius: 0.5vw;
             text-align: center;
         }
-        button{
+
+        button {
             border: 1px solid black;
             border-radius: 0.5vw;
         }
-        input[type=checkbox]{
+
+        input[type=checkbox] {
             -webkit-appearance: none;
             -moz-appearance: none;
             width: 1.5vh;
@@ -100,8 +150,23 @@
             border: 1px solid black;
             border-radius: 50%;
         }
-        input[type=checkbox]:checked{
+
+        input[type=checkbox]:checked {
             background-color: #00a6ff;
+        }
+
+        .photoSortie {
+            width: 10vw;
+        }
+
+        #inscrit {
+            border-radius: 1vw;
+            background-color: #00d941;
+        }
+
+        #nonInscrit {
+            border-radius: 1vw;
+            background-color: #eb0202;
         }
     </style>
 {% endblock %}

@@ -19,7 +19,7 @@ class MainController extends AbstractController
 {
 
     /**
-     * @Route("/", name="home")
+     * @Route("", name="home")
      */
     public function home(): Response
     {
@@ -33,7 +33,7 @@ class MainController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        $allSorties = $sortieRepository->findBy([], ['dateDebut' => 'DESC']);
+        $allSorties = $sortieRepository->findBy([], ['dateDebut' => 'ASC']);
         $filter = new Filter();
         $filterForm = $this->createForm(FilterType::class, $filter);
         $filterForm->handleRequest($request);
