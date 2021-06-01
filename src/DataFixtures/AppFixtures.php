@@ -90,6 +90,7 @@ class AppFixtures extends Fixture
             $user->setTelephone($generator->phoneNumber);
             $user->setActif($generator->boolean);
             $user->setSite($generator->randomElement($sites));
+            $user->setRoles($generator->randomElement(array(['ROLE_USER'], ['ROLE_ADMIN'])));
 
             $manager->persist($user);
             $manager->flush();
@@ -119,7 +120,6 @@ class AppFixtures extends Fixture
             $users = $userManager->findAll();
 
             $etatManager = $manager->getRepository(Etat::class);
-            $etats = $etatManager->findAll();
 
             $sortie->setNom($generator->words(3, true));
             $sortie->setDescription($generator->words(20, true));

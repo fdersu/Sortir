@@ -47,6 +47,21 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'User' => 'ROLE_USER',
+                    'Admin' => 'ROLE_ADMIN',
+                ],
+                'expanded' => true,
+                'multiple' => true
+            ])
+            ->add('actif', ChoiceType::class, [
+                'choices' => [
+                    'Actif' => true
+                ],
+                'expanded' => true,
+                'multiple' => true
+            ])
         ;
     }
 
