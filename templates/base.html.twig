@@ -18,15 +18,13 @@
 <body>
 
 <header>
-    <h1><img src="{{ asset('img/Logo-sortie.png') }}" height="50px" alt="Sortie !"></h1>
+    <h1><img src="{{ asset('img/Logo-sortie.png') }}" alt="Sortie !"></h1>
 
-    {% if (app.user) %}
-     {% include 'menu/nav.html.twig' %}
+    {% if app.user %}
+        {% include 'menu/nav.html.twig' %}
     {% endif %}
+
 </header>
-
-
 {% block body %}{% endblock %}
-{% block style %}{% endblock %}
 </body>
 </html>
