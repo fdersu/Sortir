@@ -18,13 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
-    /**
-     * @Route("/sortie", name="sortie_sortie")
-     */
-    public function detail(): Response
-    {
-
-    }
 
     /**
      * @Route("/sortie/detail/{id}", name="sortie_detail")
