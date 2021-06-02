@@ -9,14 +9,14 @@
     </div>
 
     <div class="row align-items-center">
-        <div class="col-lg-4">
+        <div class="col-lg-4 offset-lg-1">
             {% if participant.photo %}
             <img class="userPic" src="{{ asset('img/') ~ participant.photo }}" alt="userPic">
             {% else %}
             <img class="userPic" src="{{ asset('img/user_no_pic.png') }}" alt="userPic">
             {% endif %}
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-7">
             <div class="row align-items-center gap">
                 <div class="col-lg-6 odd left"><strong>Prénom:</strong></div>
                 <div class="col-lg-4 odd right">{{ participant.prenom }}</div>
