@@ -86,12 +86,12 @@
         </div>
         {% for insc in sortie.inscriptions %}
             {% if loop.index is even %}
-            <div class="row">
+            <div class="row gap">
                 <div class="col-lg-4 offset-lg-4 even left"><a href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a></div>
                 <div class="col-lg-2 even right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
             </div>
             {% else %}
-                <div class="row">
+                <div class="row gap">
                     <div class="col-lg-4 offset-lg-4 odd left"><a href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a></div>
                     <div class="col-lg-2 odd right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
                 </div>
@@ -103,7 +103,7 @@
 {% block style %}
     <style type="text/css">
         body{
-            background: linear-gradient(to bottom, #4e5382, #d6f3ff);
+            background: linear-gradient(to bottom, rgba(135, 197, 231, 0.56), rgba(214, 243, 255, 0.5));
         }
         .photo {
             width: 30vw;
@@ -124,18 +124,19 @@
             background-color: #ff7070;
         }
         .even{
-            background: linear-gradient(to bottom, rgba(114, 59, 255, 0.5), #ffffff);
+            background-color: rgb(183, 225, 238);
         }
         .odd{
-            background: linear-gradient(to bottom, rgba(51, 91, 255, 0.5), #ffffff);
+            background-color: rgb(123, 170, 224);
         }
         .left{
-            border-bottom-left-radius: 1vw;
-            border-top-left-radius: 1vw;
+            border-top-left-radius: 0.5vw;
         }
         .right{
-            border-top-right-radius: 1vw;
-            border-bottom-right-radius: 1vw;
+            border-bottom-right-radius: 0.5vw;
+        }
+        .gap{
+            margin-bottom: 0.5vh;
         }
     </style>
 {% endblock %}
