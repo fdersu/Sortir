@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Lieu;
-use App\Entity\Ville;
 use App\Entity\Sortie;
 use App\Entity\User;
+use App\Entity\Ville;
 use App\Form\LieuFormType;
 use App\Form\SortieFormType;
+use App\Form\VilleFormType;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/sortie/detail/{id}", name="sortie_detail")
+     * @Route("/sortie/detail/{sortie_id}", name="sortie_detail")
      */
     public function detail(SortieRepository $sortieRepository, $sortie_id): Response
     {
@@ -88,18 +89,13 @@ class SortieController extends AbstractController
     {
 
         $lieu = new Lieu();
-        //$ville = new Ville();
+        $lieux = $entityManager->getRepository(Lieu::class)->findAll();
 
         $lieuForm = $this->createForm(LieuFormType::class, $lieu);
-        //$villeForm = $this->createForm(LieuFormType::class, $ville);
-
         $lieuForm->handleRequest($request);
-        //$villeForm->handleRequest($request);
-
-
+        
         if($lieuForm->isSubmitted() && $lieuForm->isValid()){
 
-                //$entityManager->persist($ville);
                 $entityManager->persist($lieu);
                 $entityManager->flush();
 
@@ -111,7 +107,36 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/lieu.html.twig', [
             'lieuForm' => $lieuForm->createView(),
-            //'villeForm' => $villeForm->createView()
+            'lieux' => $lieux,
+        ]);
+
+    }
+
+    /**
+     * @Route("/sortie_ville", name="sortie_ville")
+     */
+    public function ville(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $ville = new Ville();
+        $villes = $entityManager->getRepository(Ville::class)->findAll();
+
+        $villeForm = $this->createForm(VilleFormType::class, $ville);
+        $villeForm->handleRequest($request);
+
+        if($villeForm->isSubmitted() && $villeForm->isValid()){
+
+            $entityManager->persist($ville);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Ville ajoutée !');
+            return $this->redirectToRoute('sortie_lieu');
+
+        }
+
+
+        return $this->render('sortie/ville.html.twig', [
+            'villeForm' => $villeForm->createView(),
+            'villes' => $villes,
         ]);
 
     }

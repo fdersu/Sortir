@@ -131,12 +131,17 @@ footer p {
     margin: 10%;
     padding: 1em;
 }
+*/
 
-.middle {
+.flex-block {
     display: flex;
-    justify-content: space-around;
+    flex-direction: row;
+    align-items: start;
+    margin: 2em;
+
 }
 
+/*
 .noDecoration{
     text-decoration: none;
     color:black;
