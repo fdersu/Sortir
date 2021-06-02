@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Entity\User;
+use App\Form\LieuFormType;
+use App\Form\SortieFormType;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -58,29 +62,80 @@ class SortieController extends AbstractController
     {
 
         $sortie = new Sortie();
+        $lieu = new Lieu();
+        //$ville = new Ville();
 
-        $sortieForm = $this->createForm(SortieController::class, $sortie);
+        $sortieForm = $this->createForm(SortieFormType::class, $sortie);
+        $lieuForm = $this->createForm(LieuFormType::class, $lieu);
+        //$villeForm = $this->createForm(LieuFormType::class, $ville);
 
 
         //Methode pour setter Organisateur direct dans le controlleur :
-        $sortie->setOrganisateur($entityManager->getRepository(Etat::class)->findOneBy(['pseudo' => $this->getUser()->getUsername()]));
+        $sortie->setOrganisateur($entityManager->getRepository(User::class)->findOneBy(['pseudo' => $this->getUser()->getUsername()]));
 
 
         $sortieForm->handleRequest($request);
+        $lieuForm->handleRequest($request);
+        //$villeForm->handleRequest($request);
+
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
-            $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
-            $entityManager->persist($sortie);
-            $entityManager->flush();
+            if($lieuForm->isValid()){
 
-            $this->addFlash('success', 'Sortie ajoutée !');
-            return $this->redirectToRoute('sortie_detail', ['id' => $sortie->getId()]);
+                $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
+                //$entityManager->persist($ville);
+                $entityManager->persist($lieu);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Sortie ajoutée !');
+                return $this->redirectToRoute('sortie_detail', ['id' => $sortie->getId()]);
+
+            }
 
         }
 
+
         return $this->render('sortie/add.html.twig', [
-            'wishForm' => $sortieForm->createView()
+            'sortieForm' => $sortieForm->createView(),
+            'lieuForm' => $lieuForm->createView(),
+            //'villeForm' => $villeForm->createView()
+        ]);
+
+    }
+
+    /**
+     * @Route("/sortie_lieu", name="sortie_lieu")
+     */
+    public function lieu(Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        $lieu = new Lieu();
+        //$ville = new Ville();
+
+        $lieuForm = $this->createForm(LieuFormType::class, $lieu);
+        //$villeForm = $this->createForm(LieuFormType::class, $ville);
+
+        $lieuForm->handleRequest($request);
+        //$villeForm->handleRequest($request);
+
+
+        if($lieuForm->isSubmitted() && $lieuForm->isValid()){
+
+            //$entityManager->persist($ville);
+            $entityManager->persist($lieu);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Lieu ajouté !');
+            return $this->redirectToRoute('sortie_add');
+
+        }
+
+
+        return $this->render('sortie/lieu.html.twig', [
+            'lieuForm' => $lieuForm->createView(),
+            //'villeForm' => $villeForm->createView()
         ]);
 
     }
