@@ -42,9 +42,9 @@
                     <div class="row align-items-center">
                         <div class="col-lg-2">
                             {% if sortie.urlPhoto %}
-                                <img class="photoSortie" src="{{ asset('img/') ~ sortie.urlPhoto }}" alt="photo">
+                                <a href="{{ path('sortie_sortie', {sortie_id: sortie.id}) }}"><img class="photoSortie" src="{{ asset('img/') ~ sortie.urlPhoto }}" alt="photo"></a>
                             {% else %}
-                                <img class="photoSortie" src="{{ asset('img/default_picture.png') }}" alt="photo">
+                                <a href="{{ path('sortie_sortie', {sortie_id: sortie.id}) }}"><img class="photoSortie" src="{{ asset('img/default_picture.png') }}" alt="photo"></a>
                             {% endif %}
                         </div>
                         <div class="col-lg-10">
@@ -80,7 +80,7 @@
 
                                 <div class="col-lg-1"><span>{{ sortie.organisateur.pseudo }}</span></div>
                                 <div class="col-lg-2">
-                                    <a href="{{ path('sortie_detail', {id: sortie.id}) }}">Afficher</a>
+                                    <a href="{{ path('sortie_sortie', {sortie_id: sortie.id}) }}">Afficher</a>
                                     {% set bool = false %}
                                     {% for ins in sortie.inscriptions %}
                                         {% if ins.participant.id == app.user.id %}
@@ -88,10 +88,10 @@
                                         {% endif %}
                                     {% endfor %}
                                     {% if sortie.organisateur != app.user %}
-                                    {% if bool and sortie.dateDebut > "now" %}
+                                    {% if bool and sortie.dateDebut > now %}
                                         <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}">Se
                                             désister</a>
-                                    {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > "now" %}
+                                    {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now %}
                                         <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
                                         {% else %}
                                         <a></a>
