@@ -40,7 +40,7 @@ class SortieController extends AbstractController
     /** @Route("/sortie/delete/{sortie_id}", name="sortie_delete", requirements={"sortie_id"="\d+"}) */
     public function delete(EntityManagerInterface $entityManager, SortieRepository $sortieRepository, $sortie_id){
         $sortie = $sortieRepository->find($sortie_id);
-        if($sortie) {
+        if(!empty($sortie)) {
             foreach ($sortie->getInscriptions() as $item) {
                 $entityManager->remove($item);
             }
