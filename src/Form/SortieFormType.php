@@ -42,10 +42,11 @@ class SortieFormType extends AbstractType
                 'choice_label' => 'nom'
             ])
 
-           ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-               $sortie = $event->getData();
-               $form = $event->getForm();
-               $ville = $form->get('ville')->getData();
+            ->addEventListener(FormEvents::POST_SET_DATA, function ($event) {
+                $form = $event->getForm(); // The FormBuilder
+                $sortie = $event->getData(); // The Form Object
+                $ville = $form->get('ville')->getData();
+
 
                dump($ville);
                dump($sortie);
