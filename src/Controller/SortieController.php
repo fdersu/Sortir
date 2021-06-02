@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Repository\SortieRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,16 @@ class SortieController extends AbstractController
         return $this->render('sortie/detail.html.twig', [
             'sortie' => $sortie,
             'nbPlaces' => $nbPlaces
+        ]);
+    }
+
+    /** @Route("/sortie/{sortie_id}/participant/{id}", name="sortie_participant", requirements={"sortie_id"="\d+","id"="\d+"}) */
+    public function participant(UserRepository $userRepository,SortieRepository $sortieRepository, $sortie_id, $id){
+        $user = $userRepository->find($id);
+        $sortie = $sortieRepository->find($sortie_id);
+        return $this->render('sortie/participant.html.twig', [
+            'participant' => $user,
+            'sortie' => $sortie
         ]);
     }
 

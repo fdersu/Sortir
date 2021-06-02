@@ -80,6 +80,11 @@ class User implements UserInterface
      */
     private $inscriptions;
 
+    /**
+     * @ORM\Column(type="string", length=250, nullable=true)
+     */
+    private $photo;
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
@@ -302,6 +307,18 @@ class User implements UserInterface
                 $inscription->setParticipant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }

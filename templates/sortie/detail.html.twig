@@ -8,9 +8,9 @@
         <div class="row align-items-center">
             <div class="col-lg-4">
                 {% if sortie.urlPhoto %}
-                    <img class="photo" src="{{ asset('img/') ~ sortie.urlPhoto }}">
+                    <img class="photo" src="{{ asset('img/') ~ sortie.urlPhoto }}" alt="photo">
                 {% else %}
-                    <img class="photo" src="{{ asset('img/default_picture.png') }}">
+                    <img class="photo" src="{{ asset('img/default_picture.png') }}" alt="photo">
                 {% endif %}
             </div>
             <div class="col-lg-8">
@@ -71,17 +71,16 @@
         {% for insc in sortie.inscriptions %}
             {% if loop.index is even %}
             <div class="row">
-                <div class="col-lg-4 offset-lg-4 even left"><a>{{ insc.participant.pseudo }}</a></div>
+                <div class="col-lg-4 offset-lg-4 even left"><a href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a></div>
                 <div class="col-lg-2 even right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
             </div>
             {% else %}
                 <div class="row">
-                    <div class="col-lg-4 offset-lg-4 odd left"><a>{{ insc.participant.pseudo }}</a></div>
+                    <div class="col-lg-4 offset-lg-4 odd left"><a href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a></div>
                     <div class="col-lg-2 odd right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
                 </div>
             {% endif %}
         {% endfor %}
-    </div>
     </div>
 {% endblock %}
 

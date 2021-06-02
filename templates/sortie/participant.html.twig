@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participant{% endblock %}
+
+{% block body %}
+
+    <div class="row gap">
+        <div class="col-lg-3 offset-lg-6"><strong>{{ participant.pseudo }}</strong></div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col-lg-4">
+            {% if participant.photo %}
+            <img class="userPic" src="{{ asset('img/') ~ participant.photo }}" alt="userPic">
+            {% else %}
+            <img class="userPic" src="{{ asset('img/user_no_pic.png') }}" alt="userPic">
+            {% endif %}
+        </div>
+        <div class="col-lg-8">
+            <div class="row gap">
+                <div class="col-lg-6"><strong>Prénom:</strong></div>
+                <div class="col-lg-6">{{ participant.prenom }}</div>
+            </div>
+            <div class="row gap">
+                <div class="col-lg-6"><strong>Nom:</strong></div>
+                <div class="col-lg-6">{{ participant.nom }}</div>
+            </div>
+            <div class="row gap">
+                <div class="col-lg-6"><strong>Téléphone:</strong></div>
+                <div class="col-lg-6">{{ participant.telephone }}</div>
+            </div>
+            <div class="row gap">
+                <div class="col-lg-6"><strong>E-mail</strong></div>
+                <div class="col-lg-6">{{ participant.mail }}</div>
+            </div>
+            <div class="row gap">
+                <div class="col-lg-6"><strong>Ville de rattachement:</strong></div>
+                <div class="col-lg-6">{{ participant.site.nom }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 offset-lg-6">
+            <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}"><button class="back">Retour</button></a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block style %}
+    <style type="text/css">
+        .userPic{
+            width: 20vw;
+        }
+        .gap{
+            margin-bottom: 5vh;
+        }
+        .back{
+            border: 1px solid black;
+            border-radius: 1vw;
+        }
+    </style>
+{% endblock %}
