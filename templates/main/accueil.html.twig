@@ -36,6 +36,12 @@
 
         {{ form_end(filterForm) }}
 
+        {% for message in app.flashes('notice') %}
+        <div class="row pad">
+            <div class="col-lg-4 offset-lg-4"><strong>{{ message }}</strong></div>
+        </div>
+        {% endfor %}
+
         <div>
             {% for sortie in sorties %}
                 <div class="sortie">
@@ -117,7 +123,9 @@
             margin-left: 5vw;
             margin-right: 5vw;
         }
-
+        .pad{
+            margin-top: 5vh;
+        }
         .sortie {
             margin-bottom: 3vh;
             border: 1px solid black;
