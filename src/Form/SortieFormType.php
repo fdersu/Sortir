@@ -4,31 +4,69 @@ namespace App\Form;
 
 use App\Entity\Lieu;
 use App\Entity\Sortie;
+use App\Entity\Ville;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortieFormType extends AbstractType
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('nom')
-            ->add('dateDebut')
-            ->add('duree')
-            ->add('lieu', CollectionType::class, [
-                'entry_type' => Lieu::class,
-                'entry_options' => [
-                    'label' => 'nom'],
-                'allow_add' => true,
+            ->add('dateDebut', DateTimeType::class, [
+                'html5' => true,
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text'
+            ])
+            ->add('duree', NumberType::class)
+            ->add('ville', EntityType::class, [
+                'class' => Ville::class,
+                'mapped' => false,
+                'choice_label' => 'nom'
             ])
 
-            ->add('description')
-            ->add('nbInscriptionsMax')
-            ->add('dateCloture')
+           ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+               $sortie = $event->getData();
+               $form = $event->getForm();
+               $ville = $form->get('ville')->getData();
 
+               dump($ville);
+               dump($sortie);
+
+               $lieux = $this->entityManager->getRepository(Lieu::class)->findBy(['ville' => $ville]);
+
+               $form->add('lieu', ChoiceType::class, [
+                   'choices' => $lieux,
+                   'choice_label' => 'nom'
+                   ]);
+
+               $event->setData($sortie);
+            })
+
+            ->add('description', TextareaType::class)
+            ->add('nbInscriptionsMax')
+            ->add('dateCloture', DateTimeType::class, [
+                'html5' => true,
+                'date_widget' => 'single_text',
+                'time_widget' => 'single_text'
+            ])
         ;
     }
 
