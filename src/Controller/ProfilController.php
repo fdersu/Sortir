@@ -25,6 +25,7 @@ class ProfilController extends AbstractController
         $userInSession = $userRepository->findOneBy(["pseudo" => $this->getUser()->getUsername()]);
         $user = $userRepository->find($id);
 
+
         if (!$user) {
             throw $this->createNotFoundException("Oops ! This user does not exist ! ");
         }

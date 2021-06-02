@@ -22,6 +22,17 @@ class SortieRepository extends ServiceEntityRepository
     }
 
     /** @return Sortie[] Returns an array of Sortie objects */
+    public function findWithinLastMonth(){
+        $now = new \DateTime();
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.dateDebut > :val')
+            ->setParameter('val', $now->modify('-1 month'))
+            ->orderBy('s.dateDebut', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /** @return Sortie[] Returns an array of Sortie objects */
     public function findByFilter(Filter $filter, User $user)
     {
         if ($filter) {
@@ -67,7 +78,7 @@ class SortieRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
         }
-        return $this->findBy([], ['dateDebut' => 'ASC']);
+        return $this->findWithinLastMonth();
     }
 
     // /**

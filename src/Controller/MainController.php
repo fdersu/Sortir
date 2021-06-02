@@ -33,7 +33,8 @@ class MainController extends AbstractController
     {
         /** @var User $user */
         $user = $this->getUser();
-        $allSorties = $sortieRepository->findBy([], ['dateDebut' => 'ASC']);
+        $now = new \DateTime();
+        $allSorties = $sortieRepository->findWithinLastMonth();
         $filter = new Filter();
         $filterForm = $this->createForm(FilterType::class, $filter);
         $filterForm->handleRequest($request);
@@ -42,7 +43,8 @@ class MainController extends AbstractController
         }
         return $this->render('main/accueil.html.twig', [
             'filterForm' => $filterForm->createView(),
-            'sorties' => $allSorties
+            'sorties' => $allSorties,
+            'now' => $now
         ]);
     }
 }
