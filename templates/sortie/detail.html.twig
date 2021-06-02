@@ -2,7 +2,23 @@
 
 {% block title %}Détail Sortie{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('js/detailSortie.js') }}"></script>
+{% endblock %}
+
 {% block body %}
+
+    {% if sortie.organisateur == app.user %}
+        <div class="row align-items-center paddup">
+            <div class="col-lg-2 offset-lg-6">
+                <img class="logo" src="{{ asset('img/logo_organisateur.png') }}" alt="organisateur">
+            </div>
+            <div class="col-lg-2">
+                <a id="deleteLink" href="{{ path('sortie_delete', {sortie_id: sortie.id}) }}"><button class="delete" id="delete">Supprimer</button></a>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="sortie">
         <div class="pad"></div>
         <div class="row align-items-center">
@@ -96,6 +112,17 @@
         .pad{
             margin-bottom: 5vh;
         }
+        .paddup{
+            margin-top: 5vh;
+        }
+        .logo{
+            width: 5vw;
+        }
+        .delete{
+            border: 1px solid black;
+            border-radius: 1vw;
+            background-color: #ff7070;
+        }
         .even{
             background: linear-gradient(to bottom, rgba(114, 59, 255, 0.5), #ffffff);
         }
@@ -112,3 +139,4 @@
         }
     </style>
 {% endblock %}
+
