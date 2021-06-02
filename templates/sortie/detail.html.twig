@@ -30,33 +30,33 @@
                 {% endif %}
             </div>
             <div class="col-lg-8">
-                <div class="row pad odd left">
+                <div class="row align-items-center pad odd left">
                     <div class="col-lg-4"><strong>Nom de la sortie:</strong></div>
                     <div class="col-lg-4">{{ sortie.nom }}</div>
                     <div class="col-lg-2"><strong>Ville organisatrice:</strong></div>
                     <div class="col-lg-2">{{ sortie.site.nom }}</div>
                 </div>
-                <div class="row pad even left">
+                <div class="row align-items-center pad even left">
                     <div class="col-lg-4"><strong>Date et heure de la
                             sortie:</strong></div>
                     <div class="col-lg-4">{{ sortie.dateDebut|date("\\l\\e d/m/Y \\à H:i") }}</div>
                     <div class="col-lg-2"><strong>Lieu:</strong></div>
                     <div class="col-lg-2">{{ sortie.lieu.nom }}</div>
                 </div>
-                <div class="row pad odd left">
+                <div class="row align-items-center pad odd left">
                     <div class="col-lg-4"><strong>Date limite
                             d'inscription:</strong></div>
                     <div class="col-lg-4">{{ sortie.dateCloture|date("\\l\\e d/m/Y \\à H:i") }}</div>
                     <div class="col-lg-2"><strong>Rue:</strong></div>
                     <div class="col-lg-2">{{ sortie.lieu.rue }}</div>
                 </div>
-                <div class="row pad even left">
+                <div class="row align-items-center pad even left">
                     <div class="col-lg-4"><strong>Nombre de places:</strong></div>
                     <div class="col-lg-4">{{ nbPlaces }}</div>
                     <div class="col-lg-2"><strong>Code Postal:</strong></div>
                     <div class="col-lg-2">{{ sortie.lieu.ville.codePostal }}</div>
                 </div>
-                <div class="row pad odd left">
+                <div class="row align-items-center pad odd left">
                     <div class="col-lg-4"><strong>Durée:</strong></div>
                     <div class="col-lg-4">{{ sortie.duree }} minutes</div>
                     {% if sortie.lieu.latitude %}
@@ -64,7 +64,7 @@
                         <div class="col-lg-2">{{ sortie.lieu.latitude }}</div>
                     {% endif %}
                 </div>
-                <div class="row pad even left">
+                <div class="row align-items-center pad even left">
                     <div class="col-lg-4"><strong>Description et infos:</strong></div>
                     <div class="col-lg-4">{{ sortie.description }}</div>
                     {% if sortie.lieu.longitude %}
@@ -86,12 +86,12 @@
         </div>
         {% for insc in sortie.inscriptions %}
             {% if loop.index is even %}
-            <div class="row gap">
+            <div class="row align-items-center gap">
                 <div class="col-lg-4 offset-lg-4 even left"><a href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a></div>
                 <div class="col-lg-2 even right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
             </div>
             {% else %}
-                <div class="row gap">
+                <div class="row align-items-center gap">
                     <div class="col-lg-4 offset-lg-4 odd left"><a href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a></div>
                     <div class="col-lg-2 odd right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
                 </div>
