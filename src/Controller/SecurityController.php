@@ -18,6 +18,8 @@ class SecurityController extends AbstractController
              return $this->redirectToRoute('main_accueil');
          }
 
+        //identification si l'identifiant est un pseudo ou mot de passe
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
