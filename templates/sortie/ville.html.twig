@@ -7,7 +7,7 @@
     <h1>Gérer les villes</h1>
 
     <div class="flex-block">
-        <div class="col-lg-6">
+        <div class="half-block">
             <div class="row">
                 <div class="col-lg-3"><strong>Nom</strong></div>
                 <div class="col-lg-3"><strong>Code Postal</strong></div>
@@ -19,7 +19,8 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="col-lg-6">
+        <div class="half-block">
+            <div class="form">
             <h3>Ajouter une ville</h3>
             <div>
                 {{ form_start(villeForm) }}
@@ -28,6 +29,7 @@
 
                 <button type="submit" class="btn">Ajouter la ville</button>
                 {{ form_end(villeForm) }}
+            </div>
             </div>
         </div>
     </div>
