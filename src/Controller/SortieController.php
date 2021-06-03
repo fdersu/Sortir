@@ -87,7 +87,7 @@ class SortieController extends AbstractController
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
-            if($lieuForm->isValid()){
+            if($lieuForm->isSubmitted() && $lieuForm->isValid()){
 
                 $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
                 $entityManager->persist($lieu);

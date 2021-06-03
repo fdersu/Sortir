@@ -7,11 +7,15 @@ use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -44,53 +48,36 @@ class SortieFormType extends AbstractType
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text'
             ])
-            ->add('site', EntityType::class, [
-                'class' => Site::class,
-                'placeholder' => $options['site'],
-                'choice_label' => 'nom'
+            ->add('site', TextType::class, [
+                'data' => $options['site'],
+                'disabled' => true,
             ])
             ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'mapped' => false,
                 'placeholder' => 'Choisissez une ville',
                 'choice_label' => 'nom'
-            ])
+            ]);
 
-            ->add('lieu', EntityType::class, [
-                'class' => Lieu::class,
-                'placeholder' => 'Choisissez un lieu',
-                'choice_label' => 'nom'
-             ]);
+            $formModifier = function (FormInterface $form, Ville $ville) {
 
-
-            $formModifier = function (FormInterface $form, Ville $ville = null) {
-                $lieux = null === $ville ? [] : $this->entityManager->getRepository(Lieu::class)->findBy(['ville' => $ville]);
-                $form->add('lieu', EntityType::class, [
+                $form->add('lieu', EntityType::class, array(
                     'class' => Lieu::class,
-                    'placeholder' => 'Choisissez un lieu',
-                    'choices' => $lieux,
-                ]);
+                    'query_builder' => function (EntityRepository $er) use ($ville) {
+                        return $er->createQueryBuilder('u')
+                            ->select('u')
+                            ->where('u.ville = :ville')
+                            ->setParameter('ville', $ville);
+                    },
+                    'choice_label' => 'nom')
+                );
             };
-
-            $builder->addEventListener(
-                FormEvents::PRE_SUBMIT,
-                function ($event) use ($formModifier){
-                    $form = $event->getForm(); // The FormBuilder
-                    $sortie = $event->getData(); // The Form Object (unused here)
-                    $ville = $form->get('ville')->getData();
-                    dd($ville);
-
-                    $formModifier($form, $ville);
-
-            });
-
 
             $builder->get('ville')->addEventListener(
                 FormEvents::POST_SUBMIT,
                 function (FormEvent $event) use($formModifier){
+                    $ville = $event->getForm()->getParent()->get('ville')->getData();
 
-                    $ville = $event->getForm()->get('ville')->getData();
-                    
                     $formModifier($event->getForm()->getParent(), $ville);
                 }
             );
