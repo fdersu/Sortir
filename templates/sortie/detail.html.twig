@@ -2,7 +2,32 @@
 
 {% block title %}Détail Sortie{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('js/detailSortie.js') }}"></script>
+{% endblock %}
+
 {% block body %}
+
+    {% if sortie.organisateur == app.user %}
+        <div class="row align-items-center paddup">
+            <div class="col-lg-2 offset-lg-6">
+                <img class="logo" src="{{ asset('img/logo_organisateur.png') }}" alt="organisateur">
+            </div>
+            {% if sortie.etat.libelle == 'Annulée' %}
+                <div class="col-lg-2">
+                    <button class="cancelDisabled" disabled>Annuler</button>
+                </div>
+
+            {% else %}
+                <div class="col-lg-2">
+                    <a id="cancelLink" href="{{ path('sortie_cancel', {sortie_id: sortie.id}) }}">
+                        <button class="cancel" id="cancel">Annuler</button>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
     <div class="sortie">
         <div class="pad"></div>
         <div class="row align-items-center">
@@ -14,33 +39,33 @@
                 {% endif %}
             </div>
             <div class="col-lg-8">
-                <div class="row pad odd left">
+                <div class="row align-items-center pad odd left">
                     <div class="col-lg-4"><strong>Nom de la sortie:</strong></div>
                     <div class="col-lg-4">{{ sortie.nom }}</div>
                     <div class="col-lg-2"><strong>Ville organisatrice:</strong></div>
                     <div class="col-lg-2">{{ sortie.site.nom }}</div>
                 </div>
-                <div class="row pad even left">
+                <div class="row align-items-center pad even left">
                     <div class="col-lg-4"><strong>Date et heure de la
                             sortie:</strong></div>
                     <div class="col-lg-4">{{ sortie.dateDebut|date("\\l\\e d/m/Y \\à H:i") }}</div>
                     <div class="col-lg-2"><strong>Lieu:</strong></div>
                     <div class="col-lg-2">{{ sortie.lieu.nom }}</div>
                 </div>
-                <div class="row pad odd left">
+                <div class="row align-items-center pad odd left">
                     <div class="col-lg-4"><strong>Date limite
                             d'inscription:</strong></div>
                     <div class="col-lg-4">{{ sortie.dateCloture|date("\\l\\e d/m/Y \\à H:i") }}</div>
                     <div class="col-lg-2"><strong>Rue:</strong></div>
                     <div class="col-lg-2">{{ sortie.lieu.rue }}</div>
                 </div>
-                <div class="row pad even left">
+                <div class="row align-items-center pad even left">
                     <div class="col-lg-4"><strong>Nombre de places:</strong></div>
                     <div class="col-lg-4">{{ nbPlaces }}</div>
                     <div class="col-lg-2"><strong>Code Postal:</strong></div>
                     <div class="col-lg-2">{{ sortie.lieu.ville.codePostal }}</div>
                 </div>
-                <div class="row pad odd left">
+                <div class="row align-items-center pad odd left">
                     <div class="col-lg-4"><strong>Durée:</strong></div>
                     <div class="col-lg-4">{{ sortie.duree }} minutes</div>
                     {% if sortie.lieu.latitude %}
@@ -48,7 +73,7 @@
                         <div class="col-lg-2">{{ sortie.lieu.latitude }}</div>
                     {% endif %}
                 </div>
-                <div class="row pad even left">
+                <div class="row align-items-center pad even left">
                     <div class="col-lg-4"><strong>Description et infos:</strong></div>
                     <div class="col-lg-4">{{ sortie.description }}</div>
                     {% if sortie.lieu.longitude %}
@@ -70,13 +95,17 @@
         </div>
         {% for insc in sortie.inscriptions %}
             {% if loop.index is even %}
-            <div class="row">
-                <div class="col-lg-4 offset-lg-4 even left"><a href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a></div>
-                <div class="col-lg-2 even right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
-            </div>
+                <div class="row align-items-center gap">
+                    <div class="col-lg-4 offset-lg-4 even left"><a
+                                href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a>
+                    </div>
+                    <div class="col-lg-2 even right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
+                </div>
             {% else %}
-                <div class="row">
-                    <div class="col-lg-4 offset-lg-4 odd left"><a href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a></div>
+                <div class="row align-items-center gap">
+                    <div class="col-lg-4 offset-lg-4 odd left"><a
+                                href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a>
+                    </div>
                     <div class="col-lg-2 odd right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
                 </div>
             {% endif %}
@@ -86,29 +115,58 @@
 
 {% block style %}
     <style type="text/css">
-        body{
-            background: linear-gradient(to bottom, #4e5382, #d6f3ff);
+        body {
+            background: linear-gradient(to bottom, rgba(135, 197, 231, 0.56), rgba(214, 243, 255, 0.5));
         }
+
         .photo {
             width: 30vw;
             border-radius: 1vw;
         }
-        .pad{
+
+        .pad {
             margin-bottom: 5vh;
         }
-        .even{
-            background: linear-gradient(to bottom, rgba(114, 59, 255, 0.5), #ffffff);
+
+        .paddup {
+            margin-top: 5vh;
         }
-        .odd{
-            background: linear-gradient(to bottom, rgba(51, 91, 255, 0.5), #ffffff);
+
+        .logo {
+            width: 5vw;
         }
-        .left{
-            border-bottom-left-radius: 1vw;
-            border-top-left-radius: 1vw;
+
+        .cancel {
+            border: 1px solid black;
+            border-radius: 1vw;
+            background-color: #ff7070;
         }
-        .right{
-            border-top-right-radius: 1vw;
-            border-bottom-right-radius: 1vw;
+        .cancelDisabled{
+            border: 1px solid black;
+            border-radius: 1vw;
+            background-color: #afafaf;
+        }
+        .even {
+            min-height: 5vh;
+            background-color: rgb(183, 225, 238);
+        }
+
+        .odd {
+            min-height: 5vh;
+            background-color: rgb(123, 170, 224);
+        }
+
+        .left {
+            border-top-left-radius: 0.5vw;
+        }
+
+        .right {
+            border-bottom-right-radius: 0.5vw;
+        }
+
+        .gap {
+            margin-bottom: 0.5vh;
         }
     </style>
 {% endblock %}
+

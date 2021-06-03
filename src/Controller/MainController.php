@@ -40,6 +40,9 @@ class MainController extends AbstractController
         $filterForm->handleRequest($request);
         if($filterForm->isSubmitted() && $filterForm->isValid()){
             $allSorties = $sortieRepository->findByFilter($filter, $user);
+            if(empty($allSorties)){
+                $this->addFlash('notice', "Aucun résultat pour votre recherche.");
+            }
         }
         return $this->render('main/accueil.html.twig', [
             'filterForm' => $filterForm->createView(),

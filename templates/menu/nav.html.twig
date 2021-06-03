@@ -7,7 +7,7 @@
                 <li><a class="navLink" href="{{ path('app_register') }}" title="register">Enregistrer un utilisateur</a>
                 </li>
             {% endif %}
-            <li><a class="navLink" href="{{ path('profil_edit', {'id' : app.user.id}) }}" title="Mon Profil">Mon Profil
+            <li><a class="navLink" href="{{ path('profil_edit', {id: app.user.id}) }}" title="Mon Profil">Mon Profil
                     ({{ app.user.username }})</a></li>
             <li><a class="navLink" href="{{ path('app_logout') }}" title="Deconnexion">Déconnexion</a></li>
         </ul>

@@ -4,38 +4,38 @@
 
 {% block body %}
 
-    <div class="row gap">
+    <div class="row paddup">
         <div class="col-lg-3 offset-lg-6"><strong>{{ participant.pseudo }}</strong></div>
     </div>
 
     <div class="row align-items-center">
-        <div class="col-lg-4">
+        <div class="col-lg-4 offset-lg-1">
             {% if participant.photo %}
             <img class="userPic" src="{{ asset('img/') ~ participant.photo }}" alt="userPic">
             {% else %}
             <img class="userPic" src="{{ asset('img/user_no_pic.png') }}" alt="userPic">
             {% endif %}
         </div>
-        <div class="col-lg-8">
-            <div class="row gap">
-                <div class="col-lg-6"><strong>Prénom:</strong></div>
-                <div class="col-lg-6">{{ participant.prenom }}</div>
+        <div class="col-lg-7">
+            <div class="row align-items-center gap">
+                <div class="col-lg-6 odd left"><strong>Prénom:</strong></div>
+                <div class="col-lg-4 odd right">{{ participant.prenom }}</div>
             </div>
-            <div class="row gap">
-                <div class="col-lg-6"><strong>Nom:</strong></div>
-                <div class="col-lg-6">{{ participant.nom }}</div>
+            <div class="row align-items-center gap">
+                <div class="col-lg-6 even left"><strong>Nom:</strong></div>
+                <div class="col-lg-4 even right">{{ participant.nom }}</div>
             </div>
-            <div class="row gap">
-                <div class="col-lg-6"><strong>Téléphone:</strong></div>
-                <div class="col-lg-6">{{ participant.telephone }}</div>
+            <div class="row align-items-center gap">
+                <div class="col-lg-6 odd left"><strong>Téléphone:</strong></div>
+                <div class="col-lg-4 odd right">{{ participant.telephone }}</div>
             </div>
-            <div class="row gap">
-                <div class="col-lg-6"><strong>E-mail</strong></div>
-                <div class="col-lg-6">{{ participant.mail }}</div>
+            <div class="row align-items-center gap">
+                <div class="col-lg-6 even left"><strong>E-mail</strong></div>
+                <div class="col-lg-4 even right">{{ participant.mail }}</div>
             </div>
-            <div class="row gap">
-                <div class="col-lg-6"><strong>Ville de rattachement:</strong></div>
-                <div class="col-lg-6">{{ participant.site.nom }}</div>
+            <div class="row align-items-center gap">
+                <div class="col-lg-6 odd left"><strong>Ville de rattachement:</strong></div>
+                <div class="col-lg-4 odd right">{{ participant.site.nom }}</div>
             </div>
         </div>
     </div>
@@ -49,15 +49,41 @@
 
 {% block style %}
     <style type="text/css">
+        body{
+            height: 100vh;
+            background: linear-gradient(to bottom, rgb(164, 214, 234), #ffffff);
+        }
         .userPic{
             width: 20vw;
+            border-radius: 1vw;
+        }
+        .paddup{
+            margin-top: 5vh;
         }
         .gap{
-            margin-bottom: 5vh;
+            margin-bottom: 1vh;
         }
         .back{
             border: 1px solid black;
             border-radius: 1vw;
+            background-color: rgb(168, 209, 253);
+        }
+        .back:hover{
+            background-color: rgb(77, 255, 181)
+        }
+        .odd{
+            height: 5vh;
+            background-color: rgb(130, 175, 222);
+        }
+        .even{
+            height: 5vh;
+            background-color: rgb(168, 209, 253);
+        }
+        .left{
+           border-top-left-radius: 1vw;
+        }
+        .right{
+            border-bottom-right-radius: 1vw;
         }
     </style>
 {% endblock %}

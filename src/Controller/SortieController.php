@@ -10,6 +10,7 @@ use App\Entity\Ville;
 use App\Form\LieuFormType;
 use App\Form\SortieFormType;
 use App\Form\VilleFormType;
+use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/sortie/detail/{sortie_id}", name="sortie_detail")
+     * @Route("/sortie/detail/{sortie_id}", name="sortie_detail", requirements={"sortie_id"="\d+"})
      */
     public function detail(SortieRepository $sortieRepository, $sortie_id): Response
     {
@@ -41,6 +42,20 @@ class SortieController extends AbstractController
             'participant' => $user,
             'sortie' => $sortie
         ]);
+    }
+
+    /** @Route("/sortie/cancel/{sortie_id}", name="sortie_cancel", requirements={"sortie_id"="\d+"}) */
+    public function cancel(EntityManagerInterface $entityManager,EtatRepository $etatRepository, SortieRepository $sortieRepository, $sortie_id){
+        $sortie = $sortieRepository->find($sortie_id);
+        $cancelled = $etatRepository->findOneBy(['libelle' => 'Annulée']);
+        foreach ($sortie->getInscriptions() as $item){
+            $entityManager->remove($item);
+        }
+        $entityManager->flush();
+        $sortie->setEtat($cancelled);
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+        return $this->redirectToRoute('main_accueil');
     }
 
     /**
@@ -106,14 +121,14 @@ class SortieController extends AbstractController
 
         $lieuForm = $this->createForm(LieuFormType::class, $lieu);
         $lieuForm->handleRequest($request);
-        
+
         if($lieuForm->isSubmitted() && $lieuForm->isValid()){
 
-                $entityManager->persist($lieu);
-                $entityManager->flush();
+            $entityManager->persist($lieu);
+            $entityManager->flush();
 
-                $this->addFlash('success', 'Lieu ajouté !');
-                return $this->redirectToRoute('sortie_add');
+            $this->addFlash('success', 'Lieu ajouté !');
+            return $this->redirectToRoute('sortie_add');
 
         }
 
