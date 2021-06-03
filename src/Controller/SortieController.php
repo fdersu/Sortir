@@ -90,33 +90,31 @@ class SortieController extends AbstractController
         $sortie->setOrganisateur($entityManager->getRepository(User::class)->findOneBy(['pseudo' => $this->getUser()->getUsername()]));
 
         //Methode pour récupérer le site en fonction de l'organisateur
-
+        $sortie->setSite($user->getSite());
 
         $sortieForm->handleRequest($request);
         $lieuForm->handleRequest($request);
 
 
+
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
-            if($lieuForm->isValid()){
+            if($sortie->getLieu() !== null){
 
                 $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
-                $entityManager->persist($lieu);
+
                 $entityManager->persist($sortie);
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Sortie ajoutée !');
-                return $this->redirectToRoute('sortie_detail', ['id' => $sortie->getId()]);
 
+                return $this->redirectToRoute('sortie_detail', ['sortie_id' => $sortie->getId()]);
             }
-
         }
-
 
         return $this->render('sortie/add.html.twig', [
             'sortieForm' => $sortieForm->createView(),
             'lieuForm' => $lieuForm->createView(),
-            //'villeForm' => $villeForm->createView()
         ]);
 
     }
