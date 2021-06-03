@@ -63,7 +63,6 @@ class SortieController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
-
         $sortie = new Sortie();
         $lieu = new Lieu();
         //$ville = new Ville();
