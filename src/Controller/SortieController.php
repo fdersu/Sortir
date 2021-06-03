@@ -10,6 +10,7 @@ use App\Entity\Ville;
 use App\Form\LieuFormType;
 use App\Form\SortieFormType;
 use App\Form\VilleFormType;
+use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,17 +44,17 @@ class SortieController extends AbstractController
         ]);
     }
 
-    /** @Route("/sortie/delete/{sortie_id}", name="sortie_delete", requirements={"sortie_id"="\d+"}) */
-    public function delete(EntityManagerInterface $entityManager, SortieRepository $sortieRepository, $sortie_id){
+    /** @Route("/sortie/cancel/{sortie_id}", name="sortie_cancel", requirements={"sortie_id"="\d+"}) */
+    public function cancel(EntityManagerInterface $entityManager,EtatRepository $etatRepository, SortieRepository $sortieRepository, $sortie_id){
         $sortie = $sortieRepository->find($sortie_id);
-        if(!empty($sortie)) {
-            foreach ($sortie->getInscriptions() as $item) {
-                $entityManager->remove($item);
-            }
-            $entityManager->flush();
-            $entityManager->remove($sortie);
-            $entityManager->flush();
+        $cancelled = $etatRepository->findOneBy(['libelle' => 'Annulée']);
+        foreach ($sortie->getInscriptions() as $item){
+            $entityManager->remove($item);
         }
+        $entityManager->flush();
+        $sortie->setEtat($cancelled);
+        $entityManager->persist($sortie);
+        $entityManager->flush();
         return $this->redirectToRoute('main_accueil');
     }
 
