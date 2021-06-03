@@ -7,6 +7,7 @@ use App\Form\FilterType;
 use App\Form\Model\Filter;
 use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +24,7 @@ class MainController extends AbstractController
      */
     public function home(): Response
     {
-        return $this -> redirectToRoute("app_login");
+        return $this->redirectToRoute("app_login");
     }
 
     /**
@@ -38,9 +39,9 @@ class MainController extends AbstractController
         $filter = new Filter();
         $filterForm = $this->createForm(FilterType::class, $filter);
         $filterForm->handleRequest($request);
-        if($filterForm->isSubmitted() && $filterForm->isValid()){
+        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             $allSorties = $sortieRepository->findByFilter($filter, $user);
-            if(empty($allSorties)){
+            if (empty($allSorties)) {
                 $this->addFlash('notice', "Aucun résultat pour votre recherche.");
             }
         }
@@ -49,5 +50,15 @@ class MainController extends AbstractController
             'sorties' => $allSorties,
             'now' => $now
         ]);
+    }
+
+    /** @Route("/accueil/ajax/motif", name="main_ajax_motif") */
+    public function ajaxMotif(Request $request, SortieRepository $sortieRepository)
+    {
+        if ($request->isMethod('POST')) {
+            $data = json_decode($request->getContent());
+            $sortie = $sortieRepository->find($data->sortie_id);
+            return new JsonResponse(['motif' => $sortie->getMotifAnnulation()]);
+        }
     }
 }
