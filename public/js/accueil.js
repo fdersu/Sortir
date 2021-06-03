@@ -22,8 +22,10 @@ function displayReason() {
             parent.appendChild(divRow);
         })
         item.addEventListener('mouseleave', function () {
-            let toDelete = document.getElementById('ajax');
-            toDelete.remove();
+            if(document.getElementById('ajax') != null) {
+                let toDelete = document.getElementById('ajax');
+                toDelete.remove();
+            }
         })
     }
 }
