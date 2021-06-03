@@ -21,7 +21,7 @@ function displayReason() {
             divRow.appendChild(divCol);
             parent.appendChild(divRow);
         })
-        item.addEventListener('mouseleave', function () {
+        item.addEventListener('mouseenter', function () {
             if(document.getElementById('ajax') != null) {
                 let toDelete = document.getElementById('ajax');
                 toDelete.remove();
