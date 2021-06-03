@@ -81,7 +81,6 @@ class SortieFormType extends AbstractType
                     $formModifier($event->getForm()->getParent(), $ville);
                 }
             );
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
