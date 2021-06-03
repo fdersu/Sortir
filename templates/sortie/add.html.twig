@@ -6,14 +6,16 @@
 
     <h1>Proposer une sortie</h1>
 
+<div class="form">
     {{ form_start(sortieForm) }}
 
     {{ form_widget(sortieForm) }}
 
-    <a href="{{ path('sortie_lieu') }}">Ajouter un lieu</a>
+    <button class="btn"><a href="{{ path('sortie_lieu') }}">Ajouter un lieu</a></button>
 
     <button type="submit" class="btn">Ajouter la sortie</button>
     {{ form_end(sortieForm) }}
+</div>
 
 
 {% endblock %}

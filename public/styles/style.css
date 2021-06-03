@@ -11,6 +11,7 @@ header h1 {
 */
 body {
     padding: 1rem;
+    width: 98vw;
 }
 /*
 input {
@@ -24,54 +25,50 @@ input {
 }
 
 */
-#sortie_form div {
+
+.flex-block {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: start;
+    margin: 1em;
+
+}
+
+.half-block {
+    display: table-column;
+    width: 48%;
+}
+
+.form div {
     display: flex;
     flex-direction: column;
     ms-flex-direction: row;
-    width: 70%;
-    margin-bottom: 1em;
-    margin-top: 1em;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
 }
 
-#sortie_form a {
-    display: flex;
+button a {
+    display: inline;
     flex-direction: column;
     width: 70%;
-    margin-bottom: 1em;
-    margin-top: 1em;
+    margin: 0.5em;
     text-decoration: none;
+    color: black;
 }
 
-#registration_form div {
-    display: flex;
-    flex-direction: column;
-    ms-flex-direction: row;
-    width: 70%;
-    margin-bottom: 1em;
-    margin-top: 1em;
-}
 
-#user  div {
-    display: flex;
-    flex-direction: column;
-    ms-flex-direction: row;
-    width: 70%;
-    margin-bottom: 1em;
-    margin-top: 1em;
+button {
+    display: block;
+    margin: 0 auto;
+    line-height: 2em;
+    padding: 0 20px;
+    background: teal;
+    letter-spacing: 2px;
+    transition: .2s all ease-in-out;
+    outline: none;
+    border: 1px solid rgba(0,0,0,1);
+    box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
 }
-
-    button {
-        display: block;
-        margin: 0 auto;
-        line-height: 2em;
-        padding: 0 20px;
-        background: teal;
-        letter-spacing: 2px;
-        transition: .2s all ease-in-out;
-        outline: none;
-        border: 1px solid rgba(0,0,0,1);
-        box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
-    }
 
     /*
     footer p {
@@ -161,17 +158,7 @@ input {
     margin: 10%;
     padding: 1em;
 }
-*/
 
-.flex-block {
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    margin: 2em;
-
-}
-
-/*
 .noDecoration{
     text-decoration: none;
     color:black;
