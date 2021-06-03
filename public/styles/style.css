@@ -8,11 +8,11 @@ header h1 {
     font-family: 'Mountains of Christmas', cursive;
     font-size: 3em;
 }
-
+*/
 body {
-    padding-bottom: 3rem;
+    padding: 1rem;
 }
-
+/*
 input {
     display: block;
     width: 40%;
@@ -23,36 +23,66 @@ input {
     border-bottom: 2px solid;
 }
 
-#wish_description {
+*/
+#sortie_form div {
     display: flex;
-    -ms-flex-direction: column;
+    flex-direction: column;
+    ms-flex-direction: row;
     width: 70%;
     margin-bottom: 1em;
     margin-top: 1em;
 }
 
-button {
-    display: block;
-    margin: 0 auto;
-    line-height: 2em;
-    padding: 0 20px;
-    background: teal;
-    letter-spacing: 2px;
-    transition: .2s all ease-in-out;
-    outline: none;
-    border: 1px solid rgba(0,0,0,1);
-    box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
+#sortie_form a {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    text-decoration: none;
 }
 
-footer p {
-    color: #f2f2f2;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 2em;
-    margin-left: 1em;
+#registration_form div {
+    display: flex;
+    flex-direction: column;
+    ms-flex-direction: row;
+    width: 70%;
+    margin-bottom: 1em;
+    margin-top: 1em;
 }
 
- */
+#user  div {
+    display: flex;
+    flex-direction: column;
+    ms-flex-direction: row;
+    width: 70%;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+    button {
+        display: block;
+        margin: 0 auto;
+        line-height: 2em;
+        padding: 0 20px;
+        background: teal;
+        letter-spacing: 2px;
+        transition: .2s all ease-in-out;
+        outline: none;
+        border: 1px solid rgba(0,0,0,1);
+        box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
+    }
+
+    /*
+    footer p {
+        color: #f2f2f2;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 2em;
+        margin-left: 1em;
+    }
+
+     */
 
 .ulNav {
     list-style-type: none;

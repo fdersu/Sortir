@@ -22,6 +22,7 @@ class FilterType extends AbstractType
         $builder
             ->add('site', EntityType::class, [
                 'class' => Site::class,
+                'placeholder' => 'Choisissez un site',
                 'choice_label' => 'nom',
                 'expanded' => false,
                 'multiple' => false,
