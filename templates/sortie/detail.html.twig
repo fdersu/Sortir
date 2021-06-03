@@ -40,7 +40,7 @@
                 </div>
             </div>
         {% endif %}
-    {% else %}
+    {% elseif sortie.organisateur != app.user and sortie.etat.libelle == 'Annulée' %}
         <div class="row align-items-center pad paddup">
             <div class="col-lg-5 offset-lg-6">
                 <strong>Annulée: {{ sortie.motifAnnulation }}</strong>
