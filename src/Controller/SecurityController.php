@@ -24,8 +24,9 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+        $messageError = "Les données saisies sont incorrectes, veuillez réessayer !";
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('security/login.html.twig', ['messageError'=>$messageError, 'last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**

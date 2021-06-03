@@ -9,7 +9,7 @@ security:
     app_user_provider:
       entity:
         class: App\Entity\User
-        property: pseudo
+        property: username
   firewalls:
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
