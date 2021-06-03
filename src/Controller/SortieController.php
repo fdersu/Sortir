@@ -51,20 +51,23 @@ class SortieController extends AbstractController
 
         $sortie = new Sortie();
         $lieu = new Lieu();
-        //$ville = new Ville();
 
-        $sortieForm = $this->createForm(SortieFormType::class, $sortie);
+        /** @var User $user */
+        $user = $this->getUser();
+        $siteUser = $user->getSite()->getNom();
+
+        $sortieForm = $this->createForm(SortieFormType::class, $sortie, ['site'=>$siteUser]);
         $lieuForm = $this->createForm(LieuFormType::class, $lieu);
-        //$villeForm = $this->createForm(LieuFormType::class, $ville);
 
 
         //Methode pour setter Organisateur direct dans le controlleur :
         $sortie->setOrganisateur($entityManager->getRepository(User::class)->findOneBy(['pseudo' => $this->getUser()->getUsername()]));
 
+        //Methode pour récupérer le site en fonction de l'organisateur
+
 
         $sortieForm->handleRequest($request);
         $lieuForm->handleRequest($request);
-        //$villeForm->handleRequest($request);
 
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
@@ -72,7 +75,6 @@ class SortieController extends AbstractController
             if($lieuForm->isValid()){
 
                 $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
-                //$entityManager->persist($ville);
                 $entityManager->persist($lieu);
                 $entityManager->persist($sortie);
                 $entityManager->flush();

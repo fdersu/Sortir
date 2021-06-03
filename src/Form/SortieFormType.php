@@ -3,12 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Lieu;
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -44,16 +44,27 @@ class SortieFormType extends AbstractType
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text'
             ])
+            ->add('site', EntityType::class, [
+                'class' => Site::class,
+                'placeholder' => $options['site'],
+                'choice_label' => 'nom'
+            ])
             ->add('ville', EntityType::class, [
                 'class' => Ville::class,
                 'mapped' => false,
                 'placeholder' => 'Choisissez une ville',
                 'choice_label' => 'nom'
-            ]);
+            ])
+
+            ->add('lieu', EntityType::class, [
+                'class' => Lieu::class,
+                'placeholder' => 'Choisissez un lieu',
+                'choice_label' => 'nom'
+             ]);
+
 
             $formModifier = function (FormInterface $form, Ville $ville = null) {
                 $lieux = null === $ville ? [] : $this->entityManager->getRepository(Lieu::class)->findBy(['ville' => $ville]);
-
                 $form->add('lieu', EntityType::class, [
                     'class' => Lieu::class,
                     'placeholder' => 'Choisissez un lieu',
@@ -62,15 +73,17 @@ class SortieFormType extends AbstractType
             };
 
             $builder->addEventListener(
-                FormEvents::PRE_SET_DATA,
+                FormEvents::PRE_SUBMIT,
                 function ($event) use ($formModifier){
                     $form = $event->getForm(); // The FormBuilder
                     $sortie = $event->getData(); // The Form Object (unused here)
                     $ville = $form->get('ville')->getData();
+                    dd($ville);
 
                     $formModifier($form, $ville);
 
             });
+
 
             $builder->get('ville')->addEventListener(
                 FormEvents::POST_SUBMIT,
@@ -88,8 +101,7 @@ class SortieFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Sortie::class,
-            'compound' => true,
-            'inherit_data' => true,
         ]);
+        $resolver->setRequired('site');
     }
 }
