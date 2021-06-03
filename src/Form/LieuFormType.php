@@ -19,9 +19,11 @@ class LieuFormType extends AbstractType
             ->add('rue')
             ->add('latitude')
             ->add('longitude')
-            ->add('ville', EntityType::class, [
-                'class' => Ville::class,
-                'choice_label' => 'nom'
+            ->add('ville', CollectionType::class, [
+                'label' => 'ville',
+                'entry_type' => VilleFormType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
             ])
         ;
     }

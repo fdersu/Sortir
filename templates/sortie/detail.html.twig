@@ -2,21 +2,44 @@
 
 {% block title %}Détail Sortie{% endblock %}
 
-{% block javascripts %}
-    <script src="{{ asset('js/detailSortie.js') }}"></script>
-{% endblock %}
-
 {% block body %}
 
     {% if sortie.organisateur == app.user %}
-        <div class="row align-items-center paddup">
+        <div class="row align-items-center pad paddup">
             <div class="col-lg-2 offset-lg-6">
                 <img class="logo" src="{{ asset('img/logo_organisateur.png') }}" alt="organisateur">
             </div>
-            <div class="col-lg-2">
-                <a id="deleteLink" href="{{ path('sortie_delete', {sortie_id: sortie.id}) }}"><button class="delete" id="delete">Supprimer</button></a>
-            </div>
+            {% if sortie.etat.libelle != 'Annulée' %}
+                <div class="col-lg-2">
+                    <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">
+                        <button class="cancel" id="cancel">Annuler</button>
+                    </a>
+                </div>
+            {% else %}
+                <div class="col-lg-3">
+                    <strong>Annulée: {{ sortie.motifAnnulation }}</strong>
+                </div>
+            {% endif %}
         </div>
+        {% if cancelForm is defined %}
+            <div class="row pad">
+                <div class="col-lg-2 offset-lg-6">
+                    <strong>Motif</strong>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-3 offset-lg-5">
+                    {{ form_start(cancelForm) }}
+                    {{ form_widget(cancelForm.motifAnnulation, {'attr': {'class': 'field'}}) }}
+                </div>
+                <div class="col-lg-2">
+                    <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">
+                        <button class="valider">Valider</button>
+                    </a>
+                    {{ form_end(cancelForm) }}
+                </div>
+            </div>
+        {% endif %}
     {% endif %}
 
     <div class="sortie">
@@ -86,13 +109,17 @@
         </div>
         {% for insc in sortie.inscriptions %}
             {% if loop.index is even %}
-            <div class="row align-items-center gap">
-                <div class="col-lg-4 offset-lg-4 even left"><a href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a></div>
-                <div class="col-lg-2 even right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
-            </div>
+                <div class="row align-items-center gap">
+                    <div class="col-lg-4 offset-lg-4 even left"><a
+                                href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a>
+                    </div>
+                    <div class="col-lg-2 even right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
+                </div>
             {% else %}
                 <div class="row align-items-center gap">
-                    <div class="col-lg-4 offset-lg-4 odd left"><a href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a></div>
+                    <div class="col-lg-4 offset-lg-4 odd left"><a
+                                href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a>
+                    </div>
                     <div class="col-lg-2 odd right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
                 </div>
             {% endif %}
@@ -102,43 +129,65 @@
 
 {% block style %}
     <style type="text/css">
-        body{
+        body {
             background: linear-gradient(to bottom, rgba(135, 197, 231, 0.56), rgba(214, 243, 255, 0.5));
         }
+
         .photo {
             width: 30vw;
             border-radius: 1vw;
         }
-        .pad{
+
+        .pad {
             margin-bottom: 5vh;
         }
-        .paddup{
+
+        .paddup {
             margin-top: 5vh;
         }
-        .logo{
+
+        .logo {
             width: 5vw;
         }
-        .delete{
+
+        .cancel {
             border: 1px solid black;
             border-radius: 1vw;
             background-color: #ff7070;
         }
-        .even{
+
+        .even {
             min-height: 5vh;
             background-color: rgb(183, 225, 238);
         }
-        .odd{
+
+        .odd {
             min-height: 5vh;
             background-color: rgb(123, 170, 224);
         }
-        .left{
+
+        .left {
             border-top-left-radius: 0.5vw;
         }
-        .right{
+
+        .right {
             border-bottom-right-radius: 0.5vw;
         }
-        .gap{
+
+        .gap {
             margin-bottom: 0.5vh;
+        }
+
+        .field {
+            width: 100%;
+            border-radius: 0.3vw;
+            background: transparent;
+        }
+
+        .valider {
+            border: 1px solid black;
+            border-radius: 1vw;
+            background-color: #ff7070;
         }
     </style>
 {% endblock %}

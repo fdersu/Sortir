@@ -40,8 +40,8 @@
                     <div>
                         <ul class="ville">
                             {% for item in lieuForm.ville %}
-                                <li>
                                     {{ form_errors(item) }}
+                                <li>
                                     {{ form_widget(item) }}
                                 </li>
                             {% endfor %}
@@ -58,3 +58,5 @@
     </div>
 
 {% endblock %}
+
+

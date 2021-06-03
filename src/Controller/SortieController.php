@@ -8,8 +8,10 @@ use App\Entity\Sortie;
 use App\Entity\User;
 use App\Entity\Ville;
 use App\Form\LieuFormType;
+use App\Form\MotifAnnulationType;
 use App\Form\SortieFormType;
 use App\Form\VilleFormType;
+use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,18 +45,29 @@ class SortieController extends AbstractController
         ]);
     }
 
-    /** @Route("/sortie/delete/{sortie_id}", name="sortie_delete", requirements={"sortie_id"="\d+"}) */
-    public function delete(EntityManagerInterface $entityManager, SortieRepository $sortieRepository, $sortie_id){
+    /** @Route("/sortie/cancel/reason/{sortie_id}", name="sortie_cancelReason", requirements={"sortie_id"="\d+"}) */
+    public function defineCancelReason(EntityManagerInterface $entityManager,EtatRepository $etatRepository, SortieRepository $sortieRepository,Request $request, $sortie_id){
         $sortie = $sortieRepository->find($sortie_id);
-        if(!empty($sortie)) {
-            foreach ($sortie->getInscriptions() as $item) {
+        $nbPlaces = $sortie->getNbInscriptionsMax() - $sortie->getInscriptions()->count();
+        $cancelForm = $this->createForm(MotifAnnulationType::class, $sortie);
+        $cancelForm->handleRequest($request);
+        if($cancelForm->isSubmitted() && $cancelForm->isValid()){
+            $cancelled = $etatRepository->findOneBy(['libelle' => 'Annulée']);
+            foreach ($sortie->getInscriptions() as $item){
                 $entityManager->remove($item);
             }
             $entityManager->flush();
-            $entityManager->remove($sortie);
+            $sortie->setEtat($cancelled);
+            $entityManager->persist($sortie);
             $entityManager->flush();
+            return $this->redirectToRoute('main_accueil');
         }
-        return $this->redirectToRoute('main_accueil');
+        return $this->render('sortie/detail.html.twig', [
+            'cancelForm' => $cancelForm->createView(),
+            'sortie' => $sortie,
+            'nbPlaces' => $nbPlaces
+        ]);
+
     }
 
     /**
@@ -62,47 +75,46 @@ class SortieController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
-
         $sortie = new Sortie();
         $lieu = new Lieu();
-        //$ville = new Ville();
 
-        $sortieForm = $this->createForm(SortieFormType::class, $sortie);
+        /** @var User $user */
+        $user = $this->getUser();
+        $siteUser = $user->getSite()->getNom();
+
+        $sortieForm = $this->createForm(SortieFormType::class, $sortie, ['site'=>$siteUser]);
         $lieuForm = $this->createForm(LieuFormType::class, $lieu);
-        //$villeForm = $this->createForm(LieuFormType::class, $ville);
 
 
         //Methode pour setter Organisateur direct dans le controlleur :
         $sortie->setOrganisateur($entityManager->getRepository(User::class)->findOneBy(['pseudo' => $this->getUser()->getUsername()]));
 
+        //Methode pour récupérer le site en fonction de l'organisateur
+        $sortie->setSite($user->getSite());
 
         $sortieForm->handleRequest($request);
         $lieuForm->handleRequest($request);
-        //$villeForm->handleRequest($request);
+
 
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
-            if($lieuForm->isValid()){
+            if($sortie->getLieu() !== null){
 
                 $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
-                //$entityManager->persist($ville);
-                $entityManager->persist($lieu);
+
                 $entityManager->persist($sortie);
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Sortie ajoutée !');
-                return $this->redirectToRoute('sortie_detail', ['id' => $sortie->getId()]);
 
+                return $this->redirectToRoute('sortie_detail', ['sortie_id' => $sortie->getId()]);
             }
-
         }
-
 
         return $this->render('sortie/add.html.twig', [
             'sortieForm' => $sortieForm->createView(),
             'lieuForm' => $lieuForm->createView(),
-            //'villeForm' => $villeForm->createView()
         ]);
 
     }
