@@ -61,7 +61,7 @@
                                                                                                    alt="photo"></a>
                             {% endif %}
                         </div>
-                        <div class="col-lg-10" id="parent">
+                        <div class="col-lg-10">
                             <div class="row">
                                 <div class="col-lg-3"><strong>Nom</strong></div>
                                 <div class="col-lg-1"><strong>Date</strong></div>
@@ -78,7 +78,7 @@
                                 <div class="col-lg-1"><span>{{ sortie.dateCloture|date('d/m/Y') }}</span></div>
                                 <div class="col-lg-2">
                                     <span>{{ sortie.inscriptions|length }}/{{ sortie.nbInscriptionsMax }}</span></div>
-                                <div class="col-lg-1"><span id="etat">{{ sortie.etat.libelle }}</span></div>
+                                <div class="col-lg-1"><span class="etat">{{ sortie.etat.libelle }}</span></div>
                                 <input type="hidden" value="{{ sortie.id }}" id="sortie_id">
                                 <div class="col-lg-1">
                                     {% set bool = false %}
@@ -185,7 +185,7 @@
             width: 2vw;
         }
 
-        #etat:hover {
+        .etat:hover {
             cursor: pointer;
         }
     </style>

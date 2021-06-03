@@ -40,6 +40,12 @@
                 </div>
             </div>
         {% endif %}
+    {% else %}
+        <div class="row align-items-center pad paddup">
+            <div class="col-lg-5 offset-lg-6">
+                <strong>Annulée: {{ sortie.motifAnnulation }}</strong>
+            </div>
+        </div>
     {% endif %}
 
     <div class="sortie">
