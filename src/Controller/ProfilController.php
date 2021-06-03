@@ -24,45 +24,48 @@ class ProfilController extends AbstractController
                          EntityManagerInterface $entityManager,
                          UserPasswordEncoderInterface $passwordEncoder): Response
     {
+
+        $error= "";
         $userInSession = $userRepository->findOneBy(["pseudo" => $this->getUser()->getUsername()]);
         $user = $userRepository->find($id);
 
 
-        if (!$user) {
-            throw $this->createNotFoundException("Oops ! This user does not exist ! ");
-        }
+            if (!$user) {
+                throw $this->createNotFoundException("Oops ! This user does not exist ! ");
+            }
 
-        if ($userInSession !== $user) {
-            throw $this->createNotFoundException("Oops ! You can't edit another profil than your's ! ");
-        }
-
-        $user = $userRepository->find($id);
+            if ($userInSession !== $user) {
+                throw $this->createNotFoundException("Oops ! You can't edit another profil than your's ! ");
+            }
 
 
-        if (!$user) {
-            throw $this->createNotFoundException("Oops ! This user does not exist ! ");
-        }
+            if (!$user) {
+                throw $this->createNotFoundException("Oops ! This user does not exist ! ");
+            }
 
+            $userForm = $this->createForm(UserType::class, $user);
+            $userForm->handleRequest($request);
 
-        $userForm = $this->createForm(UserType::class, $user);
+            try {
+                if ($userForm->isSubmitted() && $userForm->isValid()) {
+                    // encode the plain password
+                    $user->setPassword(
+                        $passwordEncoder->encodePassword(
+                            $user,
+                            $userForm->get('password')->getData()
+                        ));
 
-        $userForm->handleRequest($request);
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Profil modified !!');
+                }
+            } catch (\Exception $e) {
+                error_log($e->getMessage());
+                return $this->render('security/login.html.twig', ['error'=>$error, 'id' => $user->getId()]);
 
-        if ($userForm->isSubmitted() && $userForm->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $userForm->get('password')->getData()
-                ));
+            }
 
-            $entityManager->persist($user);
-            $entityManager->flush();
-        }
-
-        $this->addFlash('success', 'Profil modified !!');
-
-        return $this->render('profil/profil.html.twig', ['userForm' => $userForm->createView(), 'id' => $user->getId()]);
+        return $this->render('profil/profil.html.twig', ['error'=>$error,'userForm' => $userForm->createView(), 'id' => $user->getId()]);
     }
 
 
