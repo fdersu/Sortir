@@ -13,6 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -40,13 +41,12 @@ class SortieFormType extends AbstractType
                 'date_widget' => 'single_text',
                 'time_widget' => 'single_text'
             ])
-            ->add('duree', NumberType::class)
+            ->add('duree')
             ->add('description', TextareaType::class)
             ->add('nbInscriptionsMax')
-            ->add('dateCloture', DateTimeType::class, [
+            ->add('dateCloture', DateType::class, [
                 'html5' => true,
-                'date_widget' => 'single_text',
-                'time_widget' => 'single_text'
+                'widget' => 'single_text',
             ])
             ->add('site', TextType::class, [
                 'data' => $options['site'],

@@ -7,7 +7,7 @@
     <h1>Gérer les lieux</h1>
 
     <div class="flex-block">
-            <div class="col-lg-9">
+        <div class="half-block">
                 <div class="row">
                     <div class="col-lg-3"><strong>Nom</strong></div>
                     <div class="col-lg-3"><strong>Rue</strong></div>
@@ -26,17 +26,15 @@
                 {% endfor %}
             </div>
 
-            <div class="col-lg-6">
+        <div class="half-block">
                 <h3>Ajouter un lieu</h3>
                     {{ form_start(lieuForm) }}
                         <div class="my-custom-class-for-errors">
                             {{ form_errors(lieuForm) }}
                         </div>
-                <div class="row">
+                <div class="form">
                     <div>{{ form_row(lieuForm.nom) }}</div>
                     <div>{{ form_row(lieuForm.rue) }}</div>
-                    <div>{{ form_row(lieuForm.latitude) }}</div>
-                    <div>{{ form_row(lieuForm.longitude) }}</div>
                     <div>
                         <ul class="ville">
                             {% for item in lieuForm.ville %}
@@ -46,8 +44,10 @@
                                 </li>
                             {% endfor %}
                         </ul>
+                        <div>{{ form_row(lieuForm.latitude) }}</div>
+                        <div>{{ form_row(lieuForm.longitude) }}</div>
                         <br>
-                        <a href="{{ path('sortie_ville') }}">Gérer les villes</a>
+                        <button class="btn"><a href="{{ path('sortie_ville') }}">Gérer les villes</a></button>
                     </div>
                     <br>
                 <button type="submit" class="btn">Ajouter le lieu</button>
