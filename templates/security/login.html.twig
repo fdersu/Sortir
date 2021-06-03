@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Sortir.com{% endblock %}
 
 {% block body %}
     <form method="post">
@@ -32,7 +32,9 @@
 
         <label class="m-2 offset-5">
             <input class="checkbox" type="checkbox" name="_remember_me"> Se souvenir de moi <br>
-            <a class="m-2 mt-1 offset-5" href="">Mot de passe oublié</a>
+
+                <a href="{{ path('app_forgot_password_request') }}">Forgotten password ?</a>
+
         </label>
 
     </form>

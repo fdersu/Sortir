@@ -7,8 +7,10 @@
             <div class="alert alert-danger">{{ error }}</div>
         </center>
     {% endif %}
+    <div></div>
+   <center><h1 class="alert-link"> My profil ! </h1></center>
+    </div>
 
-    <h1 class="offset-4">Mon profil !</h1>
 
     <div class="offset-4">
         <div class="mt-4">
@@ -16,9 +18,9 @@
 
             {{ form_widget(userForm) }}
 
-            <label for="avatar">Ma photo:</label>
+            <label for="profilPicture">Ma photo:</label>
             <input type="file"
-                   id="avatar" name="avatar"
+                   id="profilPicture" name="profilPicture"
                    accept="image/png, image/jpeg">
         </div>
     </div>
