@@ -23,14 +23,12 @@ function displayReason() {
 
 function getMotif(element) {
     let sortie_id = document.getElementById('sortie_id').value;
-    console.log(sortie_id);
     let data = {sortie_id: sortie_id};
     let req = new XMLHttpRequest();
     req.open('POST', location.href + '/ajax/motif');
     req.setRequestHeader("Content-Type", "application/json;charset=utf-8");
     req.onload = function () {
         data = JSON.parse(this.responseText);
-        console.log(data);
         element.innerText = data['motif'];
     }
     req.send(JSON.stringify(data));
