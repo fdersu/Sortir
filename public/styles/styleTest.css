@@ -1,0 +1,294 @@
+::before, ::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: 1rem;
+    width: 98vw;
+}
+
+.container-grille {
+    width: 100%;
+    display: grid;
+    grid-template-columns:1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+.bg-color {
+    color: #f2f2f2;
+    background-color: teal;
+}
+
+header {
+    display: grid;
+    grid-template-columns: 60px 200px 1fr;
+    grid-template-rows: 1fr;
+    align-content: space-around;
+
+}
+
+.menu-toggle,
+.menu-checkbox {
+    display: none;
+}
+
+
+.ulNav {
+    list-style-type: none;
+    display: flex;
+    align-content: space-evenly;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: teal;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    font-size: 1rem;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: turquoise;
+    color: black;
+}
+
+
+/* Add a color to the active/current link */
+.topnav a:active {
+    background-color: #04dbde;
+    color: darkgray;
+}
+
+.currentLink {
+    background-color: #de04da;
+    color: black;
+}
+
+main {
+    margin-bottom: 1em;
+}
+
+/*
+input {
+    display: block;
+    width: 40%;
+    font-size: 1em;
+    line-height: 2em;
+    margin-bottom: 2em;
+    border: none;
+    border-bottom: 2px solid;
+}
+
+*/
+
+.accueil {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-template-rows:  1fr;
+    min-height: 115px;
+    align-content: center;
+}
+
+.block {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    padding: 1em;
+    margin-top: 1em;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: space-evenly;
+}
+
+img .noresize {
+    min-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+}
+
+.half-block {
+    display: table-column;
+    width: 48%;
+}
+
+.form div {
+    display: flex;
+    flex-direction: column;
+    ms-flex-direction: row;
+    margin: 0.5em 2em 0.5em 1em;
+}
+
+button a {
+    display: inline;
+    flex-direction: column;
+    width: 70%;
+    margin: 0.5em;
+    text-decoration: none;
+    color: black;
+}
+
+
+button {
+    display: block;
+    margin: 0 auto;
+    line-height: 2em;
+    padding: 0 20px;
+    background: teal;
+    letter-spacing: 2px;
+    transition: .2s all ease-in-out;
+    outline: none;
+    border: 1px solid rgba(0,0,0,1);
+    box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
+}
+
+
+    /*
+    footer p {
+        color: #f2f2f2;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 2em;
+        margin-left: 1em;
+    }
+
+     */
+
+
+
+/*
+.bodyTitles {
+    font-family: 'Indie Flower', cursive;
+}
+
+.flash {
+    font-size : 1em;
+    font-style: oblique;
+    color: teal;
+}
+
+.wishesList {
+    max-width:1300px;
+    width:80%;
+    height: auto;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    justify-content: center;
+    grid-gap: 10px;
+
+}
+
+.card {
+    width: auto;
+    height: auto;
+    border: 3px solid teal;
+    padding: 0.5em;
+    font-size: 1.2em;
+    font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.middleBlock {
+    display: flex;
+    margin: 10%;
+    padding: 1em;
+}
+
+.noDecoration{
+    text-decoration: none;
+    color:black;
+}
+
+
+
+
+
+.border-color{
+    padding: 1em;
+    border: solid 5px teal;
+    border-radius: 5px;
+}
+
+.button {
+    display: inline-flex;
+    justify-content: space-around;
+    margin: 0 auto;
+    line-height: 2em;
+    padding: 0 20px;
+    background: teal;
+    letter-spacing: 2px;
+    transition: .2s all ease-in-out;
+    outline: none;
+    border: 1px solid rgba(0,0,0,1);
+    box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
+}
+
+.footer{
+    background-color: teal;
+    position: fixed;
+    width: 100vw;
+    height: 3rem;
+    bottom: 0;
+}
+
+
+
+/*
+CSS rules to specify families
+
+font-family: 'Barriecito', cursive;
+font-family: 'Freckle Face', cursive;
+font-family: 'Fredoka One', cursive;
+font-family: 'Indie Flower', cursive;
+font-family: 'Mountains of Christmas', cursive;
+font-family: 'Frijole', cursive;
+font-family: 'PT Sans Narrow', sans-serif;
+*/
+
+@media screen and (max-width: 1000px) {
+
+    .container-grille{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ulNav {
+        display: none;
+    }
+
+    .menu-checkbox {
+        opacity: 0;
+        position: absolute;
+        top: -1000px;
+    }
+
+    .menu-toggle {
+        display: flex;
+        padding: .5em 1em;
+        font-size: 1.5em;
+    }
+
+    .menu-checkbox:focus + .menu-toggle {
+        outline:darkcyan auto 5px;
+    }
+
+    .menu-checkbox:checked ~ .ulNav {
+        display: block;
+    }
+}

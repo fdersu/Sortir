@@ -6,6 +6,7 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -20,31 +21,53 @@ class Sortie
     private $id;
 
     /**
+     * @Assert\NotBlank(message = "Merci d'indiquer un nom pour votre sortie")
      * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
+     * @Assert\GreaterThan("+1 day", message="Vous ne pouvez pas créer de sortie avant demain")
      * @ORM\Column(type="datetime")
      */
     private $dateDebut;
 
     /**
+     * @Assert\Type("integer")
+     * @Assert\Range(
+     *     min="1",
+     *     max="36",
+     *     notInRangeMessage="La durée doit être comprise entre 1h et 36h",
+     * )
      * @ORM\Column(type="integer")
      */
     private $duree;
 
     /**
+     * @Assert\LessThan(propertyPath="dateDebut", message="La date de cloture doit être antérieure à la date de la sortie")
      * @ORM\Column(type="datetime")
      */
     private $dateCloture;
 
     /**
+     * @Assert\Type("integer")
+     * @Assert\Range(
+     *     min="2",
+     *     max="50",
+     *     notInRangeMessage="Le nombre de participants doit être compris entre 2 et 50",
+     * )
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionsMax;
 
     /**
+     *@Assert\NotBlank(message = "Merci de décrire la sortie en quelques mots")
+     *@Assert\Length(
+     *min="30",
+     *max="500",
+     *minMessage="Minimum 30 characters",
+     *maxMessage="Maximum 500 characters"
+     *)
      * @ORM\Column(type="string", length=500, nullable=true)
      */
     private $description;

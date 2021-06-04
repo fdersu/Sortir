@@ -8,52 +8,43 @@
 
     <div class="flex-block">
         <div class="half-block">
-                <div class="row">
-                    <div class="col-lg-3"><strong>Nom</strong></div>
-                    <div class="col-lg-3"><strong>Rue</strong></div>
-                    <div class="col-lg-1"><strong>Latitude</strong></div>
-                    <div class="col-lg-1"><strong>Longitude</strong></div>
-                    <div class="col-lg-1"><strong>Ville</strong></div>
-                </div>
-                {% for lieu in lieux %}
+            <div class="row">
+                <div class="col-lg-3"><strong>Nom</strong></div>
+                <div class="col-lg-3"><strong>Rue</strong></div>
+                <div class="col-lg-1"><strong>Latitude</strong></div>
+                <div class="col-lg-1"><strong>Longitude</strong></div>
+                <div class="col-lg-1"><strong>Ville</strong></div>
+            </div>
+            {% for lieu in lieux %}
                 <div class="row">
                     <div class="col-lg-3"><span>{{ lieu.nom }}</span></div>
                     <div class="col-lg-3"><span>{{ lieu.rue }}</span></div>
                     <div class="col-lg-1"><span>{{ lieu.latitude }}</span></div>
                     <div class="col-lg-1"><span>{{ lieu.longitude }}</span></div>
-                    <div class="col-lg-1"><span>{{ lieu.ville.nom}}</span></div>
+                    <div class="col-lg-1"><span>{{ lieu.ville.nom }}</span></div>
                 </div>
-                {% endfor %}
-            </div>
+            {% endfor %}
+        </div>
 
         <div class="half-block">
-                <h3>Ajouter un lieu</h3>
-                    {{ form_start(lieuForm) }}
-                        <div class="my-custom-class-for-errors">
-                            {{ form_errors(lieuForm) }}
-                        </div>
-                <div class="form">
-                    <div>{{ form_row(lieuForm.nom) }}</div>
-                    <div>{{ form_row(lieuForm.rue) }}</div>
-                    <div>
-                        <ul class="ville">
-                            {% for item in lieuForm.ville %}
-                                    {{ form_errors(item) }}
-                                <li>
-                                    {{ form_widget(item) }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                        <div>{{ form_row(lieuForm.latitude) }}</div>
-                        <div>{{ form_row(lieuForm.longitude) }}</div>
-                        <br>
-                        <button class="btn"><a href="{{ path('sortie_ville') }}">Gérer les villes</a></button>
-                    </div>
-                    <br>
-                <button type="submit" class="btn">Ajouter le lieu</button>
-                {{ form_end(lieuForm) }}
-                </div>
+            <h3>Ajouter un lieu</h3>
+            {{ form_start(lieuForm) }}
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(lieuForm) }}
             </div>
+            <div class="form">
+                <div>{{ form_row(lieuForm.nom) }}</div>
+                <div>{{ form_row(lieuForm.rue) }}</div>
+                <div>{{ form_row(lieuForm.ville) }}</div>
+                <div>{{ form_row(lieuForm.latitude) }}</div>
+                <div>{{ form_row(lieuForm.longitude) }}</div>
+                <br>
+                <button class="btn"><a href="{{ path('sortie_ville') }}">Gérer les villes</a></button>
+                <button type="submit" class="btn">Ajouter le lieu</button>
+                <button class="btn"><a href="{{ path('sortie_add') }}">Retour</a></button>
+                {{ form_end(lieuForm) }}
+            </div>
+        </div>
 
     </div>
 

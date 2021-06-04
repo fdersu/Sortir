@@ -11,6 +11,8 @@
     <h1 class="offset-4">Mon profil !</h1>
 
 <div class="form">
+    <div class="offset-4">
+        <div class="mt-4">
             {{ form_start(userForm) }}
 
             {{ form_widget(userForm) }}
@@ -19,8 +21,9 @@
             <input type="file"
                    id="avatar" name="avatar"
                    accept="image/png, image/jpeg">
+        </div>
     </div>
-
+    <div class="col-12 col-sm-6 col-md-7 offset-4">
         <button class="btn btn-lg btn-primary" type="submit">
             Enregister
         </button>
@@ -28,6 +31,8 @@
         <a class="btn btn-lg btn-danger"
            href="{{ path('main_home') }}">Retourner à
             la page d'accueil</a>
+    </div>
+</div>
 
     {{ form_end(userForm) }}
 
