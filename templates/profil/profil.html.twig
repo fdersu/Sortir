@@ -7,22 +7,23 @@
             <div class="alert alert-danger">{{ error }}</div>
         </center>
     {% endif %}
-    <div></div>
-   <center><h1 class="alert-link"> My profil ! </h1></center>
+    <div>
+        <center><h1 class="alert-link"> My profil ! </h1></center>
     </div>
-
-
-<div class="form">
+    {% if user.photo %}
+        <center>
+            <img src="{{ asset('img/images/' ~ user.photo) }}">
+        </center>
+    {% endif %}
+    {% if user.photo == false %}
+        <center><div> Vous n'avez pas encore de photo photo de profil</div></center>
+    {% endif %}
+    <div class="form">
 
         <div class="mt-4">
             {{ form_start(userForm) }}
 
             {{ form_widget(userForm) }}
-
-            <label for="profilPicture">Ma photo:</label>
-            <input type="file"
-                   id="profilPicture" name="profilPicture"
-                   accept="image/png, image/jpeg">
         </div>
     </div>
     <div class="col-12 col-sm-6 col-md-7 offset-4">
@@ -34,9 +35,16 @@
            href="{{ path('main_home') }}">Retourner à
             la page d'accueil</a>
     </div>
-</div>
+
 
     {{ form_end(userForm) }}
 
-
+{% endblock %}
+{% block style %}
+    <style type="text/css">
+        img {
+            width:150px;
+            height:150px;
+        }
+    </style>
 {% endblock %}
