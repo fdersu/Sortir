@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\ManageEntity\UpdateEntity;
 use App\Repository\UserRepository;
+use App\Upload\UserImages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -23,16 +25,14 @@ class ProfilController extends AbstractController
                          Request $request,
                          EntityManagerInterface $entityManager,
                          UserPasswordEncoderInterface $passwordEncoder,
-                         AuthenticationUtils $authenticationUtils): Response
+                         UserImages $image,
+                         UpdateEntity $updateEntity): Response
     {
 
 
-        $lastUsername = $authenticationUtils->getLastUsername();
         $error = "";
         $userInSession = $userRepository->findOneBy(["pseudo" => $this->getUser()->getUsername()]);
         $user = $userRepository->find($id);
-        $userPseudo = new User();
-        $userPseudo->setPseudo($user->getPseudo());
 
 
         if (!$user) {
@@ -48,7 +48,16 @@ class ProfilController extends AbstractController
             $userForm->handleRequest($request);
 
             if ($userForm->isSubmitted() && $userForm->isValid()) {
+                $file = $userForm->get('photo')->getData();
 
+                /**
+                 * @var UploadedFile $file
+                 */
+                if ($file) {
+                    $directory = $this->getParameter('upload_images_sortie_dir');
+                    $image->save($file, $user, $directory);
+                    $updateEntity->save($user);
+                }
 
                 // encode the plain password
                 $user->setPassword(
@@ -66,7 +75,7 @@ class ProfilController extends AbstractController
             error_log($error->getMessage());
         }
         $entityManager->refresh($user);
-        return $this->render('profil/profil.html.twig', ['error' => $error, 'userForm' => $userForm->createView(), 'id' => $user->getId()]);
+        return $this->render('profil/profil.html.twig', ['user' => $user, 'error' => $error, 'userForm' => $userForm->createView(), 'id' => $user->getId(), 'photo' => $user->getPhoto()]);
     }
 
 }
