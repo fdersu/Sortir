@@ -169,7 +169,7 @@ button a {
 }
 
 
-button {
+/**button {
     display: block;
     margin: 0 auto;
     line-height: 2em;
@@ -180,7 +180,7 @@ button {
     outline: none;
     border: 1px solid rgba(0,0,0,1);
     box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
-}
+}*/
 
 .flash {
     font-size : 1em;
