@@ -2,6 +2,8 @@
 
 {% block title %}Créer une sortie{% endblock %}
 
+
+
 {% block body %}
 
     <h1>Proposer une sortie</h1>
@@ -11,11 +13,15 @@
 
     {{ form_widget(sortieForm) }}
 
-    <button class="btn"><a href="{{ path('sortie_lieu') }}">Ajouter un lieu</a></button>
+    <button type="submit" class="btn" id="submitBtnForNewSortie">Valider</button>
 
-    <button type="submit" class="btn">Ajouter la sortie</button>
+    <button class="btn"><a href="{{ path('main_accueil') }}">Annuler</a></button>
     {{ form_end(sortieForm) }}
 </div>
 
 
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/addSortie.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
 {% endblock %}

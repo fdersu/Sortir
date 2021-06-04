@@ -8,15 +8,27 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
- * @UniqueEntity(fields={"pseudo"}, message="There is already an account with this pseudo !")
+ * @UniqueEntity(fields={"pseudo", "mail"}, message="il y a dejà un compte associé à ce pseudo/email !")
  */
 class User implements UserInterface
 {
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('pseudo', new Assert\Regex([
+            'pattern' => '#@#',
+            'match' => false,
+            'message' => 'Le pseudo ne peut pas contenir @',
+        ]));
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -25,7 +37,6 @@ class User implements UserInterface
     private $id;
 
     /**
-     *
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $pseudo;

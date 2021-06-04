@@ -1,0 +1,207 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/accueil.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+
+    <div>
+        {{ form_start(filterForm, {'attr': {'class': 'filterForm'}}) }}
+
+        <div class="flex-row">
+            <div class="block-fltr">
+                <div class="flex-row">
+                    <div class="form-div">{{ form_label(filterForm.site) }}</div>
+                    <div class="form-div">{{ form_widget(filterForm.site) }}</div>
+                </div>
+                <div class="flex-row">
+                    <div class="form-div">{{ form_label(filterForm.recherche) }}</div>
+                    <div class="form-div">{{ form_widget(filterForm.recherche) }}</div>
+                </div>
+                <div class="flex-row">
+                    <div class="form-div">{{ form_label(filterForm.dateDebut) }}</div>
+                    <div class="form-div">{{ form_widget(filterForm.dateDebut) }}</div>
+                </div>
+                <div class="flex-row">
+                    <div class="form-div">{{ form_label(filterForm.dateFin) }}</div>
+                    <div class="form-div">{{ form_widget(filterForm.dateFin) }}</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>{{ form_widget(filterForm.organisateur) }}</div>
+                <div>{{ form_widget(filterForm.inscrit) }}</div>
+                <div>{{ form_widget(filterForm.nonInscrit) }}</div>
+                <div>{{ form_widget(filterForm.sortiesPassees) }}</div>
+            </div>
+            <div class="block"><button>rechercher</button></div>
+
+            {{ form_end(filterForm) }}
+
+            {% for message in app.flashes('notice') %}
+                <div class="row pad">
+                    <div class="col-lg-4 offset-lg-4"><strong>{{ message }}</strong></div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div>
+            {% for sortie in sorties %}
+                <div class="sortie">
+                        <div class="accueil">
+                            <div class="block-img">
+                                {% if sortie.urlPhoto %}
+                                    <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}"><img class="photoSortie noresize"
+                                                                                                       src="{{ asset('img/') ~ sortie.urlPhoto }}"
+                                                                                                       alt="photo" min-width="115px"></a>
+                                {% else %}
+                                    <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}"><img class="photoSortie noresize"
+                                                                                                       src="{{ asset('img/default_picture.png') }}"
+                                                                                                       alt="photo" min-width="115px"></a>
+                                {% endif %}
+                            </div>
+                            <div class="block">
+                                <div class="flex-row">
+                                    <div class="block">
+                                        <div><strong>Nom</strong></div>
+                                        <div><span>{{ sortie.nom }}</span></div>
+                                    </div>
+                                    <div class="block">
+                                        <div><strong>Date</strong></div>
+                                        <div><span>{{ sortie.dateDebut|date('d/m/Y') }}</span></div>
+                                    </div>
+                                    <div class="block">
+                                        <div><strong>Clôture</strong></div>
+                                        <div><span>{{ sortie.dateCloture|date('d/m/Y') }}</span></div>
+                                    </div>
+                                    <div class="block">
+                                        <div><strong>Inscrits/places</strong></div>
+                                        <div>
+                                            <span>{{ sortie.inscriptions|length }}/{{ sortie.nbInscriptionsMax }}</span></div>
+                                    </div>
+                                    <div class="block">
+                                        <div><strong>Etat</strong></div>
+                                        <div><span id="etat">{{ sortie.etat.libelle }}</span></div>
+                                        <input type="hidden" value="{{ sortie.id }}" id="sortie_id">
+                                    </div>
+                                    <div class="block">
+                                        <div><strong>Inscrit</strong></div>
+                                        <div>
+                                            {% set bool = false %}
+                                            {% for ins in sortie.inscriptions %}
+                                                {% if ins.participant.id == app.user.id %}
+                                                    {% set bool = true %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if bool %}
+                                                <img class="logoInscrit" src="{{ asset('img/tick.png') }}" alt="logo">
+                                            {% elseif bool == false and sortie.organisateur != app.user %}
+                                                <img class="logoInscrit" src="{{ asset('img/cross.png') }}" alt="logo">
+                                            {% elseif bool == false and sortie.organisateur == app.user %}
+                                                <img class="logoInscrit" src="{{ asset('img/logo_organisateur.png') }}"
+                                                     alt="logo">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="block">
+                                        <div><strong>Organisateur</strong></div>
+                                        <div><span>{{ sortie.organisateur.pseudo }}</span></div>
+                                    </div>
+                                    <div class="block">
+                                        <div><strong>Action</strong></div>
+                                        <div>
+                                            <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}">Afficher</a>
+                                            {% set bool = false %}
+                                            {% for ins in sortie.inscriptions %}
+                                                {% if ins.participant.id == app.user.id %}
+                                                    {% set bool = true %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if sortie.organisateur != app.user %}
+                                                {% if bool and sortie.dateDebut > now %}
+                                                    <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}">Se
+                                                        désister</a>
+                                                {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' %}
+                                                    <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
+                                                {% else %}
+                                                    <a></a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block style %}
+    <style type="text/css">
+        .main {
+            margin-left: 5vw;
+            margin-right: 5vw;
+        }
+
+        .pad {
+            margin-top: 5vh;
+        }
+
+        .sortie {
+            margin-bottom: 3vh;
+            border: 1px solid black;
+            border-radius: 1vw;
+        }
+
+        .filterForm {
+            margin-top: 3vh;
+            margin-bottom: 3vh;
+            padding: 3vh;
+            border: 1px solid black;
+            border-radius: 1vw;
+        }
+
+        input[type=text], input[type=date], select {
+            border: 1px solid black;
+            border-radius: 0.5vw;
+            text-align: center;
+        }
+
+        button {
+            border: 1px solid black;
+            border-radius: 0.5vw;
+        }
+
+        input[type=checkbox] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 1.5vh;
+            height: 1.5vh;
+            margin-right: 1vw;
+            border: 1px solid black;
+            border-radius: 50%;
+        }
+
+        input[type=checkbox]:checked {
+            background-color: #00a6ff;
+        }
+
+        .photoSortie {
+            width: 10vw;
+        }
+
+        .logoInscrit {
+            width: 2vw;
+        }
+
+        #etat:hover {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}

@@ -6,20 +6,23 @@
 
     <h1>Gérer les villes</h1>
 
-    <div class="flex-block">
-        <div class="half-block">
-            <div class="row">
-                <div class="col-lg-3"><strong>Nom</strong></div>
-                <div class="col-lg-3"><strong>Code Postal</strong></div>
-            </div>
-            {% for ville in villes %}
-                <div class="row">
-                    <div class="col-lg-3"><span>{{ ville.nom }}</span></div>
-                    <div class="col-lg-3"><span>{{ ville.codePostal }}</span></div>
+    <div class="flex-row">
+        <div class="block">
+            <div class="tableau">
+                <div class="tableau-villes">
+                    <div><strong>Nom</strong></div>
+                    <div><strong>Code Postal</strong></div>
                 </div>
-            {% endfor %}
+                <div class="tableau-villes">
+                    {% for ville in villes %}
+                        <div><span>{{ ville.nom }}</span></div>
+                        <div><span>{{ ville.codePostal }}</span></div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-        <div class="half-block">
+
+        <div class="block">
             <div class="form">
             <h3>Ajouter une ville</h3>
             <div>
@@ -28,6 +31,7 @@
                 {{ form_widget(villeForm)}}
 
                 <button type="submit" class="btn">Ajouter la ville</button>
+                <button class="btn"><a href="{{ path('sortie_lieu') }}">Retour</a></button>
                 {{ form_end(villeForm) }}
             </div>
             </div>
