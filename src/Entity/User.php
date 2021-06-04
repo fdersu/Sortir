@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
- * @UniqueEntity(fields={"pseudo"}, message="There is already an account with this pseudo !")
+ * @UniqueEntity(fields={"pseudo", "mail"}, message="il y a dejà un compte associé à ce pseudo/email !")
  */
 class User implements UserInterface
 {
@@ -37,7 +37,6 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @Assert\Unique()
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $pseudo;
@@ -74,7 +73,6 @@ class User implements UserInterface
     private $mail;
 
     /**
-     * @Assert\Unique()
      * @ORM\Column(type="boolean")
      */
     private $actif;
