@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 
 /**
@@ -17,6 +19,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('pseudo', new Assert\Regex([
+            'pattern' => '#@#',
+            'match' => false,
+            'message' => 'Le pseudo ne peut pas contenir @',
+        ]));
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -25,7 +37,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     *
+     * @Assert\Unique()
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $pseudo;
@@ -62,6 +74,7 @@ class User implements UserInterface
     private $mail;
 
     /**
+     * @Assert\Unique()
      * @ORM\Column(type="boolean")
      */
     private $actif;

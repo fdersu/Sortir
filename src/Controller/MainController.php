@@ -45,7 +45,7 @@ class MainController extends AbstractController
                 $this->addFlash('notice', "Aucun résultat pour votre recherche.");
             }
         }
-        return $this->render('main/accueil.html.twig', [
+        return $this->render('main/accueil_flxgrd.html.twig', [
             'filterForm' => $filterForm->createView(),
             'sorties' => $allSorties,
             'now' => $now

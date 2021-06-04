@@ -38,7 +38,7 @@ header {
 .ulNav {
     list-style-type: none;
     display: flex;
-    align-content: space-evenly;
+    justify-content: flex-end;
 }
 
 /* Add a black background color to the top navigation */
@@ -79,19 +79,6 @@ main {
     margin-bottom: 1em;
 }
 
-/*
-input {
-    display: block;
-    width: 40%;
-    font-size: 1em;
-    line-height: 2em;
-    margin-bottom: 2em;
-    border: none;
-    border-bottom: 2px solid;
-}
-
-*/
-
 .accueil {
     display: grid;
     grid-template-columns: 150px 1fr;
@@ -103,14 +90,26 @@ input {
 .block {
     display: flex;
     flex-direction: column;
+    padding: 1em;
+    margin-top: 1em;
+}
+
+.block-img {
+    display: flex;
+    flex-direction: column;
     align-content: center;
     justify-content: center;
     padding: 1em;
     margin-top: 1em;
 }
 
-.align-left {
-    align-content: flex-start;
+.block-fltr {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 1em;
+    margin-top: 1em;
 }
 
 .flex-row {
@@ -121,15 +120,28 @@ input {
     justify-content: space-evenly;
 }
 
+.tableau {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+}
+
+.tableau-lieux {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+}
+
+.tableau-villes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+}
+
 .noresize {
     min-width: 100%;
     height: auto;
     width: auto\9; /* ie8 */
-}
-
-.half-block {
-    display: table-column;
-    width: 48%;
 }
 
 .form div {
@@ -137,6 +149,14 @@ input {
     flex-direction: column;
     ms-flex-direction: row;
     margin: 0.5em 2em 0.5em 1em;
+}
+
+.form-div {
+    display: flex;
+    flex-direction: column;
+    ms-flex-direction: row;
+    margin-left: 0.5em;
+    margin-bottom: 0.1em;
 }
 
 button a {
@@ -162,6 +182,11 @@ button {
     box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
 }
 
+.flash {
+    font-size : 1em;
+    font-style: oblique;
+    color: teal;
+}
 
     /*
     footer p {
@@ -181,11 +206,7 @@ button {
     font-family: 'Indie Flower', cursive;
 }
 
-.flash {
-    font-size : 1em;
-    font-style: oblique;
-    color: teal;
-}
+
 
 .wishesList {
     max-width:1300px;
@@ -218,10 +239,6 @@ button {
     text-decoration: none;
     color:black;
 }
-
-
-
-
 
 .border-color{
     padding: 1em;

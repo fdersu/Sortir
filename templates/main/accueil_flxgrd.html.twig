@@ -13,22 +13,22 @@
         {{ form_start(filterForm, {'attr': {'class': 'filterForm'}}) }}
 
         <div class="flex-row">
-            <div class="align-left block">
+            <div class="block-fltr">
                 <div class="flex-row">
-                    <div>{{ form_label(filterForm.site) }}</div>
-                    <div>{{ form_widget(filterForm.site) }}</div>
+                    <div class="form-div">{{ form_label(filterForm.site) }}</div>
+                    <div class="form-div">{{ form_widget(filterForm.site) }}</div>
                 </div>
                 <div class="flex-row">
-                    <div>{{ form_label(filterForm.recherche) }}</div>
-                    <div>{{ form_widget(filterForm.recherche) }}</div>
+                    <div class="form-div">{{ form_label(filterForm.recherche) }}</div>
+                    <div class="form-div">{{ form_widget(filterForm.recherche) }}</div>
                 </div>
                 <div class="flex-row">
-                    <div>{{ form_label(filterForm.dateDebut) }}</div>
-                    <div>{{ form_widget(filterForm.dateDebut) }}</div>
+                    <div class="form-div">{{ form_label(filterForm.dateDebut) }}</div>
+                    <div class="form-div">{{ form_widget(filterForm.dateDebut) }}</div>
                 </div>
                 <div class="flex-row">
-                    <div>{{ form_label(filterForm.dateFin) }}</div>
-                    <div>{{ form_widget(filterForm.dateFin) }}</div>
+                    <div class="form-div">{{ form_label(filterForm.dateFin) }}</div>
+                    <div class="form-div">{{ form_widget(filterForm.dateFin) }}</div>
                 </div>
             </div>
             <div class="block">
@@ -52,7 +52,7 @@
             {% for sortie in sorties %}
                 <div class="sortie">
                         <div class="accueil">
-                            <div class="block">
+                            <div class="block-img">
                                 {% if sortie.urlPhoto %}
                                     <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}"><img class="photoSortie noresize"
                                                                                                        src="{{ asset('img/') ~ sortie.urlPhoto }}"
