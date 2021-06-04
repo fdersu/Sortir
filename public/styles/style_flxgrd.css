@@ -109,6 +109,10 @@ input {
     margin-top: 1em;
 }
 
+.align-left {
+    align-content: flex-start;
+}
+
 .flex-row {
     display: flex;
     flex-direction: row;
@@ -117,7 +121,7 @@ input {
     justify-content: space-evenly;
 }
 
-img .noresize {
+.noresize {
     min-width: 100%;
     height: auto;
     width: auto\9; /* ie8 */

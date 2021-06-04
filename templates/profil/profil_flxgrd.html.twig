@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block title %}Edit profil{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <center>
+            <div class="alert alert-danger">{{ error }}</div>
+        </center>
+    {% endif %}
+
+    <h1 class="offset-4">Mon profil !</h1>
+
+<div class="form">
+            {{ form_start(userForm) }}
+
+            {{ form_widget(userForm) }}
+
+            <label for="avatar">Ma photo:</label>
+            <input type="file"
+                   id="avatar" name="avatar"
+                   accept="image/png, image/jpeg">
+    </div>
+
+        <button class="btn btn-lg btn-primary" type="submit">
+            Enregister
+        </button>
+
+        <a class="btn btn-lg btn-danger"
+           href="{{ path('main_home') }}">Retourner à
+            la page d'accueil</a>
+
+    {{ form_end(userForm) }}
+
+
+{% endblock %}
