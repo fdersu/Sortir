@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Sortie;
 use App\Entity\User;
 use App\Form\FilterType;
 use App\Form\Model\Filter;
@@ -55,10 +56,11 @@ class MainController extends AbstractController
     /** @Route("/accueil/ajax/motif", name="main_ajax_motif") */
     public function ajaxMotif(Request $request, SortieRepository $sortieRepository)
     {
+        $sortie = new Sortie();
         if ($request->isMethod('POST')) {
             $data = json_decode($request->getContent());
-            $sortie = $sortieRepository->find($data->sortie_id);
-            return new JsonResponse(['motif' => $sortie->getMotifAnnulation()]);
+            $sortie = $sortieRepository->find($data->id);
         }
+        return new JsonResponse(['motif' => $sortie->getMotifAnnulation()]);
     }
 }

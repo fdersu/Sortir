@@ -4,19 +4,19 @@ function displayReason() {
     let etat = document.getElementsByClassName('etat');
     for(let item of etat){
         item.addEventListener('click', function () {
-            let sortieDiv = item.parentNode;
-            let sortie = sortieDiv.nextSibling;
-            let sortie_id = sortie.nextSibling.value;
-            console.log(sortie_id);
-            let parent = getParentDiv(item, 3);
+            let sortieId = item.parentElement.lastElementChild.value;
+            console.log(sortieId);
+            let parent = getParentDiv(item, 7);
             console.log(parent);
             let divRow = document.createElement('div');
             divRow.className = 'row';
             divRow.id = 'ajax';
             let divCol = document.createElement('div');
-            divCol.className = 'col-lg-4 offset-lg-7';
+            divCol.className = 'col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8 ' +
+                                'offset-0 offset-sm-4 offset-md-4 offset-lg-2 offset-xl-2 offset-xxl-2';
+            divCol.id = 'ajaxDisplay';
             let motif = document.createElement('strong');
-            getMotif(motif, sortie_id);
+            getMotif(motif, sortieId);
             divCol.appendChild(motif);
             divRow.appendChild(divCol);
             parent.appendChild(divRow);
@@ -30,8 +30,8 @@ function displayReason() {
     }
 }
 
-function getMotif(element, sortie_id) {
-    let data = {sortie_id: sortie_id};
+function getMotif(element, sortieId) {
+    let data = {id: sortieId};
     let req = new XMLHttpRequest();
     req.open('POST', location.href + '/ajax/motif');
     req.setRequestHeader("Content-Type", "application/json;charset=utf-8");

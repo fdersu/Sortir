@@ -2,6 +2,8 @@
 
 {% block title %}Accueil{% endblock %}
 
+{% block stylesheets %}{{ parent() }}{% endblock %}
+
 {% block javascripts %}
     <script src="{{ asset('js/accueil.js') }}"></script>
 {% endblock %}
@@ -11,30 +13,35 @@
 
     <div class="main">
         {{ form_start(filterForm, {'attr': {'class': 'filterForm'}}) }}
-        <div class="row">
-            <div class="col-lg-3">{{ form_label(filterForm.site) }}</div>
-            <div class="col-lg-2">{{ form_widget(filterForm.site) }}</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3">{{ form_label(filterForm.recherche) }}</div>
-            <div class="col-lg-1">{{ form_widget(filterForm.recherche) }}</div>
-            <div class="col-lg-6 offset-lg-2">{{ form_widget(filterForm.organisateur) }}</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 offset-lg-6">{{ form_widget(filterForm.inscrit) }}</div>
-            <div class="col-lg-1">
-                <button>rechercher</button>
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-6 col-xxl-6">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_label(filterForm.site) }}</div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_widget(filterForm.site) }}</div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_label(filterForm.recherche) }}</div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_widget(filterForm.recherche) }}</div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_label(filterForm.dateDebut) }}</div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_widget(filterForm.dateDebut) }}</div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_label(filterForm.dateFin) }}</div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_widget(filterForm.dateFin) }}</div>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-1">{{ form_label(filterForm.dateDebut) }}</div>
-            <div class="col-lg-2">{{ form_widget(filterForm.dateDebut) }}</div>
-            <div class="col-lg-1">{{ form_label(filterForm.dateFin) }}</div>
-            <div class="col-lg-2">{{ form_widget(filterForm.dateFin) }}</div>
-            <div class="col-lg-6">{{ form_widget(filterForm.nonInscrit) }}</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 offset-lg-6">{{ form_widget(filterForm.sortiesPassees) }}</div>
+            <div class="col-12 col-sm-12 col-md-7 col-lg-6 col-xl-4 col-xxl-4">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">{{ form_widget(filterForm.organisateur) }}</div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">{{ form_widget(filterForm.inscrit) }}</div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">{{ form_widget(filterForm.nonInscrit) }}</div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">{{ form_widget(filterForm.sortiesPassees) }}</div>
+                </div>
+            </div>
+            <div class="col-11 col-sm-11 col-md-7 col-lg-2 col-xl-2 col-xxl-2
+                        offset-1 offset-sm-1 offset-md-5 offset-lg-0 offset-xl-0 offset-xxl-0">
+                <div class="row">
+                    <div class="col-12">
+                        <button>rechercher</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -46,11 +53,12 @@
             </div>
         {% endfor %}
 
-        <div>
-            {% for sortie in sorties %}
+
+        {% for sortie in sorties %}
+            <div class="parent">
                 <div class="sortie">
                     <div class="row align-items-center">
-                        <div class="col-lg-2">
+                        <div class="col-6 col-sm-4 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
                             {% if sortie.urlPhoto %}
                                 <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}"><img class="photoSortie"
                                                                                                    src="{{ asset('img/') ~ sortie.urlPhoto }}"
@@ -61,70 +69,90 @@
                                                                                                    alt="photo"></a>
                             {% endif %}
                         </div>
-                        <div class="col-lg-10">
+                        <div class="col-6 col-sm-8 col-md-8 col-lg-10 col-xl-10 col-xxl-10">
                             <div class="row">
-                                <div class="col-lg-3"><strong>Nom</strong></div>
-                                <div class="col-lg-1"><strong>Date</strong></div>
-                                <div class="col-lg-1"><strong>Clôture</strong></div>
-                                <div class="col-lg-2"><strong>Inscrits/places</strong></div>
-                                <div class="col-lg-1"><strong>Etat</strong></div>
-                                <div class="col-lg-1"><strong>Inscrit</strong></div>
-                                <div class="col-lg-1"><strong>Organisateur</strong></div>
-                                <div class="col-lg-1"><strong>Action</strong></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3"><span>{{ sortie.nom }}</span></div>
-                                <div class="col-lg-1"><span>{{ sortie.dateDebut|date('d/m/Y') }}</span></div>
-                                <div class="col-lg-1"><span>{{ sortie.dateCloture|date('d/m/Y') }}</span></div>
-                                <div class="col-lg-2">
-                                    <span>{{ sortie.inscriptions|length }}/{{ sortie.nbInscriptionsMax }}</span></div>
-                                <div class="col-lg-1"><span class="etat">{{ sortie.etat.libelle }}</span></div>
-                                <input type="hidden" value="{{ sortie.id }}" id="sortie_id">
-                                <div class="col-lg-1">
-                                    {% set bool = false %}
-                                    {% for ins in sortie.inscriptions %}
-                                        {% if ins.participant.id == app.user.id %}
-                                            {% set bool = true %}
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if bool %}
-                                        <img class="logoInscrit" src="{{ asset('img/tick.png') }}" alt="logo">
-                                    {% elseif bool == false and sortie.organisateur != app.user %}
-                                        <img class="logoInscrit" src="{{ asset('img/cross.png') }}" alt="logo">
-                                    {% elseif bool == false and sortie.organisateur == app.user %}
-                                        <img class="logoInscrit" src="{{ asset('img/logo_organisateur.png') }}"
-                                             alt="logo">
-                                    {% endif %}
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
+                                    <div><strong>Nom</strong></div>
+                                    <div><span>{{ sortie.nom }}</span></div>
                                 </div>
-                                <div class="col-lg-1"><span>{{ sortie.organisateur.pseudo }}</span></div>
-                                <div class="col-lg-2">
-                                    <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}">Afficher</a>
-                                    {% set bool = false %}
-                                    {% for ins in sortie.inscriptions %}
-                                        {% if ins.participant.id == app.user.id %}
-                                            {% set bool = true %}
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-1">
+                                    <div><strong>Date</strong></div>
+                                    <div><span>{{ sortie.dateDebut|date('d/m/Y') }}</span></div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-1">
+                                    <div><strong>Clôture</strong></div>
+                                    <div><span>{{ sortie.dateCloture|date('d/m/Y') }}</span></div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
+                                    <div><strong>Inscrits/places</strong></div>
+                                    <div>
+                                        <span>{{ sortie.inscriptions|length }}/{{ sortie.nbInscriptionsMax }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-1 col-xxl-1">
+                                    <div><strong>Etat</strong></div>
+                                    <div>
+                                        <span class="etat">{{ sortie.etat.libelle }}</span>
+                                        <input type="hidden" value="{{ sortie.id }}">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-1 col-xxl-1">
+                                    <div><strong>Inscrit</strong></div>
+                                    <div>
+                                        {% set bool = false %}
+                                        {% for ins in sortie.inscriptions %}
+                                            {% if ins.participant.id == app.user.id %}
+                                                {% set bool = true %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if bool %}
+                                            <img class="logoInscrit" src="{{ asset('img/tick.png') }}" alt="logo">
+                                        {% elseif bool == false and sortie.organisateur != app.user %}
+                                            <img class="logoInscrit" src="{{ asset('img/cross.png') }}" alt="logo">
+                                        {% elseif bool == false and sortie.organisateur == app.user %}
+                                            <img class="logoInscrit" src="{{ asset('img/logo_organisateur.png') }}"
+                                                 alt="logo">
                                         {% endif %}
-                                    {% endfor %}
-                                    {% if sortie.organisateur != app.user %}
-                                        {% if bool and sortie.dateDebut > now %}
-                                            <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}">Se
-                                                désister</a>
-                                        {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' %}
-                                            <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
-                                        {% else %}
-                                            <a></a>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-2
+                                            offset-0 offset-sm-0 offset-md-0 offset-lg-4 offset-xl-0 offset-xxl-0">
+                                    <div><strong>Organisateur</strong></div>
+                                    <div><span>{{ sortie.organisateur.pseudo }}</span></div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-2
+                                            offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-6 offset-xxl-0">
+                                    <div><strong>Action</strong></div>
+                                    <div>
+                                        <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}">Afficher</a>
+                                        {% set bool = false %}
+                                        {% for ins in sortie.inscriptions %}
+                                            {% if ins.participant.id == app.user.id %}
+                                                {% set bool = true %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if sortie.organisateur != app.user %}
+                                            {% if bool and sortie.dateDebut > now %}
+                                                <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}">Se
+                                                    désister</a>
+                                            {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' %}
+                                                <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
+                                            {% else %}
+                                                <a></a>
+                                            {% endif %}
                                         {% endif %}
-                                    {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
 
     </div>
+
+
 {% endblock %}
 
 {% block style %}
@@ -139,9 +167,12 @@
         }
 
         .sortie {
-            margin-bottom: 3vh;
             border: 1px solid black;
             border-radius: 1vw;
+        }
+
+        .parent {
+            margin-bottom: 3vh;
         }
 
         .filterForm {
@@ -178,7 +209,7 @@
         }
 
         .photoSortie {
-            width: 10vw;
+            width: 100%;
         }
 
         .logoInscrit {
@@ -187,6 +218,10 @@
 
         .etat:hover {
             cursor: pointer;
+        }
+        #ajaxDisplay{
+            border: 1px solid black;
+            border-radius: 1vw;
         }
     </style>
 {% endblock %}
