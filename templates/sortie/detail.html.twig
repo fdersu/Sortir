@@ -6,33 +6,36 @@
 
     {% if sortie.organisateur == app.user %}
         <div class="row align-items-center pad paddup">
-            <div class="col-lg-2 offset-lg-6">
+            <div class="col-6 col-sm-6 col-md-1 col-lg-1 col-xl-1 col-xxl-1
+                        offset-0 offset-sm-0 offset-md-6 offset-lg-6 offset-xl-6 offset-xxl-6">
                 <img class="logo" src="{{ asset('img/logo_organisateur.png') }}" alt="organisateur">
             </div>
             {% if sortie.etat.libelle != 'Annulée' %}
-                <div class="col-lg-2">
+                <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3
+                            offset-0 offset-sm-0 offset-md-2 offset-lg-2 offset-xl-2 offset-xxl-2">
                     <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">
                         <button class="cancel" id="cancel">Annuler</button>
                     </a>
                 </div>
             {% else %}
-                <div class="col-lg-3">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                     <strong>Annulée: {{ sortie.motifAnnulation }}</strong>
                 </div>
             {% endif %}
         </div>
         {% if cancelForm is defined %}
             <div class="row pad">
-                <div class="col-lg-2 offset-lg-6">
+                <div class="col-6 offset-6">
                     <strong>Motif</strong>
                 </div>
             </div>
             <div class="row align-items-center">
-                <div class="col-lg-3 offset-lg-5">
+                <div class="col-12 col-sm-12 col-md-7 col-lg-5 col-xl-5 col-xxl-5
+                            offset-0 offset-sm-0 offset-md-3 offset-lg-4 offset-xl-5 offset-xxl-5">
                     {{ form_start(cancelForm) }}
                     {{ form_widget(cancelForm.motifAnnulation, {'attr': {'class': 'field'}}) }}
                 </div>
-                <div class="col-lg-2">
+                <div class="col-2 offset-6 offset-sm-6 offset-md-0 offset-lg-0 offset-xl-0 offset-xxl-0">
                     <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">
                         <button class="valider">Valider</button>
                     </a>
@@ -41,9 +44,15 @@
             </div>
         {% endif %}
     {% elseif sortie.organisateur != app.user and sortie.etat.libelle == 'Annulée' %}
+        <div class="row pad paddup">
+            <div class="col-6 offset-6">
+                <strong>Annulée:</strong>
+            </div>
+        </div>
         <div class="row align-items-center pad paddup">
-            <div class="col-lg-5 offset-lg-6">
-                <strong>Annulée: {{ sortie.motifAnnulation }}</strong>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4
+                        offset-0 offset-sm-0 offset-md-3 offset-lg-4 offset-xl-4 offset-xxl-4">
+                <strong>{{ sortie.motifAnnulation }}</strong>
             </div>
         </div>
     {% endif %}
@@ -51,82 +60,85 @@
     <div class="sortie">
         <div class="pad"></div>
         <div class="row align-items-center">
-            <div class="col-lg-4">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 {% if sortie.urlPhoto %}
                     <img class="photo" src="{{ asset('img/') ~ sortie.urlPhoto }}" alt="photo">
                 {% else %}
                     <img class="photo" src="{{ asset('img/default_picture.png') }}" alt="photo">
                 {% endif %}
             </div>
-            <div class="col-lg-8">
-                <div class="row align-items-center pad odd left">
-                    <div class="col-lg-4"><strong>Nom de la sortie:</strong></div>
-                    <div class="col-lg-4">{{ sortie.nom }}</div>
-                    <div class="col-lg-2"><strong>Ville organisatrice:</strong></div>
-                    <div class="col-lg-2">{{ sortie.site.nom }}</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-8 col-xl-8 col-xxl-8">
+                <div class="row align-items-center pad odd left right">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4"><strong>Nom de la sortie:</strong></div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">{{ sortie.nom }}</div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2"><strong>Ville organisatrice:</strong></div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2">{{ sortie.site.nom }}</div>
                 </div>
-                <div class="row align-items-center pad even left">
-                    <div class="col-lg-4"><strong>Date et heure de la
+                <div class="row align-items-center pad even left right">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4"><strong>Date et heure de la
                             sortie:</strong></div>
-                    <div class="col-lg-4">{{ sortie.dateDebut|date("\\l\\e d/m/Y \\à H:i") }}</div>
-                    <div class="col-lg-2"><strong>Lieu:</strong></div>
-                    <div class="col-lg-2">{{ sortie.lieu.nom }}</div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">{{ sortie.dateDebut|date("\\l\\e d/m/Y \\à H:i") }}</div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2"><strong>Lieu:</strong></div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2">{{ sortie.lieu.nom }}</div>
                 </div>
-                <div class="row align-items-center pad odd left">
-                    <div class="col-lg-4"><strong>Date limite
+                <div class="row align-items-center pad odd left right">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4"><strong>Date limite
                             d'inscription:</strong></div>
-                    <div class="col-lg-4">{{ sortie.dateCloture|date("\\l\\e d/m/Y \\à H:i") }}</div>
-                    <div class="col-lg-2"><strong>Rue:</strong></div>
-                    <div class="col-lg-2">{{ sortie.lieu.rue }}</div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">{{ sortie.dateCloture|date("\\l\\e d/m/Y \\à H:i") }}</div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2"><strong>Rue:</strong></div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2">{{ sortie.lieu.rue }}</div>
                 </div>
-                <div class="row align-items-center pad even left">
-                    <div class="col-lg-4"><strong>Nombre de places:</strong></div>
-                    <div class="col-lg-4">{{ nbPlaces }}</div>
-                    <div class="col-lg-2"><strong>Code Postal:</strong></div>
-                    <div class="col-lg-2">{{ sortie.lieu.ville.codePostal }}</div>
+                <div class="row align-items-center pad even left right">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4"><strong>Nombre de places:</strong></div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">{{ nbPlaces }}</div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2"><strong>Code Postal:</strong></div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2">{{ sortie.lieu.ville.codePostal }}</div>
                 </div>
-                <div class="row align-items-center pad odd left">
-                    <div class="col-lg-4"><strong>Durée:</strong></div>
-                    <div class="col-lg-4">{{ sortie.duree }} minutes</div>
+                <div class="row align-items-center pad odd left right">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4"><strong>Durée:</strong></div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">{{ sortie.duree }} minutes</div>
                     {% if sortie.lieu.latitude %}
-                        <div class="col-lg-2"><strong>Latitude:</strong></div>
-                        <div class="col-lg-2">{{ sortie.lieu.latitude }}</div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2"><strong>Latitude:</strong></div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2">{{ sortie.lieu.latitude }}</div>
                     {% endif %}
                 </div>
-                <div class="row align-items-center pad even left">
-                    <div class="col-lg-4"><strong>Description et infos:</strong></div>
-                    <div class="col-lg-4">{{ sortie.description }}</div>
+                <div class="row align-items-center pad even left right">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4"><strong>Description et infos:</strong></div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">{{ sortie.description }}</div>
                     {% if sortie.lieu.longitude %}
-                        <div class="col-lg-2"><strong>Longitude:</strong></div>
-                        <div class="col-lg-2">{{ sortie.lieu.longitude }}</div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2"><strong>Longitude:</strong></div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2">{{ sortie.lieu.longitude }}</div>
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-2 offset-lg-6"><strong>Participants</strong></div>
+    <div class="row pad paddup">
+        <div class="col-6 offset-6"><strong>Participants</strong></div>
     </div>
     <div class="participants">
         <div class="row">
-            <div class="col-lg-4 offset-lg-4"><strong>Pseudo</strong></div>
-            <div class="col-lg-2"><strong>Nom</strong></div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4
+                        offset-0 offset-sm-0 offset-md-0 offset-lg-4 offset-xl-4 offset-xxl-4"><strong>Pseudo</strong></div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2"><strong>Nom</strong></div>
         </div>
         {% for insc in sortie.inscriptions %}
             {% if loop.index is even %}
                 <div class="row align-items-center gap">
-                    <div class="col-lg-4 offset-lg-4 even left"><a
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4
+                        offset-0 offset-sm-0 offset-md-0 offset-lg-4 offset-xl-4 offset-xxl-4 even left"><a
                                 href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a>
                     </div>
-                    <div class="col-lg-2 even right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2 even right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
                 </div>
             {% else %}
                 <div class="row align-items-center gap">
-                    <div class="col-lg-4 offset-lg-4 odd left"><a
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4
+                        offset-0 offset-sm-0 offset-md-0 offset-lg-4 offset-xl-4 offset-xxl-4 odd left"><a
                                 href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a>
                     </div>
-                    <div class="col-lg-2 odd right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 col-xl-2 col-xxl-2 odd right">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
                 </div>
             {% endif %}
         {% endfor %}
@@ -136,16 +148,16 @@
 {% block style %}
     <style type="text/css">
         body {
-            background: linear-gradient(to bottom, rgba(135, 197, 231, 0.56), rgba(214, 243, 255, 0.5));
+            background: linear-gradient(to bottom, rgb(130, 169, 191), rgb(214, 243, 255));
         }
 
         .photo {
-            width: 30vw;
+            width: 100%;
             border-radius: 1vw;
         }
 
         .pad {
-            margin-bottom: 5vh;
+            margin-bottom: 1vw;
         }
 
         .paddup {
@@ -153,7 +165,7 @@
         }
 
         .logo {
-            width: 5vw;
+            width: 60px;
         }
 
         .cancel {
@@ -164,12 +176,12 @@
 
         .even {
             min-height: 5vh;
-            background-color: rgb(183, 225, 238);
+            background-color: rgba(183, 225, 238, 0.5);
         }
 
         .odd {
             min-height: 5vh;
-            background-color: rgb(123, 170, 224);
+            background-color: rgba(123, 170, 224, 0.5);
         }
 
         .left {

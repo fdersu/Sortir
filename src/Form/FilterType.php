@@ -58,7 +58,7 @@ class FilterType extends AbstractType
             ])
             ->add('nonInscrit', ChoiceType::class, [
                 'choices' => [
-                    'Sorties auxquelles je ne suis pas inscrit/e' => true
+                    'Auxquelles je ne suis pas inscrit/e' => true
                 ],
                 'expanded' => true,
                 'multiple' => true
