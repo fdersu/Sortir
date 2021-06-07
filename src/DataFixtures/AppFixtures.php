@@ -29,11 +29,20 @@ class AppFixtures extends Fixture
         $generator = Faker\Factory::create('fr_FR');
 
 
-            $villes = array('Rennes', 'Nantes', 'Quimper', 'Niort');
+            $villes = array([
+                'nom' => 'Rennes',
+                'codePostal' => '35000'],[
+                'nom' => 'Nantes',
+                'codePostal' => '44000'],[
+                'nom' => 'Quimper',
+                'codePostal' => '29000'],[
+                'nom' => 'Niort',
+                'codePostal' => '89000']);
 
             foreach ($villes as $item){
-                $ville = new Site();
-                $ville->setNom($item);
+                $ville = new Ville();
+                $ville->setNom($item['nom']);
+                $ville->setCodePostal($item['codePostal']);
                 $manager->persist($ville);
                 $manager->flush();
             }

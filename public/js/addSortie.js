@@ -1,6 +1,5 @@
 window.onload = function(){
     reloadLieux();
-    displayButtonAjoutLieu();
 }
 
 function reloadLieux(){

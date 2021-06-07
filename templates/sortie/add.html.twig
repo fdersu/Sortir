@@ -13,7 +13,7 @@
     {{ form_widget(sortieForm) }}
 
     <button type="submit" class="btn" id="submitBtnForNewSortie">Valider</button>
-
+    <button class="btn"><a href="{{ path('sortie_lieu') }}">Ajouter un lieu</a></button>
     <button class="btn"><a href="{{ path('main_accueil') }}">Annuler</a></button>
     {{ form_end(sortieForm) }}
 </div>
@@ -22,6 +22,4 @@
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/addSortie.js') }}"></script>
-    <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
-    <script src="https://unpkg.com/vue@next"></script>
 {% endblock %}
