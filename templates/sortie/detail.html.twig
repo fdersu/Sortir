@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    {% if sortie.organisateur == app.user %}
+    {% if sortie.organisateur == app.user or "ROLE_ADMIN" in app.user.roles %}
         <div class="row align-items-center pad paddup">
             <div class="col-6 col-sm-6 col-md-1 col-lg-1 col-xl-1 col-xxl-1
                         offset-0 offset-sm-0 offset-md-6 offset-lg-6 offset-xl-6 offset-xxl-6">
