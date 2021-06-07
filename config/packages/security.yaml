@@ -44,6 +44,8 @@ security:
     - { path: ^/create, roles: ROLE_USER }
     - { path: ^/edit, roles: ROLE_USER }
     - { path: ^/update, roles: ROLE_ADMIN }
+    - { path: ^/sortie_ville, roles: ROLE_ADMIN }
+    - { path: ^/sortie_site, roles: ROLE_ADMIN }
     - { path: ^/register, roles: ROLE_ADMIN }
     - { path: ^/admin, roles: ROLE_ADMIN }
 

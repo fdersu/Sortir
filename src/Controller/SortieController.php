@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Lieu;
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\User;
 use App\Entity\Ville;
 use App\Form\LieuFormType;
 use App\Form\MotifAnnulationType;
+use App\Form\SiteFormType;
 use App\Form\SortieFormType;
 use App\Form\VilleFormType;
 use App\Repository\EtatRepository;
@@ -239,6 +241,35 @@ class SortieController extends AbstractController
         return $this->render('sortie/ville.html.twig', [
             'villeForm' => $villeForm->createView(),
             'villes' => $villes,
+        ]);
+
+    }
+
+    /**
+     * @Route("/sortie_site", name="sortie_site")
+     */
+    public function site(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $site = new Site();
+        $sites = $entityManager->getRepository(Site::class)->findAll();
+
+        $siteForm = $this->createForm(SiteFormType::class, $site);
+        $siteForm->handleRequest($request);
+
+        if($siteForm->isSubmitted() && $siteForm->isValid()){
+
+            $entityManager->persist($site);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Site ajouté !');
+            return $this->redirectToRoute('sortie_lieu');
+
+        }
+
+
+        return $this->render('sortie/site.html.twig', [
+            'siteForm' => $siteForm->createView(),
+            'sites' => $sites,
         ]);
 
     }

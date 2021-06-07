@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer une ville{% endblock %}
+{% block title %}Gérer les sites{% endblock %}
 
 {% block body %}
 
@@ -23,15 +23,15 @@
 
         <div class="block">
             <div class="form">
-            <h3>Ajouter une ville</h3>
+            <h3>Ajouter un site</h3>
             <div>
-                {{ form_start(villeForm) }}
+                {{ form_start(siteForm) }}
 
-                {{ form_widget(villeForm)}}
+                {{ form_widget(siteForm)}}
 
-                <button type="submit" class="btn">Ajouter la ville</button>
-                <button class="btn"><a href="{{ path('sortie_lieu') }}">Retour</a></button>
-                {{ form_end(villeForm) }}
+                <button type="submit" class="btn">Ajouter le site</button>
+                <button class="btn"><a href="{{ path('sortie_site') }}">Retour</a></button>
+                {{ form_end(siteForm) }}
             </div>
             </div>
         </div>
