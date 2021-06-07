@@ -11,11 +11,17 @@
             <div class="tableau">
                 <div class="tableau-sites">
                     <div><strong>Nom</strong></div>
-                    <div><strong>Code Postal</strong></div>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <div><strong>Actions</strong></div>
+                    {% endif %}
                 </div>
                 <div class="tableau-sites">
                     {% for site in sites %}
                         <div><span>{{ site.nom }}</span></div>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path('site_update', {site_id: site.id}) }}">Modifier</a>
+                            <a href="{{ path('site_delete', {site_id: site.id }) }}">Supprimer</a>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
@@ -29,7 +35,7 @@
 
                 {{ form_widget(siteForm)}}
 
-                <button type="submit" class="btn">Ajouter le site</button>
+                <button type="submit" class="btn">Valider</button>
                 <button class="btn"><a href="{{ path('sortie_site') }}">Retour</a></button>
                 {{ form_end(siteForm) }}
             </div>

@@ -15,6 +15,9 @@
                     <div><strong>Latitude</strong></div>
                     <div><strong>Longitude</strong></div>
                     <div><strong>Ville</strong></div>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <div><strong>Actions</strong></div>
+                    {% endif %}
                 </div>
                 <div class="tableau-lieux">
                     {% for lieu in lieux %}
@@ -23,6 +26,10 @@
                         <div><span>{{ lieu.latitude }}</span></div>
                         <div><span>{{ lieu.longitude }}</span></div>
                         <div><span>{{ lieu.ville.nom }}</span></div>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path('lieu_update', {lieu_id: lieu.id}) }}">Modifier</a>
+                            <a href="{{ path('lieu_delete', {lieu_id: lieu.id }) }}">Supprimer</a>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
@@ -41,8 +48,8 @@
                 <div>{{ form_row(lieuForm.latitude) }}</div>
                 <div>{{ form_row(lieuForm.longitude) }}</div>
                 <br>
-                <button class="btn"><a href="{{ path('sortie_ville') }}">Gérer les villes</a></button>
-                <button type="submit" class="btn">Ajouter le lieu</button>
+                <button class="btn"><a href="{{ path('ville_add') }}">Gérer les villes</a></button>
+                <button type="submit" class="btn">Valider</button>
                 <button class="btn"><a href="{{ path('sortie_add') }}">Retour</a></button>
                 {{ form_end(lieuForm) }}
             </div>

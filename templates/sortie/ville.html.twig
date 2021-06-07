@@ -12,11 +12,18 @@
                 <div class="tableau-villes">
                     <div><strong>Nom</strong></div>
                     <div><strong>Code Postal</strong></div>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <div><strong>Actions</strong></div>
+                    {% endif %}
                 </div>
                 <div class="tableau-villes">
                     {% for ville in villes %}
                         <div><span>{{ ville.nom }}</span></div>
                         <div><span>{{ ville.codePostal }}</span></div>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path('ville_update', {ville_id: ville.id}) }}">Modifier</a>
+                            <a href="{{ path('ville_delete', {ville_id: ville.id }) }}">Supprimer</a>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
@@ -30,8 +37,8 @@
 
                 {{ form_widget(villeForm)}}
 
-                <button type="submit" class="btn">Ajouter la ville</button>
-                <button class="btn"><a href="{{ path('sortie_lieu') }}">Retour</a></button>
+                <button type="submit" class="btn">Valider</button>
+                <button class="btn"><a href="{{ path('lieu_add') }}">Retour</a></button>
                 {{ form_end(villeForm) }}
             </div>
             </div>

@@ -4,22 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Lieu;
-use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\User;
 use App\Entity\Ville;
 use App\Form\LieuFormType;
 use App\Form\MotifAnnulationType;
-use App\Form\SiteFormType;
 use App\Form\SortieFormType;
-use App\Form\VilleFormType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -94,7 +90,6 @@ class SortieController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $entityManager, $sortie_id=null): Response
     {
-        dump('Sortie id en controller : '.$sortie_id);
         //Si aucun id de sortie en requete, creation de nouveaux objets sortie et lieu
         if($sortie_id!==null){
             $sortie = $entityManager->getRepository(Sortie::class)->find($sortie_id);
@@ -182,95 +177,6 @@ class SortieController extends AbstractController
         $response->headers->set("Content-Type", "application/json;charset=utf-8");
 
         return $response;
-
-    }
-
-
-    /**
-     * @Route("/sortie_lieu", name="sortie_lieu")
-     */
-    public function lieu(Request $request, EntityManagerInterface $entityManager): Response
-    {
-
-        $lieu = new Lieu();
-        $lieux = $entityManager->getRepository(Lieu::class)->findAll();
-
-        $lieuForm = $this->createForm(LieuFormType::class, $lieu);
-        $lieuForm->handleRequest($request);
-
-        if($lieuForm->isSubmitted() && $lieuForm->isValid()){
-
-            $entityManager->persist($lieu);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Lieu ajouté !');
-            return $this->redirectToRoute('sortie_add');
-
-        }
-
-
-        return $this->render('sortie/lieu.html.twig', [
-            'lieuForm' => $lieuForm->createView(),
-            'lieux' => $lieux,
-        ]);
-
-    }
-
-    /**
-     * @Route("/sortie_ville", name="sortie_ville")
-     */
-    public function ville(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $ville = new Ville();
-        $villes = $entityManager->getRepository(Ville::class)->findAll();
-
-        $villeForm = $this->createForm(VilleFormType::class, $ville);
-        $villeForm->handleRequest($request);
-
-        if($villeForm->isSubmitted() && $villeForm->isValid()){
-
-            $entityManager->persist($ville);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Ville ajoutée !');
-            return $this->redirectToRoute('sortie_lieu');
-
-        }
-
-
-        return $this->render('sortie/ville.html.twig', [
-            'villeForm' => $villeForm->createView(),
-            'villes' => $villes,
-        ]);
-
-    }
-
-    /**
-     * @Route("/sortie_site", name="sortie_site")
-     */
-    public function site(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $site = new Site();
-        $sites = $entityManager->getRepository(Site::class)->findAll();
-
-        $siteForm = $this->createForm(SiteFormType::class, $site);
-        $siteForm->handleRequest($request);
-
-        if($siteForm->isSubmitted() && $siteForm->isValid()){
-
-            $entityManager->persist($site);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Site ajouté !');
-            return $this->redirectToRoute('sortie_lieu');
-
-        }
-
-
-        return $this->render('sortie/site.html.twig', [
-            'siteForm' => $siteForm->createView(),
-            'sites' => $sites,
-        ]);
 
     }
 
