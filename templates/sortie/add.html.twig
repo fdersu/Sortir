@@ -13,7 +13,7 @@
     {{ form_widget(sortieForm) }}
 
     {{ form_end(sortieForm) }}
-    {% if(sortie) %}
+    {% if(sortie.id!=null) %}
         <button class="btn"><a href="{{ path('sortie_cancelReason', {'sortie_id' : sortie.id}) }}">Supprimer la sortie</a></button>
     {% endif %}
     <button class="btn"><a href="{{ path('lieu_add') }}">Ajouter un lieu</a></button>

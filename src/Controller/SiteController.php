@@ -43,7 +43,7 @@ class SiteController extends AbstractController
     }
 
     /**
-     * @Route ("/site_update/{sortie_id}", name="site_update", requirements={"site_id"="\d+"})
+     * @Route ("/site_update/{site_id}", name="site_update", requirements={"site_id"="\d+"})
      */
     public function updateSite(Request $request, EntityManagerInterface $entityManager, $site_id=null): Response
     {
