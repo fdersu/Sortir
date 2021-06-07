@@ -12,12 +12,12 @@ use App\Form\MotifAnnulationType;
 use App\Form\SortieFormType;
 use App\Form\VilleFormType;
 use App\Repository\EtatRepository;
-use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,21 +75,30 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/sortie_add", name="sortie_add")
+     * @Route ("/sortie_update/{id}", name="sortie_update")
      */
-    public function add(Request $request, EntityManagerInterface $entityManager): Response
+    public function add(Request $request, EntityManagerInterface $entityManager, $idSortie=null): Response
     {
-        $sortie = new Sortie();
-        $lieu = new Lieu();
+        //Si aucun id de sortie en requete, creation de nouveaux objets sortie et lieu
+        if($idSortie!==null){
+            $sortie = $entityManager->getRepository(Sortie::class)->find($idSortie);
+            $lieu = $sortie->getLieu();
+        } else {
+            $sortie = new Sortie();
+            $lieu = new Lieu();
+        }
 
+        //Récupération du site de rattachement de l'organisateur
         /** @var User $user */
         $user = $this->getUser();
         $siteUser = $user->getSite()->getNom();
 
+        //Génération des formulaires Sortie et Lieu
         $sortieForm = $this->createForm(SortieFormType::class, $sortie, ['site'=>$siteUser]);
         $lieuForm = $this->createForm(LieuFormType::class, $lieu);
 
 
-        //Methode pour setter Organisateur direct dans le controlleur :
+        //Methode pour setter Organisateur directement dans le controlleur :
         $sortie->setOrganisateur($entityManager->getRepository(User::class)->findOneBy(['pseudo' => $this->getUser()->getUsername()]));
 
         //Methode pour récupérer le site en fonction de l'organisateur
@@ -98,9 +107,20 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
         $lieuForm->handleRequest($request);
 
-
-
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+
+            //Vérification du bouton cliqué
+
+            if ($sortieForm->getClickedButton() === $sortieForm->get('save')) {
+                $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']));
+
+            } elseif ($sortieForm->getClickedButton() === $sortieForm->get('publish')){
+                $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
+            }
+
+            //Récupération de l'id du lieu et set de l'objet à la place
+            $idLieu = $sortieForm->get('lieu')->getData();
+            $sortie->setLieu($entityManager->getRepository(Lieu::class)->find($idLieu));
 
             if($sortie->getLieu() !== null){
 
