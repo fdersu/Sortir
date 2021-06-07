@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MainController extends AbstractController
 {
-
+    /** Redirection vers la page de login */
     /**
      * @Route("", name="home")
      */
@@ -28,6 +28,7 @@ class MainController extends AbstractController
         return $this->redirectToRoute("app_login");
     }
 
+    /** Méthode d'affichage de la page d'accueil */
     /**
      * @Route("accueil", name="accueil")
      */
@@ -53,6 +54,7 @@ class MainController extends AbstractController
         ]);
     }
 
+    /** Traitement de requête AJAX pour l'affichage du motif d'annulation d'une sortie */
     /** @Route("/accueil/ajax/motif", name="main_ajax_motif") */
     public function ajaxMotif(Request $request, SortieRepository $sortieRepository)
     {

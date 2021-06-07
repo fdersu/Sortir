@@ -25,6 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
+    /** Affichage du détail d'une sortie */
     /**
      * @Route("/sortie/detail/{sortie_id}", name="sortie_detail", requirements={"sortie_id"="\d+"})
      */
@@ -38,6 +39,7 @@ class SortieController extends AbstractController
         ]);
     }
 
+    /** Affichage du profil d'un participant */
     /** @Route("/sortie/{sortie_id}/participant/{id}", name="sortie_participant", requirements={"sortie_id"="\d+","id"="\d+"}) */
     public function participant(UserRepository $userRepository,SortieRepository $sortieRepository, $sortie_id, $id){
         $user = $userRepository->find($id);
@@ -48,6 +50,17 @@ class SortieController extends AbstractController
         ]);
     }
 
+    /** @Route("/sortie/publier/{sortie_id}", name="sortie_publier", requirements={"sortie_id"="\d+"}) */
+    public function publier(EntityManagerInterface $entityManager, SortieRepository $sortieRepository, EtatRepository $etatRepository, $sortie_id){
+        $sortie = $sortieRepository->find($sortie_id);
+        $newState = $etatRepository->findOneBy(['libelle' => 'Ouverte']);
+        $sortie->setEtat($newState);
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+        return $this->redirectToRoute('main_accueil');
+    }
+
+    /** Annulation d'une sortie */
     /** @Route("/sortie/cancel/reason/{sortie_id}", name="sortie_cancelReason", requirements={"sortie_id"="\d+"}) */
     public function defineCancelReason(EntityManagerInterface $entityManager,EtatRepository $etatRepository, SortieRepository $sortieRepository,Request $request, $sortie_id){
         $sortie = $sortieRepository->find($sortie_id);
@@ -75,13 +88,13 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/sortie_add", name="sortie_add")
-     * @Route ("/sortie_update/{id}", name="sortie_update")
+     * @Route ("/sortie_update/{sortie_id}", name="sortie_update")
      */
-    public function add(Request $request, EntityManagerInterface $entityManager, $idSortie=null): Response
+    public function add(Request $request, EntityManagerInterface $entityManager, $sortie_id=null): Response
     {
         //Si aucun id de sortie en requete, creation de nouveaux objets sortie et lieu
-        if($idSortie!==null){
-            $sortie = $entityManager->getRepository(Sortie::class)->find($idSortie);
+        if($sortie_id!==null){
+            $sortie = $entityManager->getRepository(Sortie::class)->find($sortie_id);
             $lieu = $sortie->getLieu();
         } else {
             $sortie = new Sortie();
@@ -123,8 +136,6 @@ class SortieController extends AbstractController
             $sortie->setLieu($entityManager->getRepository(Lieu::class)->find($idLieu));
 
             if($sortie->getLieu() !== null){
-
-                $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Ouverte']));
 
                 $entityManager->persist($sortie);
                 $entityManager->flush();

@@ -35,8 +35,8 @@ class Sortie
     /**
      * @Assert\Type("integer")
      * @Assert\Range(
-     *     min="1",
-     *     max="36",
+     *     min="10",
+     *     max="1440",
      *     notInRangeMessage="La durée doit être comprise entre 1h et 36h",
      * )
      * @ORM\Column(type="integer")
@@ -63,9 +63,9 @@ class Sortie
     /**
      *@Assert\NotBlank(message = "Merci de décrire la sortie en quelques mots")
      *@Assert\Length(
-     *min="30",
+     *min="3",
      *max="500",
-     *minMessage="Minimum 30 characters",
+     *minMessage="Minimum 3 characters",
      *maxMessage="Maximum 500 characters"
      *)
      * @ORM\Column(type="string", length=500, nullable=true)
