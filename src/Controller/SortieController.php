@@ -12,10 +12,13 @@ use App\Form\MotifAnnulationType;
 use App\Form\SortieFormType;
 use App\Form\VilleFormType;
 use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -118,6 +121,37 @@ class SortieController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route("/sortie_add/lieu", name="sortie_add_lieu")
+     */
+    public function addSortieLieu(Request $request, VilleRepository $villeRepository): Response
+    {
+
+        $ville = new Ville();
+        if ($request->isMethod('POST')) {
+            $data = json_decode($request->getContent());
+            $ville = $villeRepository->find($data->ville);
+        }
+
+        $lieux = $ville->getLieus();
+
+
+        $tableauLieux = [];
+
+
+        foreach ($lieux as $lieu){
+           array_push($tableauLieux, ['id' => $lieu->getId(), 'nom' => $lieu->getNom()]);
+        }
+
+
+        $response = new JsonResponse(['lieux' => $tableauLieux]);
+        $response->headers->set("Content-Type", "application/json;charset=utf-8");
+
+        return $response;
+
+    }
+
 
     /**
      * @Route("/sortie_lieu", name="sortie_lieu")

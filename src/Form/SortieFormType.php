@@ -57,8 +57,17 @@ class SortieFormType extends AbstractType
                 'mapped' => false,
                 'placeholder' => 'Choisissez une ville',
                 'choice_label' => 'nom'
-            ]);
+            ])
 
+            ->add('lieu', EntityType::class, [
+                'class' => Lieu::class,
+                'mapped' => false,
+                'placeholder' => 'Choisissez un lieu',
+                'choice_label' => 'nom'
+            ])
+        ;
+
+        /*
             $formModifier = function (FormInterface $form, Ville $ville) {
 
                 $form->add('lieu', EntityType::class, array(
@@ -81,6 +90,7 @@ class SortieFormType extends AbstractType
                     $formModifier($event->getForm()->getParent(), $ville);
                 }
             );
+        */
     }
 
     public function configureOptions(OptionsResolver $resolver)
