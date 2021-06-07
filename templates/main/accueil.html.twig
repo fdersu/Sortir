@@ -148,6 +148,9 @@
                                                     <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">Annuler</a>
                                             {% endif %}
                                         {% endif %}
+                                        {% if "ROLE_ADMIN" in app.user.roles %}
+                                            <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">Annuler</a>
+                                            {% endif %}
                                     </div>
                                 </div>
                             </div>
