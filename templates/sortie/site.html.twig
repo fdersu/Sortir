@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une ville{% endblock %}
+
+{% block body %}
+
+    <h1>Gérer les sites</h1>
+
+    <div class="flex-row">
+        <div class="block">
+            <div class="tableau">
+                <div class="tableau-sites">
+                    <div><strong>Nom</strong></div>
+                    <div><strong>Code Postal</strong></div>
+                </div>
+                <div class="tableau-sites">
+                    {% for site in sites %}
+                        <div><span>{{ site.nom }}</span></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="block">
+            <div class="form">
+            <h3>Ajouter une ville</h3>
+            <div>
+                {{ form_start(villeForm) }}
+
+                {{ form_widget(villeForm)}}
+
+                <button type="submit" class="btn">Ajouter la ville</button>
+                <button class="btn"><a href="{{ path('sortie_lieu') }}">Retour</a></button>
+                {{ form_end(villeForm) }}
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

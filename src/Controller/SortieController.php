@@ -88,10 +88,11 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/sortie_add", name="sortie_add")
-     * @Route ("/sortie_update/{sortie_id}", name="sortie_update")
+     * @Route ("/sortie_update/{sortie_id}", name="sortie_update", requirements={"sortie_id"="\d+"})
      */
     public function add(Request $request, EntityManagerInterface $entityManager, $sortie_id=null): Response
     {
+        dump('Sortie id en controller : '.$sortie_id);
         //Si aucun id de sortie en requete, creation de nouveaux objets sortie et lieu
         if($sortie_id!==null){
             $sortie = $entityManager->getRepository(Sortie::class)->find($sortie_id);
@@ -105,6 +106,10 @@ class SortieController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $siteUser = $user->getSite()->getNom();
+        $sortie->setSite($user->getSite());
+
+        //Récupération de la longitude et latitude
+
 
         //Génération des formulaires Sortie et Lieu
         $sortieForm = $this->createForm(SortieFormType::class, $sortie, ['site'=>$siteUser]);
@@ -114,16 +119,13 @@ class SortieController extends AbstractController
         //Methode pour setter Organisateur directement dans le controlleur :
         $sortie->setOrganisateur($entityManager->getRepository(User::class)->findOneBy(['pseudo' => $this->getUser()->getUsername()]));
 
-        //Methode pour récupérer le site en fonction de l'organisateur
-        $sortie->setSite($user->getSite());
-
+        //Recupération de la requete
         $sortieForm->handleRequest($request);
         $lieuForm->handleRequest($request);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
             //Vérification du bouton cliqué
-
             if ($sortieForm->getClickedButton() === $sortieForm->get('save')) {
                 $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']));
 
@@ -149,6 +151,7 @@ class SortieController extends AbstractController
         return $this->render('sortie/add.html.twig', [
             'sortieForm' => $sortieForm->createView(),
             'lieuForm' => $lieuForm->createView(),
+            'sortie' => $sortie,
         ]);
 
     }
@@ -167,14 +170,11 @@ class SortieController extends AbstractController
 
         $lieux = $ville->getLieus();
 
-
         $tableauLieux = [];
-
 
         foreach ($lieux as $lieu){
            array_push($tableauLieux, ['id' => $lieu->getId(), 'nom' => $lieu->getNom()]);
         }
-
 
         $response = new JsonResponse(['lieux' => $tableauLieux]);
         $response->headers->set("Content-Type", "application/json;charset=utf-8");

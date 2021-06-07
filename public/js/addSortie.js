@@ -1,5 +1,6 @@
 window.onload = function(){
     reloadLieux();
+    //displayButtonDelete();
 }
 
 function reloadLieux(){
@@ -41,32 +42,38 @@ function reloadLieux(){
         req.send(JSON.stringify(data));
 
     })
-
 }
 
 
+function displayButtonDelete(){
 
-function displayButtonAjoutLieu(){
+    let matches = location.href.match(/\d+/g);
 
-    if(document.getElementById('sortie_form_lieu')){
+    if(matches){
 
-        let lieux = document.getElementById('sortie_form_lieu');
-        console.log(lieux);
+        let urlParams = new URLSearchParams(window.location.search);
 
-        let submitButton = document.getElementById('submitBtnForNewSortie');
-        console.log(submitButton);
+        console.log(urlParams.has('sortie_id')); // true
+        console.log(urlParams.get('sortie_id'));
+        let sortie_id = urlParams.get('sortie_id');
+        //console.log(urlParams.getAll('action')); // ["edit"]
+        //console.log(urlParams.toString()); // "?post=1234&action=edit"
+        //console.log(urlParams.append('active', '1')); // "?post=1234&action=edit&active=1"
 
-        let lieuButton = document.createElement("button");
-        lieuButton.className = 'btn';
-        lieuButton.textContent = 'Ajouter un lieu';
+        let cancelButton = document.getElementById('cancelBtnForAddSortie');
+        console.log(cancelButton);
+
+        let supprButton = document.createElement("button");
+        supprButton.className = 'btn';
+        supprButton.textContent = 'Supprimer la sortie';
 
         let link = document.createElement("a");
-        link.href="{{ path('sortie_lieu') }}";
+        link.href="http://sortir/sortie/cancel/reason/" + sortie_id;
 
-        lieuButton.appendChild(link);
-        submitButton.after(lieuButton);
+        supprButton.appendChild(link);
+        cancelButton.after(supprButton);
+
     }
-
 }
 
 
