@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ProfilController extends AbstractController
 {
@@ -75,7 +74,8 @@ class ProfilController extends AbstractController
             error_log($error->getMessage());
         }
         $entityManager->refresh($user);
-        return $this->render('profil/profil.html.twig', ['user' => $user, 'error' => $error, 'userForm' => $userForm->createView(), 'id' => $user->getId(), 'photo' => $user->getPhoto()]);
+        return $this->render('profil/profil.html.twig', ['user' => $user, 'error' => $error, 'userForm' => $userForm->createView(),
+                                                              'id' => $user->getId(), 'photo' => $user->getPhoto()]);
     }
 
 }
