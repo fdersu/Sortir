@@ -6,9 +6,7 @@ window.onload = function(){
 function reloadLieux(){
 
     let sortie_form_ville = document.getElementById('sortie_form_ville');
-    console.log(sortie_form_ville);
     let sortie_form_lieu = document.getElementById('sortie_form_lieu');
-    console.log(sortie_form_lieu);
 
     sortie_form_ville.addEventListener('change', function(){
 
@@ -17,7 +15,16 @@ function reloadLieux(){
         let data = {'ville' : ville};
         let lieux = [];
         let req = new XMLHttpRequest();
-        req.open('POST', location.href + '/lieu');
+
+        if(location.href.match(/\d+/)){
+            let arrayLocation = location.href.split("/");
+            arrayLocation.pop();
+            let newLocation = arrayLocation.join("/");
+            req.open('POST', newLocation + '/lieu');
+        } else {
+            req.open('POST', location.href + '/lieu');
+        }
+
         req.setRequestHeader("Content-Type", "application/json;charset=utf-8");
         req.onload = function () {
             data = JSON.parse(this.responseText);

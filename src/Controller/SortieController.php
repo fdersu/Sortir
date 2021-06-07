@@ -155,6 +155,7 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/sortie_add/lieu", name="sortie_add_lieu")
+     * @Route("/sortie_update/lieu", name="sortie_update_lieu")
      */
     public function addSortieLieu(Request $request, VilleRepository $villeRepository): Response
     {
