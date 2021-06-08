@@ -11,10 +11,10 @@
 
     {{ form_start(formActive, {'attr': {'class': 'row'}}) }}
     {% for item in allUsers %}
-        <div class="col-12 col-sm-6 d-flex justify-content-center">
+        <div class="col-12 col-sm-6 d-flex justify-content-start justify-content-sm-center">
             {{ form_label(formActive.children[item.id]) }}
         </div>
-        <div class="col-12 col-sm-6 d-flex justify-content-center">
+        <div class="col-12 col-sm-6 d-flex justify-content-start justify-content-sm-center">
             {{ form_widget(formActive.children[item.id]) }}
         </div>
     {% endfor %}
