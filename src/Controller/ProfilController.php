@@ -30,23 +30,30 @@ class ProfilController extends AbstractController
 
 
         $error = "";
+
         $userInSession = $userRepository->findOneBy(["pseudo" => $this->getUser()->getUsername()]);
         $user = $userRepository->find($id);
 
-
+        //Si l'id n'existe pas
         if (!$user) {
             throw $this->createNotFoundException("Oops ! This user does not exist ! ");
         }
 
+        //Si l'id existe mais qu'il ne correspond pas au pseudo de l'utilisateur en session
         if ($userInSession !== $user) {
             throw $this->createNotFoundException("Oops ! You can't edit another profil than your's ! ");
         }
 
         try {
+            //Création du formulaire
             $userForm = $this->createForm(UserType::class, $userInSession);
+
+            //Recupérer les données dans le POST
             $userForm->handleRequest($request);
 
             if ($userForm->isSubmitted() && $userForm->isValid()) {
+
+                //Upload de l'image
                 $file = $userForm->get('photo')->getData();
 
                 /**
@@ -58,7 +65,7 @@ class ProfilController extends AbstractController
                     $updateEntity->save($user);
                 }
 
-                // encode the plain password
+                //Encoder le password
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $userInSession,
@@ -67,6 +74,8 @@ class ProfilController extends AbstractController
 
                 $entityManager->persist($user);
                 $entityManager->flush();
+
+                //Affichage du message si profil modifié
                 $this->addFlash('success', 'Profil modified !!');
             }
 

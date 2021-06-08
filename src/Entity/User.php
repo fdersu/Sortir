@@ -78,7 +78,7 @@ class User implements UserInterface
     private $actif;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $site;

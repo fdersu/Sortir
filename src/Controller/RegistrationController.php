@@ -18,27 +18,31 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      * @Route("/update", name="app_update")
+     * Incrire une nouvelle personne si admin
      */
     public function register(Request $request,
                              UserPasswordEncoderInterface $passwordEncoder,
                              GuardAuthenticatorHandler $guardHandler,
                              AppAuthenticator $authenticator,
                              UserRepository $userRepository
-                             ): Response
+    ): Response
     {
 
-        if($request->query->get('id')){
+        if ($request->query->get('id')) {
             $id = $request->query->get('id');
             $user = $userRepository->find($id);
         } else {
             $user = new User();
         }
 
+        //Création du formulaire
         $form = $this->createForm(RegistrationFormType::class, $user);
+
+        //Récuperer les données dans le POST
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            //Encoder le mot de passe
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,

@@ -30,12 +30,12 @@ class Lieu
     private $rue;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $latitude;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $longitude;
 
