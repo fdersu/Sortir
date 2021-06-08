@@ -5,17 +5,20 @@ window.onload = function(){
 
 function reloadLieux(){
 
+    // Récupération des selects ville et lieu
     let sortie_form_ville = document.getElementById('sortie_form_ville');
     let sortie_form_lieu = document.getElementById('sortie_form_lieu');
 
+    //Ajout d'un event listener sur le select "ville"
     sortie_form_ville.addEventListener('change', function(){
 
         let ville = sortie_form_ville.value;
-        console.log(ville);
         let data = {'ville' : ville};
         let lieux = [];
         let req = new XMLHttpRequest();
 
+        //S'il y a un nombre dans l'url : split de l'url pour retirer ce nombre, puis envoi d'une
+        //requete POST vers la route /lieu qui permet de récupérer la liste de lieux
         if(location.href.match(/\d+/)){
             let arrayLocation = location.href.split("/");
             arrayLocation.pop();
@@ -25,18 +28,19 @@ function reloadLieux(){
             req.open('POST', location.href + '/lieu');
         }
 
+        //Décodage des lieux reçus en retour
         req.setRequestHeader("Content-Type", "application/json;charset=utf-8");
         req.onload = function () {
             data = JSON.parse(this.responseText);
             lieux = data['lieux'];
 
-            console.log(lieux);
-
+            //Suppression des lieux actuellement dans le select
             for (i = sortie_form_lieu.length - 1; i >= 0; i--) {
                 let child = sortie_form_lieu.firstChild;
                 child.remove();
             }
 
+            //Ajout des lieux reçus dans le select
             for (let lieu of lieux) {
                 let optionLieu = document.createElement('option');
                 optionLieu.value = lieu['id'];

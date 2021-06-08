@@ -85,6 +85,7 @@ class SortieController extends AbstractController
     }
 
     /**
+     * Methode de création ou modification d'une sortie
      * @Route("/sortie_add", name="sortie_add")
      * @Route ("/sortie_update/{sortie_id}", name="sortie_update", requirements={"sortie_id"="\d+"})
      */
@@ -154,6 +155,7 @@ class SortieController extends AbstractController
     }
 
     /**
+     * Methode de récupération de la liste des lieux pour le formulaire de creation de sortie
      * @Route("/sortie_add/lieu", name="sortie_add_lieu")
      * @Route("/sortie_update/lieu", name="sortie_update_lieu")
      */
@@ -161,19 +163,23 @@ class SortieController extends AbstractController
     {
 
         $ville = new Ville();
+
+        //S'il y a de la data en requete, récupération du json, décodage, et recherche de la ville d'après son id
         if ($request->isMethod('POST')) {
             $data = json_decode($request->getContent());
             $ville = $villeRepository->find($data->ville);
         }
 
+        //Récupération d'un tableau de lieux à partir de la ville
         $lieux = $ville->getLieus();
 
+        //Recreation manuellement d'un tableau de lieux (pour éviter pb avec json.parse au décodage)
         $tableauLieux = [];
-
         foreach ($lieux as $lieu){
            array_push($tableauLieux, ['id' => $lieu->getId(), 'nom' => $lieu->getNom()]);
         }
 
+        //Création d'une réponse Json encodant le tableau de lieux et envoi en retour
         $response = new JsonResponse(['lieux' => $tableauLieux]);
         $response->headers->set("Content-Type", "application/json;charset=utf-8");
 
