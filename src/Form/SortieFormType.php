@@ -69,14 +69,14 @@ class SortieFormType extends AbstractType
                 'label' => 'Enregistrer',
                 'attr' => [
                     'id' => 'saveBtnForNewSortie',
-                    'class' => 'btn'
+                    'class' => 'btn',
                 ]
             ])
             ->add('publish', SubmitType::class, [
                 'label' => 'Publier la sortie',
                 'attr' => [
                     'id' => 'submitBtnForNewSortie',
-                    'class' => 'btn'
+                    'class' => 'btn',
                 ]
             ])
         ;

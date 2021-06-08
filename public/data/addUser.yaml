@@ -1,0 +1,23 @@
+results:
+    -
+        pseudo: Thierry2
+        password : thithi2
+        nom : Baucalet
+        roles : ['ROLE_USER']
+        prenom : Thierry
+        telephone : 0123456789
+        mail: thithi@bauca.com
+        photo :
+        site : Rennes
+        actif : 1
+    -
+        pseudo : Bobby
+        password: bobob123
+        nom: Lostis
+        roles: [ 'ROLE_USER' ]
+        prenom: Bernard
+        telephone: 0123456789
+        mail: boby@lostis.com
+        photo:
+        site: Rennes
+        actif: 1

@@ -30,20 +30,25 @@ class ProfilController extends AbstractController
 
 
         $error = "";
+
         $userInSession = $userRepository->findOneBy(["pseudo" => $this->getUser()->getUsername()]);
         $user = $userRepository->find($id);
 
-
+        //Si l'id n'existe pas
         if (!$user) {
             throw $this->createNotFoundException("Oops ! This user does not exist ! ");
         }
 
+        //Si l'id existe mais qu'il ne correspond pas au pseudo de l'utilisateur en session
         if ($userInSession !== $user) {
             throw $this->createNotFoundException("Oops ! You can't edit another profil than your's ! ");
         }
 
         try {
+            //Création du formulaire
             $userForm = $this->createForm(UserType::class, $userInSession);
+
+            //Recupérer les données dans le POST
             $userForm->handleRequest($request);
 
             if ($userForm->isSubmitted() && $userForm->isValid()) {
@@ -58,7 +63,7 @@ class ProfilController extends AbstractController
                     $updateEntity->save($user);
                 }
 
-                // encode the plain password
+                //Encoder le password
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $userInSession,
@@ -67,6 +72,8 @@ class ProfilController extends AbstractController
 
                 $entityManager->persist($user);
                 $entityManager->flush();
+
+                //Affichage du message si profil modifié
                 $this->addFlash('success', 'Profil modified !!');
             }
 
@@ -77,6 +84,36 @@ class ProfilController extends AbstractController
         return $this->render('profil/profil.html.twig', ['user' => $user, 'error' => $error, 'userForm' => $userForm->createView(),
                                                               'id' => $user->getId(), 'photo' => $user->getPhoto()]);
     }
+
+
+
+    /**
+     * Methode pour exporter tous les users au format CSV (pour avoir un fichier pour tester l'import)
+     * @Route("/profil/export", name="profil_export")
+     */
+    public function exportCSV(Request $request, UserRepository $userRepository): Response
+    {
+
+        $users = $userRepository->findAll();
+        $str = "";
+
+        foreach ($users as $user) {
+
+            $str .= $user->getPseudo() . "," . $user->getPassword() . "," . $user->getNom() . "," . $user->getPrenom();
+            $str .= "," . $user->getTelephone() . "," . $user->getMail() . "," . $user->getActif();
+            foreach ($user->getRoles() as $role) {
+                $str .= "," . $role;
+            }
+            $str .= "," . $user->getPhoto();
+            $str .= "\n";
+        }
+
+        $response = new Response($str);
+        $response->headers->set('Content-Type', 'text/csv');
+
+        return $response;
+    }
+
 
 }
 

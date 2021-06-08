@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Gérer les lieux{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/style_flxgrd.css') }}">{% endblock %}
 
 {% block body %}
 
@@ -9,7 +10,11 @@
     <div class="flex-row">
         <div class="block">
             <div class="tableau">
-                <div class="tableau-lieux">
+                {% if is_granted("ROLE_ADMIN") %}
+                <div class="tableau-lieux-admin">
+                    {% else %}
+                    <div class="tableau-lieux">
+                        {% endif %}
                     <div><strong>Nom</strong></div>
                     <div><strong>Rue</strong></div>
                     <div><strong>Latitude</strong></div>
@@ -19,7 +24,11 @@
                         <div><strong>Actions</strong></div>
                     {% endif %}
                 </div>
-                <div class="tableau-lieux">
+                {% if is_granted("ROLE_ADMIN") %}
+                        <div class="tableau-lieux-admin">
+                            {% else %}
+                                <div class="tableau-lieux">
+                                    {% endif %}
                     {% for lieu in lieux %}
                         <div><span>{{ lieu.nom }}</span></div>
                         <div><span>{{ lieu.rue }}</span></div>
@@ -27,8 +36,10 @@
                         <div><span>{{ lieu.longitude }}</span></div>
                         <div><span>{{ lieu.ville.nom }}</span></div>
                         {% if is_granted("ROLE_ADMIN") %}
-                            <a href="{{ path('lieu_update', {lieu_id: lieu.id}) }}">Modifier</a>
-                            <a href="{{ path('lieu_delete', {lieu_id: lieu.id }) }}">Supprimer</a>
+                            <div class="block-case">
+                                <a href="{{ path('lieu_update', {lieu_id: lieu.id}) }}">Modifier</a>
+                                <a href="{{ path('lieu_delete', {lieu_id: lieu.id }) }}">Supprimer</a>
+                            </div>
                         {% endif %}
                     {% endfor %}
                 </div>

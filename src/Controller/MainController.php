@@ -34,19 +34,33 @@ class MainController extends AbstractController
      */
     public function accueil(SortieRepository $sortieRepository, Request $request): Response
     {
+        //Instance de user
         /** @var User $user */
         $user = $this->getUser();
+
+        //Variable de la date actuelle
         $now = new \DateTime();
+
+        //Toutes les sorties datant de moins d'un mois
         $allSorties = $sortieRepository->findWithinLastMonth();
+
         $filter = new Filter();
+
+        //Création du formulaire de filtre
         $filterForm = $this->createForm(FilterType::class, $filter);
+
+        //Récuperer les informations du POST
         $filterForm->handleRequest($request);
         if ($filterForm->isSubmitted() && $filterForm->isValid()) {
             $allSorties = $sortieRepository->findByFilter($filter, $user);
+
+            //Si il n'y a aucune sorties correspondant aux filtres
             if (empty($allSorties)) {
                 $this->addFlash('notice', "Aucun résultat pour votre recherche.");
             }
         }
+
+        //Rafraichir la page + affichage des sorties en fonction des filtres
         return $this->render('main/accueil.html.twig', [
             'filterForm' => $filterForm->createView(),
             'sorties' => $allSorties,

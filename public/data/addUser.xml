@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user>
+	<results>
+		<name>
+			<title>Mr</title>
+			<first>Harold</first>
+			<last>Lambert</last>
+		</name>
+		<location>
+			<street>
+				<number>6298</number>
+				<name>Sunset St</name>
+			</street>
+			<city>Plano</city>
+			<state>Vermont</state>
+			<country>United States</country>
+			<postcode>47687</postcode>
+			<coordinates>
+				<latitude>-5.8851</latitude>
+				<longitude>-110.5382</longitude>
+			</coordinates>
+			<timezone>
+				<offset>-3:00</offset>
+				<description>Brazil, Buenos Aires, Georgetown</description>
+			</timezone>
+		</location>
+		<email>harold.lambert@example.com</email>
+		<login>
+			<uuid>685acae6-ad64-4851-a6a4-4ade9503f55a</uuid>
+			<username>redfish373</username>
+			<password>goodbye</password>
+			<salt>O1xsItdP</salt>
+			<md5>c675b0a46d47ddcf759cc6b515803e59</md5>
+			<sha1>06d9e3e71e3f6bad1c79f2dfb5836aade97fc242</sha1>
+			<sha256>65f14ce16ba1ffba3ff1efb8a92ac3b15e8951e471aa0aa69fcf54607a4218b1</sha256>
+		</login>
+		<dob>
+			<date>1981-02-04T00:26:10.174Z</date>
+			<age>40</age>
+		</dob>
+		<registered>
+			<date>2017-01-14T03:06:56.583Z</date>
+			<age>4</age>
+		</registered>
+		<phone>(530)-193-3651</phone>
+		<cell>(789)-742-3441</cell>
+		<id>
+			<name>SSN</name>
+			<value>620-66-6576</value>
+		</id>
+		<picture>
+			<large>https://randomuser.me/api/portraits/men/88.jpg</large>
+			<medium>https://randomuser.me/api/portraits/med/men/88.jpg</medium>
+			<thumbnail>https://randomuser.me/api/portraits/thumb/men/88.jpg</thumbnail>
+		</picture>
+		<nat>US</nat>
+	</results>
+</user>

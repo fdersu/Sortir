@@ -1,0 +1,109 @@
+::before, ::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: 1rem;
+    width: 98vw;
+}
+
+.container-grille {
+    width: 100%;
+    display: grid;
+    grid-template-columns:1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+.bg-color {
+    color: #f2f2f2;
+    background-color: teal;
+}
+
+header {
+    display: grid;
+    grid-template-columns: 60px 200px 1fr;
+    grid-template-rows: 1fr;
+    justify-content: center;
+
+}
+
+.logo {
+    max-height: 50px;
+    width: auto;
+}
+
+.menu-toggle,
+.menu-checkbox {
+    display: none;
+}
+
+
+.ulNav {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: teal;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    font-size: 1rem;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: turquoise;
+    color: black;
+}
+
+
+/* Add a color to the active/current link */
+.topnav a:active {
+    background-color: #04dbde;
+    color: darkgray;
+}
+
+
+@media screen and (max-width: 1000px) {
+
+    .container-grille{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ulNav {
+        display: none;
+    }
+
+    .menu-checkbox {
+        opacity: 0;
+        position: absolute;
+        top: -1000px;
+    }
+
+    .menu-toggle {
+        display: flex;
+        padding: .5em 1em;
+        font-size: 1.5em;
+    }
+
+    .menu-checkbox:focus + .menu-toggle {
+        outline:darkcyan auto 5px;
+    }
+
+    .menu-checkbox:checked ~ .ulNav {
+        display: block;
+    }
+}

@@ -26,7 +26,13 @@ header {
     grid-template-columns: 60px 200px 1fr;
     grid-template-rows: 1fr;
     align-content: space-around;
+    justify-content: center;
 
+}
+
+.logo {
+    max-height: 50px;
+    width: auto;
 }
 
 .menu-toggle,
@@ -126,16 +132,57 @@ main {
     grid-template-rows: auto 1fr;
 }
 
+.block-case {
+    display: flex;
+    flex-direction: column;
+}
+
+.tableau-lieux-admin {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 5px;
+    border: solid 1px;
+}
+
 .tableau-lieux {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
+    grid-gap: 5px;
+    border: solid 1px;
+}
+
+.tableau-villes-admin {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 5px;
+    border: solid 1px;
 }
 
 .tableau-villes {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
+    grid-gap: 5px;
+    border: solid 1px;
+}
+
+.tableau-sites-admin {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 5px;
+    border: solid 1px;
+}
+
+.tableau-sites {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-gap: 5px;
+    border: solid 1px;
 }
 
 .noresize {
@@ -159,7 +206,7 @@ main {
     margin-bottom: 0.1em;
 }
 
-button a {
+.btn a {
     display: inline;
     flex-direction: column;
     width: 70%;
@@ -168,9 +215,15 @@ button a {
     color: black;
 }
 
+.btn a:hover {
+    color: white;
+}
 
-/**button {
-    display: block;
+
+
+.btn {
+    display: inline;
+    justify-content: space-around;
     margin: 0 auto;
     line-height: 2em;
     padding: 0 20px;
@@ -178,9 +231,9 @@ button a {
     letter-spacing: 2px;
     transition: .2s all ease-in-out;
     outline: none;
-    border: 1px solid rgba(0,0,0,1);
-    box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
-}*/
+    border: 1px solid rgba(0, 0, 0, 1);
+    box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0, 0, 0, 1);
+}
 
 .flash {
     font-size : 1em;
@@ -206,6 +259,18 @@ button a {
     font-family: 'Indie Flower', cursive;
 }
 
+button {
+    display: block;
+    margin: 0 auto;
+    line-height: 2em;
+    padding: 0 20px;
+    background-color: teal;
+    letter-spacing: 2px;
+    transition: .2s all ease-in-out;
+    outline: none;
+    border: 1px solid rgba(0,0,0,1);
+    box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
+}
 
 
 .wishesList {

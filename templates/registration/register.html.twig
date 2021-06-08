@@ -13,9 +13,18 @@
         {{ form_start(registrationForm) }}
 
         {{ form_widget(registrationForm) }}
-
-        <button type="submit" class="btn">Valider</button>
-        {{ form_end(registrationForm) }}
     </div>
+    <div class="col-12 col-sm-6 col-md-7 offset-4">
+        <button class="btn btn-lg btn-primary" type="submit">
+            Enregister
+        </button>
+
+        <a class="btn btn-lg btn-danger"
+           href="{{ path('main_home') }}">Retourner à
+            la page d'accueil</a>
+    </div>
+
+    {{ form_end(registrationForm) }}
+
 
 {% endblock %}
