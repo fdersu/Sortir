@@ -170,7 +170,7 @@ fabric.properties
 !bin/symfony_requirements
 /vendor/
 
-# Assets and user uploads
+# Assets and user data
 /web/bundles/
 /web/uploads/
 

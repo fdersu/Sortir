@@ -44,7 +44,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $role;
+    private $roles;
 
     /**
      * @var string The hashed password
@@ -141,16 +141,16 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getRole(): string
+    public function getRoles(): array
     {
-        $role = 'ROLE_USER';
+        $roles = 'ROLE_USER';
 
-        return $this->role;
+        return $this->roles;
     }
 
-    public function setRole(string $role): self
+    public function setRoles(array $roles): self
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
@@ -334,8 +334,4 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles()
-    {
-        // TODO: Implement getRoles() method.
-    }
 }
