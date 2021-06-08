@@ -2,22 +2,25 @@
     <div class="topnav ">
         <input type="checkbox" id="menu-checkbox" class="menu-checkbox">
         <label for="menu-checkbox" class="menu-toggle">≡ Menu</label>
-        <ul class="nav ulNav" id="menu">
+        <ul class="ulNav" id="menu">
             <li><a class="navLink" href="{{ path('main_accueil') }}" title="Home">Accueil</a></li>
             <li><a class="navLink" href="{{ path('sortie_add') }}" title="Ajouter une sortie">Ajouter une sortie</a></li>
+            <li><a class="navLink" href="{{ path('profil_edit', {'id' : app.user.id}) }}" title="Mon Profil">Mon Profil</a></li>
             {% if is_granted("ROLE_ADMIN") %}
-                <li><a class="navLink" href="{{ path('ville_add') }}" title="gestion_villes">Villes</a>
-                </li>
-                <li><a class="navLink" href="{{ path('site_add') }}" title="gestion_sites">Sites</a>
-                </li>
-                <li>
-                    <a class="navLink" href="{{ path('gestion_users_enable_disable_delete') }}">Gestion utilisateurs</a>
-                </li>
-                <li><a class="navLink" href="{{ path('app_register') }}" title="register">Enregistrer un utilisateur</a>
-                </li>
+            <li class="navLink submenu">
+                <a href="#">Admin dashbord</a>
+                    <ul class="admin-dashbord" title="Admin dashbord">
+                        <li><a class="navLink" href="{{ path('app_register') }}" title="register">Enregistrer un utilisateur</a>
+                        </li>
+                        <li><a class="navLink" href="{{ path('actif_update') }}" title="gestion utilisateurs">Gestion des utilisateurs</a>
+                        </li>
+                        <li><a class="navLink" href="{{ path('ville_add') }}" title="gestion_villes">Gestion des villes</a>
+                        </li>
+                        <li><a class="navLink" href="{{ path('site_add') }}" title="gestion_sites">Gestion des sites</a>
+                        </li>
+                    </ul>
+            </li>
             {% endif %}
-            <li><a class="navLink" href="{{ path('profil_edit', {'id' : app.user.id}) }}" title="Mon Profil">Mon Profil
-                   </a></li>
             <li><a class="navLink" href="{{ path('app_logout') }}" title="Deconnexion">Déconnexion</a></li>
         </ul>
     </div>

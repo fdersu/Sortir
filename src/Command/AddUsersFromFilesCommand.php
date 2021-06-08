@@ -109,7 +109,7 @@ class AddUsersFromFilesCommand extends Command
                     $newUser->setPseudo($row['pseudo'])
                         ->setPassword($this->encoder->encodePassword($newUser, $row['password']))
                         ->setNom($row['nom'])
-                        ->setRole($row['role'])
+                        ->setRoles(['ROLE_USER'])
                         ->setPrenom($row['prenom'])
                         ->setTelephone($row['telephone'])
                         ->setMail($row['mail'])

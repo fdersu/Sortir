@@ -95,16 +95,12 @@ class ProfilController extends AbstractController
     {
 
         $users = $userRepository->findAll();
-        $str = "";
+        $str = "site,pseudo,password,nom,prenom,telephone,mail,actif,roles,photo"."\n";
 
         foreach ($users as $user) {
 
-            $str .= $user->getPseudo() . "," . $user->getPassword() . "," . $user->getNom() . "," . $user->getPrenom();
-            $str .= "," . $user->getTelephone() . "," . $user->getMail() . "," . $user->getActif();
-            foreach ($user->getRoles() as $role) {
-                $str .= "," . $role;
-            }
-            $str .= "," . $user->getPhoto();
+            $str .= $user->getSite()->getId() . "," . $user->getPseudo() . "," . $user->getPassword() . "," . $user->getNom() . "," . $user->getPrenom();
+            $str .= "," . $user->getTelephone() . "," . $user->getMail() . "," . $user->getActif() . "," . $user->getRoles() . "," . $user->getPhoto();
             $str .= "\n";
         }
 
@@ -114,6 +110,36 @@ class ProfilController extends AbstractController
         return $response;
     }
 
+    /**
+     * @Route ("/actif_update", name="actif_update")
+     */
+    public function actifUpdate(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        //Récupération des users en base
+        $users = $entityManager->getRepository(User::class)->findAll();
+
+        if ($request->isMethod('post')) {
+            //Pour chaque user, récupération de la checkbox corrrespondant et set
+            foreach ($users as $user){
+                $actif = $request->request->get($user->getId());
+                if($actif!=null){
+                    $user->setActif(true);
+                } else {
+                    $user->setActif(false);
+                }
+            }
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Users modifiés !');
+        }
+
+        return $this->render('sortie/usersActifs.html.twig', [
+            'users' => $users,
+        ]);
+
+    }
 
 }
 
