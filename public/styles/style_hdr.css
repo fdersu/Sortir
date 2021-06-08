@@ -35,7 +35,8 @@ header {
 }
 
 .menu-toggle,
-.menu-checkbox {
+.menu-checkbox,
+.submenu-checkbox {
     display: none;
 }
 
@@ -56,19 +57,27 @@ header {
     max-height: 0;
 }
 
-.submenu:hover .admin-dashbord {
+.submenu-checkbox {
+    opacity: 0;
+    position: absolute;
+    top: -1000px;
+}
+
+.submenu-checkbox:checked ~ .admin-dashbord {
     display: flex;
     flex-direction: column;
     overflow: no-content;
     max-height: 100%;
 }
 
-.submenu:active .admin-dashbord {
+/*
+.submenu:hover .admin-dashbord {
     display: flex;
     flex-direction: column;
     overflow: no-content;
     max-height: 100%;
-}
+}*/
+
 
 /* Add a teal background color to the top navigation */
 .topnav {
