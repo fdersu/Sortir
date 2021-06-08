@@ -4,7 +4,9 @@
         <label for="menu-checkbox" class="menu-toggle">≡ Menu</label>
         <ul class="ulNav" id="menu">
             <li><a class="navLink" href="{{ path('main_accueil') }}" title="Home">Accueil</a></li>
+            {% if app.user.actif %}
             <li><a class="navLink" href="{{ path('sortie_add') }}" title="Ajouter une sortie">Ajouter une sortie</a></li>
+            {% endif %}
             <li><a class="navLink" href="{{ path('profil_edit', {'id' : app.user.id}) }}" title="Mon Profil">Mon Profil</a></li>
             {% if is_granted("ROLE_ADMIN") %}
             <li class="navLink submenu">
@@ -12,7 +14,7 @@
                     <ul class="admin-dashbord" title="Admin dashbord">
                         <li><a class="navLink" href="{{ path('app_register') }}" title="register">Enregistrer un utilisateur</a>
                         </li>
-                        <li><a class="navLink" href="{{ path('actif_update') }}" title="gestion utilisateurs">Gestion des utilisateurs</a>
+                        <li><a class="navLink" href="{{ path('gestion_users_enable_disable_delete') }}" title="gestion utilisateurs">Gestion des utilisateurs</a>
                         </li>
                         <li><a class="navLink" href="{{ path('ville_add') }}" title="gestion_villes">Gestion des villes</a>
                         </li>

@@ -133,10 +133,10 @@
                                             {% if bool and sortie.dateDebut > now %}
                                                 <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}">Se
                                                     désister</a>
-                                            {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' %}
+                                            {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' and app.user.actif %}
                                                 <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
                                             {% endif %}
-                                        {% elseif sortie.organisateur == app.user %}
+                                        {% elseif sortie.organisateur == app.user and app.user.actif %}
                                             {% if sortie.etat.libelle == 'Créée' %}
                                                     <a href="{{ path('sortie_update', {sortie_id: sortie.id}) }}">Modifier</a>
                                                     <a href="{{ path('sortie_publier', {sortie_id: sortie.id }) }}">Publier</a>
