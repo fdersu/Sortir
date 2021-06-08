@@ -14,15 +14,9 @@
         <div class="col-12 col-sm-6 d-flex justify-content-center">
             {{ form_label(formActive.children[item.id]) }}
         </div>
-        {% if item.actif %}
         <div class="col-12 col-sm-6 d-flex justify-content-center">
             {{ form_widget(formActive.children[item.id]) }}
         </div>
-        {% else %}
-            <div class="col-12 col-sm-6 d-flex justify-content-center">
-                {{ form_widget(formActive.children[item.id]) }}
-            </div>
-        {% endif %}
     {% endfor %}
     <div class="col-12 d-flex justify-content-center"><button>Valider</button></div>
     {{ form_end(formActive) }}
