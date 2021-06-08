@@ -26,6 +26,7 @@ header {
     grid-template-columns: 60px 200px 1fr;
     grid-template-rows: 1fr;
     align-content: space-around;
+    justify-content: center;
 
 }
 

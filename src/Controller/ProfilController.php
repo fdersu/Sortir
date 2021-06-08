@@ -43,7 +43,7 @@ class ProfilController extends AbstractController
         }
 
         try {
-            $userForm = $this->createForm(UserType::class, $userInSession);
+            $userForm = $this->createForm(UserType::class, $userInSession, ['role' => $userInSession->getRoles()]);
             $userForm->handleRequest($request);
 
             if ($userForm->isSubmitted() && $userForm->isValid()) {

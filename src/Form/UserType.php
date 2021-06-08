@@ -42,7 +42,6 @@ class UserType extends AbstractType
                 'expanded' => false,
                 'multiple' => false
             ])
-            ->add('actif')
             ->add('photo', FileType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -55,12 +54,20 @@ class UserType extends AbstractType
                     )
                 ]
             ]);
+        if (in_array('ROLE_ADMIN', $options['role'])) {
+            // do as you want if admin
+            $builder
+                ->add('actif');
+        }
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validation_groups' => ['create'],
+            'role' => ['ROLE_USER'],
         ]);
     }
 }
