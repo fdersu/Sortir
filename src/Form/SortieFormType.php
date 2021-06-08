@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -57,8 +58,30 @@ class SortieFormType extends AbstractType
                 'mapped' => false,
                 'placeholder' => 'Choisissez une ville',
                 'choice_label' => 'nom'
-            ]);
+            ])
 
+            ->add('lieu', EntityType::class, [
+                'class' => Lieu::class,
+                'placeholder' => 'Choisissez un lieu',
+                'choice_label' => 'nom'
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'Enregistrer',
+                'attr' => [
+                    'id' => 'saveBtnForNewSortie',
+                    'class' => 'btn',
+                ]
+            ])
+            ->add('publish', SubmitType::class, [
+                'label' => 'Publier la sortie',
+                'attr' => [
+                    'id' => 'submitBtnForNewSortie',
+                    'class' => 'btn',
+                ]
+            ])
+        ;
+
+        /*
             $formModifier = function (FormInterface $form, Ville $ville) {
 
                 $form->add('lieu', EntityType::class, array(
@@ -81,12 +104,14 @@ class SortieFormType extends AbstractType
                     $formModifier($event->getForm()->getParent(), $ville);
                 }
             );
+        */
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Sortie::class,
+            'allow_extra_fields' => true,
         ]);
         $resolver->setRequired('site');
     }

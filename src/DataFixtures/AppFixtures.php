@@ -28,28 +28,26 @@ class AppFixtures extends Fixture
     {
         $generator = Faker\Factory::create('fr_FR');
 
-        for ($i = 0; $i <= 10; $i++){
 
-            $ville = new Ville();
+            $villes = array([
+                'nom' => 'Rennes',
+                'codePostal' => '35000'],[
+                'nom' => 'Nantes',
+                'codePostal' => '44000'],[
+                'nom' => 'Quimper',
+                'codePostal' => '29000'],[
+                'nom' => 'Niort',
+                'codePostal' => '89000']);
 
-            $ville->setNom($generator->randomElement(array('Rennes', 'Nantes', 'Quimper', 'Niort')));
-            if($ville->getNom()=='Rennes'){
-                $ville->setCodePostal('35000');
-            }
-            if($ville->getNom()=='Nantes'){
-                $ville->setCodePostal('44000');
-            }
-            if($ville->getNom()=='Quimper'){
-                $ville->setCodePostal('29000');
-            }
-            if($ville->getNom()=='Niort'){
-                $ville->setCodePostal('79000');
+            foreach ($villes as $item){
+                $ville = new Ville();
+                $ville->setNom($item['nom']);
+                $ville->setCodePostal($item['codePostal']);
+                $manager->persist($ville);
+                $manager->flush();
             }
 
-            $manager->persist($ville);
-            $manager->flush();
 
-        }
 
         for ($i = 0; $i <= 10; $i++){
             $lieu = new Lieu();

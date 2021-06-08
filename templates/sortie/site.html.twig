@@ -1,38 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gérer les villes{% endblock %}
+{% block title %}Gérer les sites{% endblock %}
 {% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/style_flxgrd.css') }}">{% endblock %}
 
 {% block body %}
 
-    <h1>Gérer les villes</h1>
+    <h1>Gérer les sites</h1>
 
     <div class="flex-row">
         <div class="block">
             <div class="tableau">
                 {% if is_granted("ROLE_ADMIN") %}
-                <div class="tableau-villes-admin">
+                <div class="tableau-sites-admin">
                     {% else %}
-                    <div class="tableau-villes">
+                    <div class="tableau-sites">
                         {% endif %}
                     <div><strong>Nom</strong></div>
-                    <div><strong>Code Postal</strong></div>
                     {% if is_granted("ROLE_ADMIN") %}
                         <div><strong>Actions</strong></div>
                     {% endif %}
                 </div>
                     {% if is_granted("ROLE_ADMIN") %}
-                    <div class="tableau-villes-admin">
+                    <div class="tableau-sites-admin">
                         {% else %}
-                        <div class="tableau-villes">
+                        <div class="tableau-sites">
                             {% endif %}
-                    {% for ville in villes %}
-                        <div><span>{{ ville.nom }}</span></div>
-                        <div><span>{{ ville.codePostal }}</span></div>
+                    {% for site in sites %}
+                        <div><span>{{ site.nom }}</span></div>
                         {% if is_granted("ROLE_ADMIN") %}
                             <div class="block-case">
-                                <a href="{{ path('ville_update', {ville_id: ville.id}) }}">Modifier</a>
-                                <a href="{{ path('ville_delete', {ville_id: ville.id }) }}">Supprimer</a>
+                                <a href="{{ path('site_update', {site_id: site.id}) }}">Modifier</a>
+                                <a href="{{ path('site_delete', {site_id: site.id }) }}">Supprimer</a>
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -42,15 +40,15 @@
 
         <div class="block">
             <div class="form">
-            <h3>Ajouter une ville</h3>
+            <h3>Ajouter un site</h3>
             <div>
-                {{ form_start(villeForm) }}
+                {{ form_start(siteForm) }}
 
-                {{ form_widget(villeForm)}}
+                {{ form_widget(siteForm)}}
 
                 <button type="submit" class="btn">Valider</button>
-                <button class="btn"><a href="{{ path('lieu_add') }}">Retour</a></button>
-                {{ form_end(villeForm) }}
+                <button class="btn"><a href="{{ path('site_add') }}">Retour</a></button>
+                {{ form_end(siteForm) }}
             </div>
             </div>
         </div>

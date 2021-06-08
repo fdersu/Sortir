@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un lieu{% endblock %}
+{% block title %}Gérer les lieux{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/style_flxgrd.css') }}">{% endblock %}
 
 {% block body %}
 
@@ -9,20 +10,37 @@
     <div class="flex-row">
         <div class="block">
             <div class="tableau">
-                <div class="tableau-lieux">
+                {% if is_granted("ROLE_ADMIN") %}
+                <div class="tableau-lieux-admin">
+                    {% else %}
+                    <div class="tableau-lieux">
+                        {% endif %}
                     <div><strong>Nom</strong></div>
                     <div><strong>Rue</strong></div>
                     <div><strong>Latitude</strong></div>
                     <div><strong>Longitude</strong></div>
                     <div><strong>Ville</strong></div>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <div><strong>Actions</strong></div>
+                    {% endif %}
                 </div>
-                <div class="tableau-lieux">
+                {% if is_granted("ROLE_ADMIN") %}
+                        <div class="tableau-lieux-admin">
+                            {% else %}
+                                <div class="tableau-lieux">
+                                    {% endif %}
                     {% for lieu in lieux %}
                         <div><span>{{ lieu.nom }}</span></div>
                         <div><span>{{ lieu.rue }}</span></div>
                         <div><span>{{ lieu.latitude }}</span></div>
                         <div><span>{{ lieu.longitude }}</span></div>
                         <div><span>{{ lieu.ville.nom }}</span></div>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <div class="block-case">
+                                <a href="{{ path('lieu_update', {lieu_id: lieu.id}) }}">Modifier</a>
+                                <a href="{{ path('lieu_delete', {lieu_id: lieu.id }) }}">Supprimer</a>
+                            </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
@@ -41,8 +59,8 @@
                 <div>{{ form_row(lieuForm.latitude) }}</div>
                 <div>{{ form_row(lieuForm.longitude) }}</div>
                 <br>
-                <button class="btn"><a href="{{ path('sortie_ville') }}">Gérer les villes</a></button>
-                <button type="submit" class="btn">Ajouter le lieu</button>
+                <button class="btn"><a href="{{ path('ville_add') }}">Gérer les villes</a></button>
+                <button type="submit" class="btn">Valider</button>
                 <button class="btn"><a href="{{ path('sortie_add') }}">Retour</a></button>
                 {{ form_end(lieuForm) }}
             </div>

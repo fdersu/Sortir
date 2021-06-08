@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Créer une sortie{% endblock %}
-
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/style_flxgrd.css') }}">{% endblock %}
 
 
 {% block body %}
@@ -11,17 +11,32 @@
 <div class="form">
     {{ form_start(sortieForm) }}
 
-    {{ form_widget(sortieForm) }}
+    {{ form_row(sortieForm.nom) }}
+    {{ form_row(sortieForm.dateDebut) }}
+    {{ form_row(sortieForm.duree) }}
+    {{ form_row(sortieForm.description) }}
+    {{ form_row(sortieForm.nbInscriptionsMax) }}
+    {{ form_row(sortieForm.dateCloture) }}
+    {{ form_row(sortieForm.site) }}
+    {{ form_row(sortieForm.ville) }}
+    {{ form_row(sortieForm.lieu) }}
 
-    <button type="submit" class="btn" id="submitBtnForNewSortie">Valider</button>
+    <div style="display: inline-flex; "></div>
+    {{ form_widget(sortieForm.save) }}
+    {{ form_widget(sortieForm.publish) }}
 
-    <button class="btn"><a href="{{ path('main_accueil') }}">Annuler</a></button>
+    {% if(sortie.id!=null) %}
+        <button class="btn"><a href="{{ path('sortie_cancelReason', {'sortie_id' : sortie.id}) }}">Supprimer la sortie</a></button>
+    {% endif %}
+    <button class="btn"><a href="{{ path('lieu_add') }}">Ajouter un lieu</a></button>
+    <button class="btn" id="cancelBtnForAddSortie"><a href="{{ path('main_accueil') }}">Annuler</a></button>
+    
     {{ form_end(sortieForm) }}
+    
 </div>
 
 
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/addSortie.js') }}"></script>
-    <script src="{{ asset('js/jquery-3.6.0.js') }}"></script>
 {% endblock %}

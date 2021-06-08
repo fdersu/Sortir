@@ -6,6 +6,10 @@
             <li><a class="navLink" href="{{ path('main_accueil') }}" title="Home">Accueil</a></li>
             <li><a class="navLink" href="{{ path('sortie_add') }}" title="Ajouter une sortie">Ajouter une sortie</a></li>
             {% if is_granted("ROLE_ADMIN") %}
+                <li><a class="navLink" href="{{ path('ville_add') }}" title="gestion_villes">Villes</a>
+                </li>
+                <li><a class="navLink" href="{{ path('site_add') }}" title="gestion_sites">Sites</a>
+                </li>
                 <li><a class="navLink" href="{{ path('app_register') }}" title="register">Enregistrer un utilisateur</a>
                 </li>
             {% endif %}

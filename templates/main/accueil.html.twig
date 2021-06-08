@@ -139,10 +139,18 @@
                                                     désister</a>
                                             {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' %}
                                                 <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
-                                            {% else %}
-                                                <a></a>
+                                            {% endif %}
+                                        {% elseif sortie.organisateur == app.user %}
+                                            {% if sortie.etat.libelle == 'Créée' %}
+                                                    <a href="{{ path('sortie_update', {sortie_id: sortie.id}) }}">Modifier</a>
+                                                    <a href="{{ path('sortie_publier', {sortie_id: sortie.id }) }}">Publier</a>
+                                            {% elseif sortie.etat.libelle == 'Ouverte' or sortie.etat.libelle == 'Clôturée' %}
+                                                    <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">Annuler</a>
                                             {% endif %}
                                         {% endif %}
+                                        {% if "ROLE_ADMIN" in app.user.roles %}
+                                            <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">Annuler</a>
+                                            {% endif %}
                                     </div>
                                 </div>
                             </div>

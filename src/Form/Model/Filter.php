@@ -4,6 +4,7 @@
 namespace App\Form\Model;
 
 
+/** Objet filtre utilisé pour la création du formulaire du filtre */
 class Filter
 {
 

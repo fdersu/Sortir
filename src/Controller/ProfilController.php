@@ -52,8 +52,6 @@ class ProfilController extends AbstractController
             $userForm->handleRequest($request);
 
             if ($userForm->isSubmitted() && $userForm->isValid()) {
-
-                //Upload de l'image
                 $file = $userForm->get('photo')->getData();
 
                 /**
@@ -86,6 +84,36 @@ class ProfilController extends AbstractController
         return $this->render('profil/profil.html.twig', ['user' => $user, 'error' => $error, 'userForm' => $userForm->createView(),
                                                               'id' => $user->getId(), 'photo' => $user->getPhoto()]);
     }
+
+
+
+    /**
+     * Methode pour exporter tous les users au format CSV (pour avoir un fichier pour tester l'import)
+     * @Route("/profil/export", name="profil_export")
+     */
+    public function exportCSV(Request $request, UserRepository $userRepository): Response
+    {
+
+        $users = $userRepository->findAll();
+        $str = "";
+
+        foreach ($users as $user) {
+
+            $str .= $user->getPseudo() . "," . $user->getPassword() . "," . $user->getNom() . "," . $user->getPrenom();
+            $str .= "," . $user->getTelephone() . "," . $user->getMail() . "," . $user->getActif();
+            foreach ($user->getRoles() as $role) {
+                $str .= "," . $role;
+            }
+            $str .= "," . $user->getPhoto();
+            $str .= "\n";
+        }
+
+        $response = new Response($str);
+        $response->headers->set('Content-Type', 'text/csv');
+
+        return $response;
+    }
+
 
 }
 

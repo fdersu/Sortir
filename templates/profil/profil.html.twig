@@ -24,6 +24,7 @@
             {{ form_start(userForm) }}
 
             {{ form_widget(userForm) }}
+            
         </div>
     </div>
     <div class="col-12 col-sm-6 col-md-7 offset-4">
@@ -36,10 +37,14 @@
             la page d'accueil</a>
     </div>
 
-
     {{ form_end(userForm) }}
 
+    {% if is_granted("ROLE_ADMIN") %}
+        <button class="btn"><a href="{{ path('profil_export') }}">Exporter tous les utilisateurs</a></button>
+    {% endif %}
+
 {% endblock %}
+
 {% block style %}
     <style type="text/css">
         img {
