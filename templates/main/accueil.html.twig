@@ -49,18 +49,14 @@
 
         {{ form_end(filterForm) }}
 
-        {% for message in app.flashes('notice') %}
-            <div class="row pad">
-                <div class="col-lg-4 offset-lg-4"><strong>{{ message }}</strong></div>
-            </div>
-        {% endfor %}
+
 
 
         {% for sortie in sorties %}
             <div class="parent">
                 <div class="sortie">
                     <div class="row align-items-center">
-                        <div class="col-6 col-sm-4 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
                             {% if sortie.urlPhoto %}
                                 <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}"><img class="photoSortie"
                                                                                                    src="{{ asset('img/') ~ sortie.urlPhoto }}"
@@ -71,7 +67,7 @@
                                                                                                    alt="photo"></a>
                             {% endif %}
                         </div>
-                        <div class="col-6 col-sm-8 col-md-8 col-lg-10 col-xl-10 col-xxl-10">
+                        <div class="col-12 col-sm-12 col-md-8 col-lg-10 col-xl-10 col-xxl-10">
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
                                     <div><strong>Nom</strong></div>
