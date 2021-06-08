@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Gérer les sites{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/style_flxgrd.css') }}">{% endblock %}
 
 {% block body %}
 
@@ -9,18 +10,28 @@
     <div class="flex-row">
         <div class="block">
             <div class="tableau">
-                <div class="tableau-sites">
+                {% if is_granted("ROLE_ADMIN") %}
+                <div class="tableau-sites-admin">
+                    {% else %}
+                    <div class="tableau-sites">
+                        {% endif %}
                     <div><strong>Nom</strong></div>
                     {% if is_granted("ROLE_ADMIN") %}
                         <div><strong>Actions</strong></div>
                     {% endif %}
                 </div>
-                <div class="tableau-sites">
+                    {% if is_granted("ROLE_ADMIN") %}
+                    <div class="tableau-sites-admin">
+                        {% else %}
+                        <div class="tableau-sites">
+                            {% endif %}
                     {% for site in sites %}
                         <div><span>{{ site.nom }}</span></div>
                         {% if is_granted("ROLE_ADMIN") %}
-                            <a href="{{ path('site_update', {site_id: site.id}) }}">Modifier</a>
-                            <a href="{{ path('site_delete', {site_id: site.id }) }}">Supprimer</a>
+                            <div class="block-case">
+                                <a href="{{ path('site_update', {site_id: site.id}) }}">Modifier</a>
+                                <a href="{{ path('site_delete', {site_id: site.id }) }}">Supprimer</a>
+                            </div>
                         {% endif %}
                     {% endfor %}
                 </div>
