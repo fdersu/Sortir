@@ -30,15 +30,15 @@
                                 <div class="tableau-lieux">
                                     {% endif %}
                     {% for lieu in lieux %}
-                        <div {% if(loop.index is even) %} class="even" {% else%} class="odd" {% endif %}><span>{{ lieu.nom }}</span></div>
-                        <div {% if(loop.index is even) %} class="even" {% else%} class="odd" {% endif %}><span>{{ lieu.rue }}</span></div>
-                        <div {% if(loop.index is even) %} class="even" {% else%} class="odd" {% endif %}><span>{{ lieu.latitude }}</span></div>
-                        <div {% if(loop.index is even) %} class="even" {% else%} class="odd" {% endif %}><span>{{ lieu.longitude }}</span></div>
-                        <div {% if(loop.index is even) %} class="even" {% else%} class="odd" {% endif %}><span>{{ lieu.ville.nom }}</span></div>
+                        <div {% if(loop.index is even) %} class="even left grid-item" {% else%} class="odd left grid-item" {% endif %}><span>{{ lieu.nom }}</span></div>
+                        <div {% if(loop.index is even) %} class="even grid-item" {% else%} class="odd grid-item" {% endif %}><span>{{ lieu.rue }}</span></div>
+                        <div {% if(loop.index is even) %} class="even grid-item" {% else%} class="odd grid-item" {% endif %}><span>{{ lieu.latitude }}</span></div>
+                        <div {% if(loop.index is even) %} class="even grid-item" {% else%} class="odd grid-item" {% endif %}><span>{{ lieu.longitude }}</span></div>
+                        <div {% if(loop.index is even) %} class="even grid-item" {% else%} class="odd grid-item" {% endif %}><span>{{ lieu.ville.nom }}</span></div>
                         {% if is_granted("ROLE_ADMIN") %}
-                            <div  {% if(loop.index is even) %} class="block-case even" {% else%} class="block-case odd" {% endif %}>
-                                <a href="{{ path('lieu_update', {lieu_id: lieu.id}) }}">Modifier</a>
-                                <a href="{{ path('lieu_delete', {lieu_id: lieu.id }) }}">Supprimer</a>
+                            <div  {% if(loop.index is even) %} class="block-case even right grid-item" {% else%} class="block-case odd right grid-item" {% endif %}>
+                                <a href="{{ path('lieu_update', {lieu_id: lieu.id}) }}"> Modifier </a>
+                                <a href="{{ path('lieu_delete', {lieu_id: lieu.id }) }}"> Supprimer </a>
                             </div>
                         {% endif %}
                     {% endfor %}

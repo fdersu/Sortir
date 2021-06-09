@@ -26,6 +26,7 @@ header {
     grid-template-columns: 60px 200px 1fr;
     grid-template-rows: 1fr;
     justify-content: center;
+    font-family: 'Rum Raisin', sans-serif;
 }
 
 .logo {
@@ -47,7 +48,7 @@ header {
 }
 
 .ulNav > li > a {
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
 .admin-dashboard {
@@ -158,3 +159,13 @@ header {
     }
 }
 
+/*
+CSS rules to specify families
+
+    font-family: 'Chicle', cursive;
+    font-family: 'Englebert', sans-serif;
+    font-family: 'IM Fell DW Pica SC', serif;
+    font-family: 'Mouse Memoirs', sans-serif;
+    font-family: 'Rum Raisin', sans-serif;
+    font-family: 'Stylish', sans-serif;
+*/

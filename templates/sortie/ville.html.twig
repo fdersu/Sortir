@@ -27,10 +27,10 @@
                         <div class="tableau-villes">
                             {% endif %}
                     {% for ville in villes %}
-                        <div {% if(loop.index is even) %} class="even" {% else%} class="odd" {% endif %}><span>{{ ville.nom }}</span></div>
-                        <div {% if(loop.index is even) %} class="even" {% else%} class="odd" {% endif %}><span>{{ ville.codePostal }}</span></div>
+                        <div {% if(loop.index is even) %} class="even left grid-item" {% else%} class="odd left grid-item" {% endif %}><span>{{ ville.nom }}</span></div>
+                        <div {% if(loop.index is even) %} class="even grid-item" {% else%} class="odd grid-item" {% endif %}><span>{{ ville.codePostal }}</span></div>
                         {% if is_granted("ROLE_ADMIN") %}
-                            <div  {% if(loop.index is even) %} class="flex-row even" {% else%} class="flex-row odd" {% endif %}>
+                            <div  {% if(loop.index is even) %} class="flex-row even right grid-item" {% else%} class="flex-row odd right grid-item" {% endif %}>
                                 <a href="{{ path('ville_update', {ville_id: ville.id}) }}">Modifier</a>
                                 <a href="{{ path('ville_delete', {ville_id: ville.id }) }}">Supprimer</a>
                             </div>

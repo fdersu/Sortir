@@ -26,11 +26,11 @@
                         <div class="tableau-sites">
                             {% endif %}
                     {% for site in sites %}
-                        <div {% if(loop.index is even) %} class="even" {% else%} class="odd" {% endif %}><span>{{ site.nom }}</span></div>
+                        <div {% if(loop.index is even) %} class="even left grid-item" {% else%} class="odd left grid-item" {% endif %}><span>{{ site.nom }}</span></div>
                         {% if is_granted("ROLE_ADMIN") %}
-                            <div  {% if(loop.index is even) %} class="flex-row even" {% else%} class="flex-row odd" {% endif %}>
-                                <span><a href="{{ path('site_update', {site_id: site.id}) }}">Modifier</a></span>
-                                <span><a href="{{ path('site_delete', {site_id: site.id }) }}">Supprimer</a></span>
+                            <div  {% if(loop.index is even) %} class="flex-row even right grid-item" {% else%} class="flex-row odd right grid-item" {% endif %}>
+                                <a href="{{ path('site_update', {site_id: site.id}) }}">Modifier</a>
+                                <a href="{{ path('site_delete', {site_id: site.id }) }}">Supprimer</a>
                             </div>
                         {% endif %}
                     {% endfor %}
