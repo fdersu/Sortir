@@ -1,22 +1,22 @@
 {% extends 'base.html.twig' %}
-{% block title %}Edit profil{% endblock %}
+{% block title %}Profil{% endblock %}
 
 {% block body %}
     {% if error %}
-        <center>
+        <div style="text-align: center;">
             <div class="alert alert-danger">{{ error }}</div>
-        </center>
+        </div>
     {% endif %}
     <div>
-        <center><h1 class="alert-link"> My profil ! </h1></center>
+        <div style="text-align: center;"><h1 class="alert-link"> Mon profil ! </h1></div>
     </div>
     {% if user.photo %}
-        <center>
+        <div style="text-align: center;">
             <img src="{{ asset('img/images/' ~ user.photo) }}">
-        </center>
+        </div>
     {% endif %}
     {% if user.photo == false %}
-        <center><div> Vous n'avez pas encore de photo photo de profil</div></center>
+        <div style="text-align: center;"><div> Vous n'avez pas encore de photo photo de profil</div></div>
     {% endif %}
     <div class="form">
 
@@ -38,10 +38,6 @@
     </div>
 
     {{ form_end(userForm) }}
-
-    {% if is_granted("ROLE_ADMIN") %}
-        <button class="btn"><a href="{{ path('profil_export') }}">Exporter tous les utilisateurs</a></button>
-    {% endif %}
 
 {% endblock %}
 

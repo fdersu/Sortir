@@ -148,6 +148,25 @@ class User implements UserInterface
         return $this->roles;
     }
 
+    public function getRolesToString()
+    {
+        $roles = $this->roles;
+        if ($roles != NULL) {
+
+            $roleToString = "[";
+
+            foreach ($roles as $role){
+                $roleToString .= $role . ",";
+            }
+            $roleToString = substr($roleToString,0,-1);
+            $roleToString .= "]";
+
+            return $roleToString;
+        }else {
+            return $this->roles;
+        }
+    }
+
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;

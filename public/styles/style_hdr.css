@@ -47,7 +47,7 @@ header {
     justify-content: flex-end;
 }
 
-.admin-dashbord {
+.admin-dashboard {
     width: 100%;
     text-align: left;
     border-radius: 2px;
@@ -63,21 +63,12 @@ header {
     top: -1000px;
 }
 
-.submenu-checkbox:checked ~ .admin-dashbord {
+.submenu-checkbox:checked ~ .admin-dashboard {
     display: flex;
     flex-direction: column;
     overflow: no-content;
     max-height: 100%;
 }
-
-/*
-.submenu:hover .admin-dashbord {
-    display: flex;
-    flex-direction: column;
-    overflow: no-content;
-    max-height: 100%;
-}*/
-
 
 /* Add a teal background color to the top navigation */
 .topnav {
