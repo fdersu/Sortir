@@ -71,10 +71,11 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
+
         $bool = false;
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         foreach ($users as $user) {
-            if ($user->getMail() == 'mail') {
+            if ($user->getMail()) {
                 $bool = true;
             }
         }
@@ -86,7 +87,7 @@ class ResetPasswordController extends AbstractController
         }
         $error = "L'email utilisée n'existe pas, veuillez réessayer!";
         return $this->render('security/login.html.twig', [
-            'error' => $error, 'messageError' => $error, 'last_username' => '?'
+            'error' => $error, 'messageError' => $error, 'last_username' => ''
         ]);
     }
 
