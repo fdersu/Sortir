@@ -4,35 +4,54 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-12 d-flex justify-content-center">
+        <div class="col-12 d-flex justify-content-center hello rowset">
             <strong>Hello {{ app.user.pseudo }} !</strong>
         </div>
     </div>
 
-    {{ form_start(formActive, {'attr': {'class': 'row'}}) }}
-    {% for item in allUsers %}
-        <div class="col-12 col-sm-6 d-flex justify-content-start justify-content-sm-center">
-            {{ form_label(formActive.children[item.id]) }}
+    <div class="container">
+        {{ form_start(formActive, {'attr': {'class': 'row'}}) }}
+        {% for item in allUsers %}
+            {% if loop.index is odd %}
+                <div class="col-12 col-sm-6 d-flex justify-content-start justify-content-sm-center rowset odd gap left">
+                    {{ form_label(formActive.children[item.id]) }}
+                </div>
+                <div class="col-12 col-sm-6 d-flex justify-content-start justify-content-sm-center rowset odd gap right">
+                    {{ form_widget(formActive.children[item.id]) }}
+                </div>
+            {% else %}
+                <div class="col-12 col-sm-6 d-flex justify-content-start justify-content-sm-center rowset even gap left">
+                    {{ form_label(formActive.children[item.id]) }}
+                </div>
+                <div class="col-12 col-sm-6 d-flex justify-content-start justify-content-sm-center rowset even gap right">
+                    {{ form_widget(formActive.children[item.id]) }}
+                </div>
+            {% endif %}
+        {% endfor %}
+        <div class="col-12 d-flex justify-content-center">
+            <button>Valider</button>
         </div>
-        <div class="col-12 col-sm-6 d-flex justify-content-start justify-content-sm-center">
-            {{ form_widget(formActive.children[item.id]) }}
-        </div>
-    {% endfor %}
-    <div class="col-12 d-flex justify-content-center"><button>Valider</button></div>
-    {{ form_end(formActive) }}
+        {{ form_end(formActive) }}
+    </div>
 
 {% endblock %}
 
 {% block style %}
     <style type="text/css">
-        input[type=radio]{
+        .hello{
+            font-size: 3vh;
+
+        }
+        input[type=radio] {
             margin-right: 1vw;
             margin-left: 1vw;
         }
-        button{
+
+        button {
             border: 1px solid black;
             border-radius: 0.5vw;
         }
+
         input[type=radio] {
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -45,6 +64,25 @@
 
         input[type=radio]:checked {
             background-color: #00a6ff;
+        }
+
+        .rowset {
+            padding: 3vh;
+        }
+        .odd{
+            background-color: rgb(199, 208, 224);
+        }
+        .even{
+            background-color: rgb(221, 237, 255);
+        }
+        .gap{
+            margin-bottom: 1vh;
+        }
+        .left{
+            border-top-left-radius: 1vw;
+        }
+        .right{
+            border-bottom-right-radius: 1vw;
         }
     </style>
 {% endblock %}
