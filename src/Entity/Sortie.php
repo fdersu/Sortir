@@ -27,7 +27,7 @@ class Sortie
     private $nom;
 
     /**
-     * @Assert\GreaterThan("+1 day", message="Vous ne pouvez pas créer de sortie avant demain")
+     *@Assert\GreaterThan("+1 day", message="Vous ne pouvez pas créer de sortie avant demain")
      * @ORM\Column(type="datetime")
      */
     private $dateDebut;
@@ -39,7 +39,7 @@ class Sortie
      *     max="36",
      *     notInRangeMessage="La durée doit être comprise entre 1h et 36h",
      * )
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $duree;
 
@@ -294,4 +294,5 @@ class Sortie
 
         return $this;
     }
+
 }
