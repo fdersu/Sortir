@@ -131,4 +131,8 @@ header {
     .menu-checkbox:checked ~ .ulNav {
         display: block;
     }
+    
+    .noDisplayOnSmartphone {
+        display: none;
+    }
 }

@@ -5,7 +5,7 @@
         <ul class="ulNav" id="menu">
             <li><a class="navLink" href="{{ path('main_accueil') }}" title="Home">Accueil</a></li>
             {% if app.user.actif %}
-            <li><a class="navLink" href="{{ path('sortie_add') }}" title="Ajouter une sortie">Ajouter une sortie</a></li>
+            <li class="noDisplayOnSmartphone"><a class="navLink" href="{{ path('sortie_add') }}" title="Ajouter une sortie">Ajouter une sortie</a></li>
             {% endif %}
             <li><a class="navLink" href="{{ path('profil_edit', {'id' : app.user.id}) }}" title="Mon Profil">Mon Profil</a></li>
             {% if is_granted("ROLE_ADMIN") %}
