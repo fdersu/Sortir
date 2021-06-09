@@ -26,7 +26,6 @@ header {
     grid-template-columns: 60px 200px 1fr;
     grid-template-rows: 1fr;
     justify-content: center;
-
 }
 
 .logo {
@@ -47,6 +46,10 @@ header {
     justify-content: flex-end;
 }
 
+.ulNav > li > a {
+    font-size: 1rem;
+}
+
 .admin-dashboard {
     width: 100%;
     text-align: left;
@@ -56,6 +59,24 @@ header {
     overflow: hidden;
     max-height: 0;
 }
+
+/*
+.submenu:hover .admin-dashbord {
+    display: flex;
+    flex-direction: column;
+    overflow: no-content;
+    list-style: none;
+    max-height: 100%;
+}
+
+
+.submenu:active .admin-dashbord {
+    display: flex;
+    flex-direction: column;
+    overflow: no-content;
+    list-style: none;
+    max-height: 100%;
+}*/
 
 .submenu-checkbox {
     opacity: 0;
@@ -131,8 +152,9 @@ header {
     .menu-checkbox:checked ~ .ulNav {
         display: block;
     }
-    
+
     .noDisplayOnSmartphone {
         display: none;
     }
 }
+

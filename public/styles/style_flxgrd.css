@@ -124,6 +124,7 @@ main {
     flex-wrap: wrap;
     align-content: center;
     justify-content: space-evenly;
+    margin-left: 0.2em;
 }
 
 .tableau {
@@ -185,20 +186,20 @@ main {
     width: auto\9; /* ie8 */
 }
 
+
 .form div {
     display: flex;
     flex-direction: column;
-    ms-flex-direction: row;
-    margin: 0.5em 2em 0.5em 1em;
+    margin: 0.5em 2em 0.5em 0em;
 }
 
+/*
 .form-div {
     display: flex;
     flex-direction: column;
-    ms-flex-direction: row;
     margin-left: 0.5em;
     margin-bottom: 0.1em;
-}
+}*/
 
 .btn a {
     display: inline;

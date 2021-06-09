@@ -15,10 +15,10 @@
                     {% else %}
                     <div class="tableau-villes">
                         {% endif %}
-                    <div><strong>Nom</strong></div>
-                    <div><strong>Code Postal</strong></div>
+                    <div><h3>Nom</h3></div>
+                    <div><h3>Code Postal</h3></div>
                     {% if is_granted("ROLE_ADMIN") %}
-                        <div><strong>Actions</strong></div>
+                        <div><h3>Actions</h3></div>
                     {% endif %}
                 </div>
                     {% if is_granted("ROLE_ADMIN") %}
@@ -27,10 +27,10 @@
                         <div class="tableau-villes">
                             {% endif %}
                     {% for ville in villes %}
-                        <div><span>{{ ville.nom }}</span></div>
-                        <div><span>{{ ville.codePostal }}</span></div>
+                        <div {% if(loop.index is even) %} class="even" {% else%} class="odd" {% endif %}><span>{{ ville.nom }}</span></div>
+                        <div {% if(loop.index is even) %} class="even" {% else%} class="odd" {% endif %}><span>{{ ville.codePostal }}</span></div>
                         {% if is_granted("ROLE_ADMIN") %}
-                            <div class="block-case">
+                            <div  {% if(loop.index is even) %} class="flex-row even" {% else%} class="flex-row odd" {% endif %}>
                                 <a href="{{ path('ville_update', {ville_id: ville.id}) }}">Modifier</a>
                                 <a href="{{ path('ville_delete', {ville_id: ville.id }) }}">Supprimer</a>
                             </div>
@@ -57,4 +57,37 @@
     </div>
 
 
+{% endblock %}
+
+{% block style %}
+    <style type="text/css">
+
+        .even {
+            min-height: 5vh;
+            background-color: rgba(0, 166, 166, 0.3);
+        }
+
+        .odd {
+            min-height: 5vh;
+            background-color: rgba(51, 225, 208, 0.3);
+        }
+
+        .left {
+            border-top-left-radius: 0.5vw;
+        }
+
+        .right {
+            border-bottom-right-radius: 0.5vw;
+        }
+
+        .gap {
+            margin-bottom: 0.5vh;
+        }
+
+        .field {
+            width: 100%;
+            border-radius: 0.3vw;
+            background: transparent;
+        }
+    </style>
 {% endblock %}

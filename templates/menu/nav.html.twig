@@ -9,9 +9,9 @@
             {% endif %}
             <li><a class="navLink" href="{{ path('profil_edit', {'id' : app.user.id}) }}" title="Mon Profil">Mon Profil</a></li>
             {% if is_granted("ROLE_ADMIN") %}
-            <li class="navLink submenu">
-                <input type="checkbox" id="submenu-checkbox" class="submenu-checkbox">
-                <a><label for="submenu-checkbox" >Admin dashbord</label></a>
+                <li class="navLink submenu">
+                    <input type="checkbox" id="submenu-checkbox" class="submenu-checkbox">
+                    <a><label for="submenu-checkbox" >Admin dashbord</label></a>
                     <ul class="admin-dashboard" title="Admin dashboard">
                         <li><a class="navLink" href="{{ path('app_register') }}" title="register">Enregistrer un utilisateur</a>
                         </li>

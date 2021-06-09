@@ -3,12 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Lieu;
-use App\Entity\Site;
 use App\Entity\Sortie;
-use App\Entity\Ville;
 use App\Form\LieuFormType;
-use App\Form\SiteFormType;
-use App\Form\VilleFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
