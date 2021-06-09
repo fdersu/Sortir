@@ -35,7 +35,8 @@ header {
 }
 
 .menu-toggle,
-.menu-checkbox {
+.menu-checkbox,
+.submenu-checkbox {
     display: none;
 }
 
@@ -46,7 +47,39 @@ header {
     justify-content: flex-end;
 }
 
-/* Add a black background color to the top navigation */
+.admin-dashbord {
+    width: 100%;
+    text-align: left;
+    border-radius: 2px;
+    text-decoration: none;
+    list-style: none;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.submenu-checkbox {
+    opacity: 0;
+    position: absolute;
+    top: -1000px;
+}
+
+.submenu-checkbox:checked ~ .admin-dashbord {
+    display: flex;
+    flex-direction: column;
+    overflow: no-content;
+    max-height: 100%;
+}
+
+/*
+.submenu:hover .admin-dashbord {
+    display: flex;
+    flex-direction: column;
+    overflow: no-content;
+    max-height: 100%;
+}*/
+
+
+/* Add a teal background color to the top navigation */
 .topnav {
     background-color: teal;
     overflow: hidden;
@@ -74,6 +107,7 @@ header {
     background-color: #04dbde;
     color: darkgray;
 }
+
 
 
 @media screen and (max-width: 1000px) {

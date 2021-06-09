@@ -12,8 +12,8 @@ function displayReason() {
             divRow.className = 'row';
             divRow.id = 'ajax';
             let divCol = document.createElement('div');
-            divCol.className = 'col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8 ' +
-                                'offset-0 offset-sm-4 offset-md-4 offset-lg-2 offset-xl-2 offset-xxl-2';
+            divCol.className = 'col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 ' +
+                                'offset-0 offset-sm-0 offset-md-4 offset-lg-2 offset-xl-2 offset-xxl-2';
             divCol.id = 'ajaxDisplay';
             let motif = document.createElement('strong');
             getMotif(motif, sortieId);

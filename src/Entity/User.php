@@ -44,7 +44,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private $roles;
 
     /**
      * @var string The hashed password
@@ -78,7 +78,7 @@ class User implements UserInterface
     private $actif;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="users")
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="users", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $site;
@@ -143,11 +143,9 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles = 'ROLE_USER';
 
-        return array_unique($roles);
+        return $this->roles;
     }
 
     public function setRoles(array $roles): self
@@ -336,4 +334,8 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+    }
 }
