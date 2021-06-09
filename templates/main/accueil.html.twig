@@ -16,28 +16,27 @@
     <div class="main">
         {{ form_start(filterForm, {'attr': {'class': 'filterForm'}}) }}
         <div class="row align-items-center">
-            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-6 col-xxl-6">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-6">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_label(filterForm.site) }}</div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_widget(filterForm.site) }}</div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_label(filterForm.recherche) }}</div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_widget(filterForm.recherche) }}</div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_label(filterForm.dateDebut) }}</div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_widget(filterForm.dateDebut) }}</div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_label(filterForm.dateFin) }}</div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6">{{ form_widget(filterForm.dateFin) }}</div>
+                    <div class="col-12 col-xl-6">{{ form_label(filterForm.site) }}</div>
+                    <div class="col-12 col-xl-6">{{ form_widget(filterForm.site) }}</div>
+                    <div class="col-12 col-xl-6">{{ form_label(filterForm.recherche) }}</div>
+                    <div class="col-12 col-xl-6">{{ form_widget(filterForm.recherche) }}</div>
+                    <div class="col-12 col-xl-6">{{ form_label(filterForm.dateDebut) }}</div>
+                    <div class="col-12 col-xl-6">{{ form_widget(filterForm.dateDebut) }}</div>
+                    <div class="col-12 col-xl-6">{{ form_label(filterForm.dateFin) }}</div>
+                    <div class="col-12 col-xl-6">{{ form_widget(filterForm.dateFin) }}</div>
                 </div>
             </div>
-            <div class="col-12 col-sm-12 col-md-7 col-lg-6 col-xl-4 col-xxl-4">
+            <div class="col-12 col-md-7 col-lg-6 col-xl-4">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">{{ form_widget(filterForm.organisateur) }}</div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">{{ form_widget(filterForm.inscrit) }}</div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">{{ form_widget(filterForm.nonInscrit) }}</div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">{{ form_widget(filterForm.sortiesPassees) }}</div>
+                    <div class="col-12">{{ form_widget(filterForm.organisateur) }}</div>
+                    <div class="col-12">{{ form_widget(filterForm.inscrit) }}</div>
+                    <div class="col-12">{{ form_widget(filterForm.nonInscrit) }}</div>
+                    <div class="col-12">{{ form_widget(filterForm.sortiesPassees) }}</div>
                 </div>
             </div>
-            <div class="col-11 col-sm-11 col-md-7 col-lg-2 col-xl-2 col-xxl-2
-                        offset-1 offset-sm-1 offset-md-5 offset-lg-0 offset-xl-0 offset-xxl-0">
+            <div class="col-12 col-lg-2 d-flex justify-content-center justify-content-lg-start ">
                 <div class="row">
                     <div class="col-12">
                         <button>rechercher</button>
@@ -56,7 +55,7 @@
             <div class="parent">
                 <div class="sortie">
                     <div class="row align-items-center">
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
+                        <div class="col-12 col-md-4 col-lg-2">
                             {% if sortie.urlPhoto %}
                                 <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}"><img class="photoSortie"
                                                                                                    src="{{ asset('img/') ~ sortie.urlPhoto }}"
@@ -67,34 +66,34 @@
                                                                                                    alt="photo"></a>
                             {% endif %}
                         </div>
-                        <div class="col-12 col-sm-12 col-md-8 col-lg-10 col-xl-10 col-xxl-10">
+                        <div class="col-12 col-md-8 col-lg-10">
                             <div class="row">
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                                     <div><strong>Nom</strong></div>
                                     <div><span>{{ sortie.nom }}</span></div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-1">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xxl-1">
                                     <div><strong>Date</strong></div>
                                     <div><span>{{ sortie.dateDebut|date('d/m/Y') }}</span></div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-1">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xxl-1">
                                     <div><strong>Clôture</strong></div>
                                     <div><span>{{ sortie.dateCloture|date('d/m/Y') }}</span></div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-2">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                                     <div><strong>Inscrits/places</strong></div>
                                     <div>
                                         <span>{{ sortie.inscriptions|length }}/{{ sortie.nbInscriptionsMax }}</span>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-1 col-xxl-1">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-1">
                                     <div><strong>Etat</strong></div>
                                     <div>
                                         <span class="etat">{{ sortie.etat.libelle }}</span>
                                         <input type="hidden" value="{{ sortie.id }}">
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-1 col-xxl-1">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-1">
                                     <div><strong>Inscrit</strong></div>
                                     <div>
                                         {% set bool = false %}
@@ -113,13 +112,13 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-2
-                                            offset-0 offset-sm-0 offset-md-0 offset-lg-4 offset-xl-0 offset-xxl-0">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2
+                                            offset-0 offset-lg-4 offset-xl-0">
                                     <div><strong>Organisateur</strong></div>
                                     <div><span>{{ sortie.organisateur.pseudo }}</span></div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-2 col-xl-2 col-xxl-2
-                                            offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-6 offset-xxl-0">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-2
+                                            offset-0 offset-xl-6 offset-xxl-0">
                                     <div><strong>Action</strong></div>
                                     <div>
                                         <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}">Afficher</a>
@@ -133,10 +132,10 @@
                                             {% if bool and sortie.dateDebut > now %}
                                                 <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}">Se
                                                     désister</a>
-                                            {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' %}
+                                            {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' and app.user.actif %}
                                                 <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
                                             {% endif %}
-                                        {% elseif sortie.organisateur == app.user %}
+                                        {% elseif sortie.organisateur == app.user and app.user.actif %}
                                             {% if sortie.etat.libelle == 'Créée' %}
                                                     <a href="{{ path('sortie_update', {sortie_id: sortie.id}) }}">Modifier</a>
                                                     <a href="{{ path('sortie_publier', {sortie_id: sortie.id }) }}">Publier</a>
@@ -144,7 +143,7 @@
                                                     <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">Annuler</a>
                                             {% endif %}
                                         {% endif %}
-                                        {% if "ROLE_ADMIN" in app.user.roles %}
+                                        {% if "ROLE_ADMIN" in app.user.roles and sortie.etat.libelle != 'Annulée' %}
                                             <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">Annuler</a>
                                             {% endif %}
                                     </div>

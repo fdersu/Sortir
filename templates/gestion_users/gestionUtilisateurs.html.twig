@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion Utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <strong>Hello {{ app.user.pseudo }} !</strong>
+        </div>
+    </div>
+
+    {{ form_start(formActive, {'attr': {'class': 'row'}}) }}
+    {% for item in allUsers %}
+        <div class="col-12 col-sm-6 d-flex justify-content-start justify-content-sm-center">
+            {{ form_label(formActive.children[item.id]) }}
+        </div>
+        <div class="col-12 col-sm-6 d-flex justify-content-start justify-content-sm-center">
+            {{ form_widget(formActive.children[item.id]) }}
+        </div>
+    {% endfor %}
+    <div class="col-12 d-flex justify-content-center"><button>Valider</button></div>
+    {{ form_end(formActive) }}
+
+{% endblock %}
+
+{% block style %}
+    <style type="text/css">
+        input[type=radio]{
+            margin-right: 1vw;
+            margin-left: 1vw;
+        }
+        button{
+            border: 1px solid black;
+            border-radius: 1vw;
+        }
+    </style>
+{% endblock %}
