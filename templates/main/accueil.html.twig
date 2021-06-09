@@ -58,7 +58,7 @@
                         <div class="col-12 col-md-4 col-lg-2">
                             {% if sortie.urlPhoto %}
                                 <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}"><img class="photoSortie"
-                                                                                                   src="{{ asset('img/') ~ sortie.urlPhoto }}"
+                                                                                                   src="{{ asset('img/images/') ~ sortie.urlPhoto }}"
                                                                                                    alt="photo"></a>
                             {% else %}
                                 <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}"><img class="photoSortie"

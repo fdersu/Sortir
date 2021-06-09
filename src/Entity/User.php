@@ -334,7 +334,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles()
+    public function getRole()
     {
         // TODO: Implement getRoles() method.
     }

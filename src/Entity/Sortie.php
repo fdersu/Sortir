@@ -35,8 +35,8 @@ class Sortie
     /**
      * @Assert\Type("integer")
      * @Assert\Range(
-     *     min="10",
-     *     max="1440",
+     *     min="1",
+     *     max="36",
      *     notInRangeMessage="La durée doit être comprise entre 1h et 36h",
      * )
      * @ORM\Column(type="integer")
