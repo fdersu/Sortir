@@ -72,7 +72,7 @@ class SortieRepository extends ServiceEntityRepository
                     ->setParameter('val7', new \DateTime());
             }
             $dateLimite = new \DateTime();
-            return $qb->andWhere('s.dateDebut > :val8')
+            return $qb->andWhere('s.dateDebut >= :val8')
                 ->setParameter('val8', $dateLimite->modify('-1 month'))
                 ->orderBy('s.dateDebut', 'ASC')
                 ->getQuery()

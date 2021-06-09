@@ -10,9 +10,6 @@
         
     {% endblock %}
 
-    {% block javascripts %}
-        {# {{ encore_entry_script_tags('app') }} #}
-    {% endblock %}
 </head>
 <body>
 <div class="container-grille">
@@ -40,6 +37,8 @@
 {% block body %}{% endblock %}
 {% block style %}{% endblock %}
 
-
+{% block javascripts %}
+    {# {{ encore_entry_script_tags('app') }} #}
+{% endblock %}
 </body>
 </html>

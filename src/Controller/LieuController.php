@@ -23,6 +23,7 @@ class LieuController extends AbstractController
      */
     public function lieu(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $bool = true;
         $lieu = new Lieu();
 
         $lieux = $entityManager->getRepository(Lieu::class)->findAll();
@@ -36,8 +37,9 @@ class LieuController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Lieu ajouté !');
-            return $this->redirectToRoute('sortie_add');
-
+            return $this->redirectToRoute('sortie_add', [
+                'bool' => $bool
+            ]);
         }
 
 
