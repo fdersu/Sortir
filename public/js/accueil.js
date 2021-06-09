@@ -15,6 +15,7 @@ function displayReason() {
             divCol.className = 'col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8 ' +
                                 'offset-0 offset-sm-0 offset-md-4 offset-lg-2 offset-xl-2 offset-xxl-2';
             divCol.id = 'ajaxDisplay';
+            divCol.style.backgroundColor = 'white';
             let motif = document.createElement('strong');
             getMotif(motif, sortieId);
             divCol.appendChild(motif);

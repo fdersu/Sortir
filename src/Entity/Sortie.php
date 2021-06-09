@@ -33,7 +33,7 @@ class Sortie
     private $dateDebut;
 
     /**
-     * @Assert\Type("integer")
+     * @Assert\Type("float")
      * @Assert\Range(
      *     min="1",
      *     max="36",
