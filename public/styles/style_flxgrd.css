@@ -142,7 +142,6 @@ main {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
     grid-gap: 5px;
-    border: solid 1px;
 }
 
 .tableau-lieux {
@@ -150,7 +149,6 @@ main {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
     grid-gap: 5px;
-    border: solid 1px;
 }
 
 .tableau-villes-admin {
@@ -158,7 +156,6 @@ main {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
     grid-gap: 5px;
-    border: solid 1px;
 }
 
 .tableau-villes {
@@ -166,7 +163,6 @@ main {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     grid-gap: 5px;
-    border: solid 1px;
 }
 
 .tableau-sites-admin {
@@ -174,7 +170,6 @@ main {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     grid-gap: 5px;
-    border: solid 1px;
 }
 
 .tableau-sites {
@@ -182,7 +177,6 @@ main {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     grid-gap: 5px;
-    border: solid 1px;
 }
 
 .noresize {

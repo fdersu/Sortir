@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\AppAuthenticator;
-use App\Upload\UserFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,8 +29,6 @@ class RegistrationController extends AbstractController
                              UserRepository $userRepository
     ): Response
     {
-
-
         if ($request->query->get('id')) {
             $id = $request->query->get('id');
             $user = $userRepository->find($id);
@@ -55,10 +52,10 @@ class RegistrationController extends AbstractController
             );
             $user->setActif(true);
 
+            //Envoyer les données en bdd
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -67,7 +64,6 @@ class RegistrationController extends AbstractController
                 'main' // firewall name in security.yaml
             );
         }
-
 
         return $this->render('registration/register.html.twig', ['registrationForm' => $form->createView(),]);
     }
@@ -78,46 +74,44 @@ class RegistrationController extends AbstractController
      */
     public function addUsersByFile(
         AddUsersFromFilesCommand $addUsersFromFilesCommand,
-        Request $request,
-        UserFile $userFile,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        string $dataDirectory
     )
     {
+        //Upload du fichier dans le dossier public/data
+        $nomOrigine = $_FILES['monfichier']['name'];
+        $elementsChemin = pathinfo($nomOrigine);
+        $extensionFichier = $elementsChemin['extension'];
+        $extensionsAutorisees = array("csv", "xml");
 
-        $users = $request->request->get('importUser');
-     
-// Copie dans le repertoire du script avec un nom
-// incluant l'heure a la seconde pres
-        $repertoireDestination = dirname(__FILE__) . "/";
-        $nomDestination = "fichier_du_" . date("YmdHis") . ".txt";
-        if (is_uploaded_file($_FILES["monfichier"]["tmp_name"])) {
-            if (rename($_FILES["monfichier"]["tmp_name"],
-                $repertoireDestination . $nomDestination)) {
-                echo "Le fichier temporaire " . $_FILES["monfichier"]["tmp_name"] .
-                    " a été déplacé vers " . $repertoireDestination . $nomDestination;
-            } else {
-                echo "Le déplacement du fichier temporaire a échoué" .
-                    " vérifiez l'existence du répertoire " . $repertoireDestination;
-            }
+        if (!(in_array($extensionFichier, $extensionsAutorisees))) {
+            echo "Le fichier n'a pas l'extension attendue";
         } else {
-            echo "Le fichier n'a pas été uploadé (trop gros ?)";
+            // Copie dans le repertoire du script avec un nom incluant l'heure a la seconde pres
+            $repertoireDestination =  $dataDirectory;
+            $filename = "addUsers".date("dmYHis").".".$extensionFichier;
+
+            if (move_uploaded_file($_FILES["monfichier"]["tmp_name"],
+                $repertoireDestination.$filename)) {
+                echo "Le fichier temporaire ".$_FILES["monfichier"]["tmp_name"].
+                    " a été déplacé vers ".$repertoireDestination.$filename;
+            } else {
+                echo "Le fichier n'a pas été uploadé (trop gros ?) ou ".
+                    "Le déplacement du fichier temporaire a échoué".
+                    " vérifiez l'existence du répertoire ".$repertoireDestination;
+            }
         }
-        $directory = $this->getParameter('upload_users_sortie_dir');
 
-        $userFile->save($importUser, $directory);
-
-        $users = $addUsersFromFilesCommand->addUsers();
+        //Lecture du fichier et ajout des utilisateurs
+        $users = $addUsersFromFilesCommand->addUsers($filename);
         foreach ($users as $addUserOneByOne) {
 
-            //$entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($addUserOneByOne);
-
         }
-
         $entityManager->flush();
+        
         $this->addFlash('success', 'Utilisateurs ajoutés !');
-        $entityManager->refresh($importUser);
-        return $this->render('registration/register.html.twig');
+        return $this->redirectToRoute('app_register');
     }
 }
 

@@ -57,16 +57,19 @@ class AddUsersFromFilesCommand extends Command
         $this->io = new SymfonyStyle($input, $output);
     }
 
+    /*
+     * fonction non utilisée
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->addUsers();
 
         return Command::SUCCESS;
     }
+    */
 
-    public function getDataFromFiles(): array
+    public function getDataFromFiles($filename): array
     {
-        $file = $this->dataDirectory . 'addUser.csv';
+        $file = $this->dataDirectory . $filename;
 
         $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
 
@@ -89,11 +92,11 @@ class AddUsersFromFilesCommand extends Command
         return $data;
     }
 
-    public function addUsers(): array
+    public function addUsers($filename): array
     {
         $users = [];
         $i = 0;
-        foreach ($this->getDataFromFiles() as $row) {
+        foreach ($this->getDataFromFiles($filename) as $row) {
             if (array_key_exists('pseudo', $row) && !empty($row['pseudo'])) {
                 $user = $this->userRepository->findOneBy([
                     'pseudo' => $row['pseudo']

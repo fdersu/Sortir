@@ -1,4 +1,0 @@
-site,pseudo,password,nom,prenom,telephone,mail,actif,roles,photo
-84,Jeannette,$argon2id$v=19$m=65536t=4p=1$M1NxSkFZelNwNmNwYjVrRA$j7tndIKvR3lQncrY9S1fbDcpEGroeAdtvb5a/BKJQqo,Lemaitre,Nicolas,+33 5 00 76 32 ,ljaneattes@wanadoo.fr,,[ROLE_ADMIN],
-83,Tancrede3,$argon2id$v=19$m=65536t=4p=1$QVo3YkFUb0F3ZmRSdDREWA$IDM876d7diZpSlaE/YDUvdT+io+iUJbnDowk9MF2iFQ,Barre,Jean,09 85 04 86 06,ntancredere@laposte.ne,1,[ROLE_USER],
-82,Ewen5,$argon2id$v=19$m=65536t=4p=1$T0JmeTFyZW9kUEZoQW5ucw$h0QSq4rKu8jRE+tkSXP6LdyuDdo8Y7iJUcaVtYx91VA,Collet,Bertrand,+33 (0)6 72 15 ,ewen.benoit@fourni,,[ROLE_ADMIN],
