@@ -5,43 +5,42 @@
 {% block body %}
 
     <div class="row paddup">
-        <div class="col-6 offset-6"><strong>{{ participant.pseudo }}</strong></div>
+        <div class="col-12 d-flex justify-content-center"><strong>{{ participant.pseudo }}</strong></div>
     </div>
 
     <div class="row align-items-center">
-        <div class="col-8 col-sm-8 col-md-4 col-lg-4 col-xl-4 col-xxl-4
-                    offset-2 offset-sm-2 offset-md-0 offset-lg-1 offset-xl-1 offset-xxl-1">
+        <div class="col-8 col-md-4 offset-2 offset-md-0 offset-lg-1 ">
             {% if participant.photo %}
             <img class="userPic" src="{{ asset('img/images/') ~ participant.photo }}" alt="userPic">
             {% else %}
             <img class="userPic" src="{{ asset('img/user_no_pic.png') }}" alt="userPic">
             {% endif %}
         </div>
-        <div class="col-12 col-sm-12 col-md-8 col-lg-7 col-xl-7 col-xxl-7">
+        <div class="col-12 col-md-8 col-lg-7">
             <div class="row align-items-center gap">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 odd left"><strong>Prénom:</strong></div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4 odd right">{{ participant.prenom }}</div>
+                <div class="col-6 odd left"><strong>Prénom:</strong></div>
+                <div class="col-6 col-lg-4 odd right">{{ participant.prenom }}</div>
             </div>
             <div class="row align-items-center gap">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 even left"><strong>Nom:</strong></div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4 even right">{{ participant.nom }}</div>
+                <div class="col-6 even left"><strong>Nom:</strong></div>
+                <div class="col-6 col-lg-4 even right">{{ participant.nom }}</div>
             </div>
             <div class="row align-items-center gap">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 odd left"><strong>Téléphone:</strong></div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4 odd right">{{ participant.telephone }}</div>
+                <div class="col-6 odd left"><strong>Téléphone:</strong></div>
+                <div class="col-6 col-lg-4 odd right">{{ participant.telephone }}</div>
             </div>
             <div class="row align-items-center gap">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 even left"><strong>E-mail</strong></div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4 even right">{{ participant.mail }}</div>
+                <div class="col-6 even left"><strong>E-mail</strong></div>
+                <div class="col-6 col-lg-4 even right">{{ participant.mail }}</div>
             </div>
             <div class="row align-items-center gap">
-                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 odd left"><strong>Ville de rattachement:</strong></div>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4 odd right">{{ participant.site.nom }}</div>
+                <div class="col-6 odd left"><strong>Ville de rattachement:</strong></div>
+                <div class="col-6 col-lg-4 odd right">{{ participant.site.nom }}</div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-6 offset-6">
+        <div class="col-12 d-flex justify-content-center">
             <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}"><button class="back">Retour</button></a>
         </div>
     </div>
