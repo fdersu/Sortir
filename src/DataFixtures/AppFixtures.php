@@ -58,6 +58,8 @@ class AppFixtures extends Fixture
             $lieu->setNom($generator->words(3, true));
             $lieu->setRue($generator->numberBetween(1,20).', rue de '.$generator->word);
             $lieu->setVille($generator->randomElement($villes));
+            $lieu->setLatitude($generator->latitude);
+            $lieu->setLongitude($generator->longitude);
 
             $manager->persist($lieu);
             $manager->flush();
