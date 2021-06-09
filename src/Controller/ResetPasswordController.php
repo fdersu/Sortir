@@ -42,15 +42,17 @@ class ResetPasswordController extends AbstractController
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->processSendingPasswordResetEmail(
                 $form->get('mail')->getData(),
                 $mailer
+
             );
         }
-
+        $mailSended = $request->request->get('mail');
         return $this->render('reset_password/request.html.twig', [
-            'requestForm' => $form->createView(),
+            'requestForm' => $form->createView(), 'mail' => $mailSended
         ]);
     }
 
@@ -69,13 +71,25 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
-
-        dump($token);
-        return $this->render('reset_password/check_email.html.twig', [
-            'resetToken' => $resetToken,
-            'token' => $token
+        $bool = false;
+        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        foreach ($users as $user) {
+            if ($user->getMail() == 'mail') {
+                $bool = true;
+            }
+        }
+        if ($bool) {
+            return $this->render('reset_password/check_email.html.twig', [
+                'resetToken' => $resetToken,
+                'token' => $token
+            ]);
+        }
+        $error = "L'email utilisée n'existe pas, veuillez réessayer!";
+        return $this->render('security/login.html.twig', [
+            'error' => $error, 'messageError' => $error, 'last_username' => '?'
         ]);
     }
+
 
     /**
      * Validates and process the reset URL that the user clicked in their email.
@@ -141,6 +155,7 @@ class ResetPasswordController extends AbstractController
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
             'mail' => $emailFormData,
         ]);
+
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {

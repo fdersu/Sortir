@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Register{% endblock %}
-
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/style_flxgrd.css') }}">{% endblock %}
 {% block body %}
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
@@ -11,7 +11,15 @@
 
     <div class="form">
         {{ form_start(registrationForm) }}
-
+        {{ form_row(registrationForm.pseudo) }}
+        {{ form_row(registrationForm.prenom) }}
+        {{ form_row(registrationForm.nom) }}
+        {{ form_row(registrationForm.mail) }}
+        {{ form_row(registrationForm.telephone) }}
+        {{ form_row(registrationForm.site) }}
+        {{ form_row(registrationForm.plainPassword) }}
+        {{ form_row(registrationForm.roles) }}
+        {{ form_row(registrationForm.actif) }}
         {{ form_widget(registrationForm) }}
     </div>
     <div class="col-12 col-sm-6 col-md-7 offset-4">

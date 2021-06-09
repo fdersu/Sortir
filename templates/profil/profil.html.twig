@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}Edit profil{% endblock %}
+{% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/style_flxgrd.css') }}">{% endblock %}
 
 {% block body %}
     {% if error %}
@@ -8,7 +9,7 @@
         </center>
     {% endif %}
     <div>
-        <center><h1 class="alert-link"> My profil ! </h1></center>
+        <center><h1 class="alert-link"> Mon profil ! </h1></center>
     </div>
     {% if user.photo %}
         <center>
@@ -16,16 +17,24 @@
         </center>
     {% endif %}
     {% if user.photo == false %}
-        <center><div> Vous n'avez pas encore de photo photo de profil</div></center>
+        <center>
+            <div> Vous n'avez pas encore de photo photo de profil</div>
+        </center>
     {% endif %}
     <div class="form">
 
-        <div class="mt-4">
-            {{ form_start(userForm) }}
+        {{ form_start(userForm) }}
 
-            {{ form_widget(userForm) }}
-            
-        </div>
+        {{ form_row((userForm.pseudo)) }}
+        {{ form_row((userForm.prenom)) }}
+        {{ form_row((userForm.nom)) }}
+        {{ form_row((userForm.telephone)) }}
+        {{ form_row((userForm.mail)) }}
+        {{ form_row((userForm.password)) }}
+        {{ form_row((userForm.site)) }}
+        {{ form_row((userForm.photo)) }}
+        {{ form_widget(userForm) }}
+
     </div>
     <div class="col-12 col-sm-6 col-md-7 offset-4">
         <button class="btn btn-lg btn-primary" type="submit">
@@ -48,8 +57,8 @@
 {% block style %}
     <style type="text/css">
         img {
-            width:150px;
-            height:150px;
+            width: 150px;
+            height: 150px;
         }
     </style>
 {% endblock %}

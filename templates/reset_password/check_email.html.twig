@@ -3,6 +3,7 @@
 {% block title %}Password Reset Email Sent{% endblock %}
 
 {% block body %}
+
     <p>
         S'il existe un compte correspondant à votre e-mail, un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe..
     </p>
@@ -10,6 +11,5 @@
 
     <p>Si vous n'avez pas reçu de mail, veuillez modifier votre mot de passe en cliquant sur le lien suivant : <a href="{{ url('app_reset_password', {'token' : token}) }}">{{ url('app_reset_password', {'token' : token}) }}</a>
     </p>
-
 
 {% endblock %}
