@@ -68,7 +68,7 @@ class User implements UserInterface
     private $telephone;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20 ,unique=true)
      */
     private $mail;
 
