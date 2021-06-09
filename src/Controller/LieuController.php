@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Lieu;
 use App\Entity\Site;
+use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\LieuFormType;
 use App\Form\SiteFormType;
@@ -84,13 +85,22 @@ class LieuController extends AbstractController
      */
     public function delete($lieu_id, EntityManagerInterface $entityManager): Response
     {
+        //Récupération en base du lieu et des sorties associées
         $lieuToDelete = $entityManager->find(Lieu::class, $lieu_id);
+        $linkedSorties = $entityManager->getRepository(Sortie::class)->findBy(['lieu' =>$lieuToDelete]);
 
-        $entityManager->remove($lieuToDelete);
-        $entityManager->flush();
+        //Suppression du lieu refusée si des sorties sont associées
+        if($linkedSorties){
+            $this->addFlash('error', 'Ce lieu est associé à des sorties');
 
-        $this->addFlash('success', 'La ville a été supprimée');
+        } else {
+            $entityManager->remove($lieuToDelete);
+            $entityManager->flush();
 
+            $this->addFlash('success', 'Le lieu a été supprimé');
+        }
+
+        //Rechargement de la page de gestion des lieux
         return $this->redirectToRoute('lieu_add');
     }
 }
