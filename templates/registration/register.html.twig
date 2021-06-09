@@ -26,13 +26,15 @@
         </div>
 
         {{ form_end(registrationForm) }}
+
         <form enctype="multipart/form-data" action="{{ path('app_register_file') }}" method="post">
             <input accept="text/csv" type="hidden" name="MAX_FILE_SIZE" value="100000" />
-            Transfère le fichier <input type="file" name="monfichier" />
+            Transfère le fichier <input accept="text/csv" type="file" name="monfichier" />
             <input type="submit" />
         </form>
 
 
     </div>
+
 
 {% endblock %}
