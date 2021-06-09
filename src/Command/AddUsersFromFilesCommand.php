@@ -45,26 +45,26 @@ class AddUsersFromFilesCommand extends Command
     }
 
 
-    protected static $defaultName = 'app:add-users-from-files';
+    public static $defaultName = 'app:add-users-from-files';
 
-    protected function configure(): void
+    public function configure()
     {
         $this->setDescription('Importer des données en provenance d\'un fichier CSV, XML ou YAML');
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    public function initialize(InputInterface $input, OutputInterface $output)
     {
         $this->io = new SymfonyStyle($input, $output);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->addUsers();
 
         return Command::SUCCESS;
     }
 
-    private function getDataFromFiles(): array
+    public function getDataFromFiles(): array
     {
         $file = $this->dataDirectory . 'addUser.csv';
 
@@ -74,8 +74,6 @@ class AddUsersFromFilesCommand extends Command
 
         $encoders = [
             new CsvEncoder(),
-            new XmlEncoder(),
-            new YamlEncoder()
         ];
 
         $serializer = new Serializer($normalizers, $encoders);
@@ -91,19 +89,17 @@ class AddUsersFromFilesCommand extends Command
         return $data;
     }
 
-    private function addUsers(): void
+    public function addUsers(): array
     {
-        $this->io->section('Ajout des participants à partir d\'un fichier');
-
-        $userCreated = 0;
-
+        $users = [];
+        $i = 0;
         foreach ($this->getDataFromFiles() as $row) {
             if (array_key_exists('pseudo', $row) && !empty($row['pseudo'])) {
                 $user = $this->userRepository->findOneBy([
                     'pseudo' => $row['pseudo']
                 ]);
                 if (!$user) {
-                    $site = $this->entityManager->getRepository(Site::class)->findOneBy(['nom'=>$row['site']]);
+                    $site = $this->entityManager->getRepository(Site::class)->findOneBy(['nom' => $row['site']]);
 
                     $newUser = new User();
                     $newUser->setPseudo($row['pseudo'])
@@ -117,25 +113,11 @@ class AddUsersFromFilesCommand extends Command
                         ->setSite($site)
                         ->setActif($row['actif']);
 
-
-                    $userCreated++;
-
-                    $this->entityManager->persist($newUser);
-                    $this->entityManager->flush();
+                    $users [$i] = $newUser;
+                    $i++;
                 }
-                $this->entityManager->flush();
             }
 
-        }
-
-
-        if ($userCreated > 1) {
-            $string = "{$userCreated} Participants ajoutés à la sortie.";
-        } elseif ($userCreated === 1) {
-            $string = '1 participant ajouté à la sortie.';
-        } else {
-            $string = 'Aucun participant ajouté à la sortie';
-        }
-        $this->io->success($string);
+        }return $users;
     }
 }
