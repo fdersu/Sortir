@@ -10,10 +10,12 @@ use App\Entity\Ville;
 use App\Form\LieuFormType;
 use App\Form\MotifAnnulationType;
 use App\Form\SortieFormType;
+use App\ManageEntity\UpdateEntity;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use App\Repository\VilleRepository;
+use App\Upload\SortieImages;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -89,7 +91,7 @@ class SortieController extends AbstractController
      * @Route("/sortie_add", name="sortie_add")
      * @Route ("/sortie_update/{sortie_id}", name="sortie_update", requirements={"sortie_id"="\d+"})
      */
-    public function add(Request $request, EntityManagerInterface $entityManager, $sortie_id=null): Response
+    public function add(Request $request,SortieImages $images, UpdateEntity $updateEntity, EntityManagerInterface $entityManager, $sortie_id=null): Response
     {
         //Si aucun id de sortie en requete, creation de nouveaux objets sortie et lieu
         if($sortie_id!==null){
@@ -117,12 +119,18 @@ class SortieController extends AbstractController
         //Methode pour setter Organisateur directement dans le controlleur :
         $sortie->setOrganisateur($entityManager->getRepository(User::class)->findOneBy(['pseudo' => $this->getUser()->getUsername()]));
 
+
+
         //Recupération de la requete
         $sortieForm->handleRequest($request);
         $lieuForm->handleRequest($request);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
-
+            $file = $sortieForm->get('urlPhoto')->getData();
+            if ($file) {
+                $directory = $this->getParameter('upload_images_sortie_dir');
+                $images->save($file, $sortie, $directory);
+            }
             //Vérification du bouton cliqué
             if ($sortieForm->getClickedButton() === $sortieForm->get('save')) {
                 $sortie->setEtat($entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'Créée']));
@@ -136,13 +144,13 @@ class SortieController extends AbstractController
             $sortie->setLieu($entityManager->getRepository(Lieu::class)->find($idLieu));
 
             if($sortie->getLieu() !== null){
-
+                $updateEntity->save($sortie);
                 $entityManager->persist($sortie);
                 $entityManager->flush();
 
                 $this->addFlash('success', 'Sortie ajoutée !');
 
-                return $this->redirectToRoute('sortie_detail', ['sortie_id' => $sortie->getId()]);
+                return $this->redirectToRoute('sortie_detail', ['sortie_id' => $sortie->getId(), 'urlPhoto' => $sortie->getUrlPhoto()]);
             }
         }
 

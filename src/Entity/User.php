@@ -353,4 +353,8 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getRole()
+    {
+        // TODO: Implement getRoles() method.
+    }
 }
