@@ -11,9 +11,9 @@ use PHPUnit\Framework\TestCase;
 
 class TestUnitTest extends TestCase
 {
-    public function testVilleRemove(VilleController $villeController): void
+    public function testVilleRemove(VilleController $villeController, EntityManagerInterface $entityManager): void
     {
-        $ville1 = $entityManager->
+        $ville1 = new Ville();
         $ville2 = new Ville();
         $lieu1 = new Lieu();
         $lieu2 = new Lieu();
@@ -37,8 +37,4 @@ class TestUnitTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testSomething(): void
-    {
-        $this->assertTrue(true);
-    }
 }
