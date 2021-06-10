@@ -82,4 +82,28 @@ class GestionUsersController extends AbstractController
             'allUsers' => $users
         ]);
     }
+
+
+    /**
+     * Methode pour exporter tous les users au format CSV (pour avoir un fichier pour tester l'import)
+     * @Route("/gestion/users/export", name="users_export")
+     */
+    public function exportCSV(UserRepository $userRepository): Response
+    {
+
+        $users = $userRepository->findAll();
+        $str = "site;pseudo;password;nom;prenom;telephone;mail;actif;roles;photo"."\n";
+
+        foreach ($users as $user) {
+
+            $str .= $user->getSite()->getNom() . ";" . $user->getPseudo() . ";" . $user->getPassword() . ";" . $user->getNom() . ";" . $user->getPrenom();
+            $str .= ";" . $user->getTelephone() . ";" . $user->getMail() . ";" . $user->getActif() . ";" . $user->getRolesToString() . ";" . $user->getPhoto();
+            $str .= "\n";
+        }
+
+        $response = new Response($str);
+        $response->headers->set('Content-Type', 'text/csv');
+
+        return $response;
+    }
 }

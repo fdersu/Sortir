@@ -28,7 +28,6 @@ class ProfilController extends AbstractController
                          UpdateEntity $updateEntity): Response
     {
 
-
         $error = "";
 
         $userInSession = $userRepository->findOneBy(["pseudo" => $this->getUser()->getUsername()]);
@@ -86,33 +85,9 @@ class ProfilController extends AbstractController
     }
 
 
-
-    /**
-     * Methode pour exporter tous les users au format CSV (pour avoir un fichier pour tester l'import)
-     * @Route("/profil/export", name="profil_export")
-     */
-    public function exportCSV(Request $request, UserRepository $userRepository): Response
-    {
-
-        $users = $userRepository->findAll();
-        $str = "site,pseudo,password,nom,prenom,telephone,mail,actif,roles,photo"."\n";
-
-        foreach ($users as $user) {
-
-            $str .= $user->getSite()->getId() . "," . $user->getPseudo() . "," . $user->getPassword() . "," . $user->getNom() . "," . $user->getPrenom();
-            $str .= "," . $user->getTelephone() . "," . $user->getMail() . "," . $user->getActif() . "," . $user->getRoles() . "," . $user->getPhoto();
-            $str .= "\n";
-        }
-
-        $response = new Response($str);
-        $response->headers->set('Content-Type', 'text/csv');
-
-        return $response;
-    }
-
     /**
      * @Route ("/actif_update", name="actif_update")
-     */
+     */ /*
     public function actifUpdate(Request $request, EntityManagerInterface $entityManager): Response
     {
         //Récupération des users en base
@@ -135,11 +110,10 @@ class ProfilController extends AbstractController
             $this->addFlash('success', 'Users modifiés !');
         }
 
-        return $this->render('sortie/usersActifs.html.twig', [
+        return $this->render('gestion_users/usersActifs_flxgrd.html.twig', [
             'users' => $users,
         ]);
-
-    }
+    } */
 
 }
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Site;
+use App\Entity\User;
 use App\Form\SiteFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -77,13 +78,22 @@ class SiteController extends AbstractController
      */
     public function delete($site_id, EntityManagerInterface $entityManager): Response
     {
+        //Récupération en base du site et des users associés
         $siteToDelete = $entityManager->find(Site::class, $site_id);
+        $linkedUsers = $entityManager->getRepository(User::class)->findBy(['site'=>$siteToDelete]);
 
-        $entityManager->remove($siteToDelete);
-        $entityManager->flush();
+        //Suppression du site refusée si des users sont associés
+        if($linkedUsers){
+            $this->addFlash('error', 'Ce site est associé à des utilisateurs');
 
-        $this->addFlash('success', 'Le site a été supprimé');
+        } else {
+            $entityManager->remove($siteToDelete);
+            $entityManager->flush();
 
+            $this->addFlash('success', 'Le site a été supprimé');
+        }
+
+        //Rechargement de la page de gestion des sites
         return $this->redirectToRoute('site_add');
     }
 

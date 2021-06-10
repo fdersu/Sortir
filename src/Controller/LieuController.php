@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Lieu;
-use App\Entity\Site;
-use App\Entity\Ville;
+use App\Entity\Sortie;
 use App\Form\LieuFormType;
-use App\Form\SiteFormType;
-use App\Form\VilleFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +19,7 @@ class LieuController extends AbstractController
      */
     public function lieu(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $bool = true;
         $lieu = new Lieu();
 
         $lieux = $entityManager->getRepository(Lieu::class)->findAll();
@@ -35,8 +33,9 @@ class LieuController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Lieu ajouté !');
-            return $this->redirectToRoute('sortie_add');
-
+            return $this->redirectToRoute('sortie_add', [
+                'bool' => $bool
+            ]);
         }
 
 
@@ -84,13 +83,22 @@ class LieuController extends AbstractController
      */
     public function delete($lieu_id, EntityManagerInterface $entityManager): Response
     {
+        //Récupération en base du lieu et des sorties associées
         $lieuToDelete = $entityManager->find(Lieu::class, $lieu_id);
+        $linkedSorties = $entityManager->getRepository(Sortie::class)->findBy(['lieu' =>$lieuToDelete]);
 
-        $entityManager->remove($lieuToDelete);
-        $entityManager->flush();
+        //Suppression du lieu refusée si des sorties sont associées
+        if($linkedSorties){
+            $this->addFlash('error', 'Ce lieu est associé à des sorties');
 
-        $this->addFlash('success', 'La ville a été supprimée');
+        } else {
+            $entityManager->remove($lieuToDelete);
+            $entityManager->flush();
 
+            $this->addFlash('success', 'Le lieu a été supprimé');
+        }
+
+        //Rechargement de la page de gestion des lieux
         return $this->redirectToRoute('lieu_add');
     }
 }

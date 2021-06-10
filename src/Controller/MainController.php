@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\FilterType;
 use App\Form\Model\Filter;
 use App\Repository\SortieRepository;
+use App\Services\GestionEtatsSorties;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +33,7 @@ class MainController extends AbstractController
     /**
      * @Route("accueil", name="accueil")
      */
-    public function accueil(SortieRepository $sortieRepository, Request $request): Response
+    public function accueil(SortieRepository $sortieRepository, GestionEtatsSorties $etatsSorties, Request $request): Response
     {
         //Instance de user
         /** @var User $user */
@@ -43,6 +44,11 @@ class MainController extends AbstractController
 
         //Toutes les sorties datant de moins d'un mois
         $allSorties = $sortieRepository->findWithinLastMonth();
+
+        //Met à jour les états des sorties
+        foreach ($allSorties as $sortie){
+            $etatsSorties->setEtats($sortie);
+        }
 
         $filter = new Filter();
 

@@ -58,7 +58,7 @@
         <div class="row align-items-center">
             <div class="col-12 col-md-4">
                 {% if sortie.urlPhoto %}
-                    <img class="photo" src="{{ asset('img/images/') ~ sortie.urlPhoto }}" alt="photo">
+                    <img class="photo" src="{{ asset('img/') ~ sortie.urlPhoto }}" alt="photo">
                 {% else %}
                     <img class="photo" src="{{ asset('img/default_picture.png') }}" alt="photo">
                 {% endif %}
@@ -147,7 +147,7 @@
 {% block style %}
     <style type="text/css">
         body {
-            background: linear-gradient(to bottom, rgb(130, 169, 191), rgb(214, 243, 255));
+
         }
 
         .photo {
@@ -169,18 +169,21 @@
 
         .cancel {
             border: 1px solid black;
-            border-radius: 1vw;
+            border-radius: 0.5vw;
             background-color: #ff7070;
+        }
+        .cancel:hover{
+            color: white;
         }
 
         .even {
             min-height: 5vh;
-            background-color: rgba(183, 225, 238, 0.5);
+            background-color: rgba(0, 166, 166, 0.3);
         }
 
         .odd {
             min-height: 5vh;
-            background-color: rgba(123, 170, 224, 0.5);
+            background-color: rgba(51, 225, 208, 0.3);
         }
 
         .left {
@@ -203,8 +206,11 @@
 
         .valider {
             border: 1px solid black;
-            border-radius: 1vw;
+            border-radius: 0.5vw;
             background-color: #ff7070;
+        }
+        .valider:hover{
+            color: white;
         }
     </style>
 {% endblock %}

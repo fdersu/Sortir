@@ -118,7 +118,7 @@
                                     <div><span>{{ sortie.organisateur.pseudo }}</span></div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-md-4 col-lg-2
-                                            offset-0 offset-xl-6 offset-xxl-0">
+                                            offset-0 offset-xl-6 offset-xxl-0 links">
                                     <div><strong>Action</strong></div>
                                     <div>
                                         <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}">Afficher</a>
@@ -135,7 +135,7 @@
                                             {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' and app.user.actif %}
                                                 <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
                                             {% endif %}
-                                        {% elseif sortie.organisateur == app.user and app.user.actif %}
+                                        {% elseif sortie.organisateur == app.user and app.user.actif and not "ROLE_ADMIN" in app.user.roles %}
                                             {% if sortie.etat.libelle == 'Créée' %}
                                                     <a href="{{ path('sortie_update', {sortie_id: sortie.id}) }}">Modifier</a>
                                                     <a href="{{ path('sortie_publier', {sortie_id: sortie.id }) }}">Publier</a>
@@ -162,18 +162,18 @@
 
 {% block style %}
     <style type="text/css">
+        body{
+            background-color: rgb(199, 208, 224);
+        }
         .main {
             margin-left: 5vw;
             margin-right: 5vw;
         }
 
-        .pad {
-            margin-top: 5vh;
-        }
-
         .sortie {
             border: 1px solid black;
             border-radius: 1vw;
+            background-color: white;
         }
 
         .parent {
@@ -186,6 +186,7 @@
             padding: 3vh;
             border: 1px solid black;
             border-radius: 1vw;
+            background-color: white;
         }
 
         input[type=text], input[type=date], select {
@@ -197,6 +198,11 @@
         button {
             border: 1px solid black;
             border-radius: 0.5vw;
+            background-color: rgb(199, 208, 224);
+        }
+        button:hover{
+            color: white;
+            background-color: teal;
         }
 
         input[type=checkbox] {
@@ -227,6 +233,15 @@
         #ajaxDisplay{
             border: 1px solid black;
             border-radius: 1vw;
+        }
+        .links a{
+            text-decoration: none;
+            border: 1px solid black;
+            padding-left: 0.2vw;
+            padding-right: 0.2vw;
+            border-radius: 0.5vw;
+            background-color: #28343d;
+            color: white;
         }
     </style>
 {% endblock %}

@@ -9,6 +9,14 @@ body {
     width: 98vw;
 }
 
+.mainBody {
+    margin-left: 2em;
+}
+
+h1, h2, h3 {
+    font-family: 'Englebert', sans-serif;
+}
+
 .container-grille {
     width: 100%;
     display: grid;
@@ -137,46 +145,57 @@ main {
     flex-direction: column;
 }
 
+.grid-item {
+    padding: 0.5rem;
+}
+
+.grid-item a {
+    padding: 0.5rem;
+    margin: 3px;
+    text-decoration: none;
+    color: black;
+}
+
 .tableau-lieux-admin {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
-    grid-gap: 5px;
+    grid-row-gap: 3px;
 }
 
 .tableau-lieux {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
-    grid-gap: 5px;
+    grid-row-gap: 3px;
 }
 
 .tableau-villes-admin {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
-    grid-gap: 5px;
+    grid-row-gap: 3px;
 }
 
 .tableau-villes {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
-    grid-gap: 5px;
+    grid-row-gap: 3px;
 }
 
 .tableau-sites-admin {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
-    grid-gap: 5px;
+    grid-row-gap: 3px;
 }
 
 .tableau-sites {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto;
-    grid-gap: 5px;
+    grid-row-gap: 3px;
 }
 
 .noresize {
@@ -185,22 +204,40 @@ main {
     width: auto\9; /* ie8 */
 }
 
+
 .form div {
     display: flex;
     flex-direction: column;
-    ms-flex-direction: row;
-    margin: 0.5em 2em 0.5em 1em;
+    margin: 0.5em 2em 0.5em 0em;
 }
 
-.form-div {
-    display: flex;
-    flex-direction: column;
-    ms-flex-direction: row;
-    margin-left: 0.5em;
-    margin-bottom: 0.1em;
+
+.sortie-form {
+   width: 70%;
+    margin-left: 1em;
 }
 
-.btn a {
+form input:not([type="file"]), form textarea, form select{
+    border-radius: 10% 5%;
+}
+
+.btn-sortie {
+    display: inline;
+    justify-content: space-around;
+    margin: 0 auto;
+    line-height: 2em;
+    min-height: 3em;
+    padding: 0 20px;
+    background: teal;
+    letter-spacing: 2px;
+    transition: .2s all ease-in-out;
+    outline: none;
+    border: 1px solid #00CCCC;
+    border-radius: 10px 10px 15px 10px;
+    box-shadow: 3px 2px 1px rgba(51, 225, 208, 0.3), 3px 3px 1px 1px #00CCCC;
+}
+
+.btn-sortie a {
     display: inline;
     flex-direction: column;
     width: 70%;
@@ -209,24 +246,12 @@ main {
     color: black;
 }
 
-.btn a:hover {
+.btn-sortie:hover {
     color: white;
 }
 
-
-
-.btn {
-    display: inline;
-    justify-content: space-around;
-    margin: 0 auto;
-    line-height: 2em;
-    padding: 0 20px;
-    background: teal;
-    letter-spacing: 2px;
-    transition: .2s all ease-in-out;
-    outline: none;
-    border: 1px solid rgba(0, 0, 0, 1);
-    box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0, 0, 0, 1);
+.btn-sortie a:hover {
+    color: white;
 }
 
 .flash {
@@ -235,24 +260,39 @@ main {
     color: teal;
 }
 
-    /*
-    footer p {
-        color: #f2f2f2;
-        font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 2em;
-        margin-left: 1em;
-    }
-
-     */
-
-
-
-/*
-.bodyTitles {
-    font-family: 'Indie Flower', cursive;
+.links a {
+    text-decoration: none;
+    border: 1px solid black;
+    padding-left: 0.2vw;
+    padding-right: 0.2vw;
+    border-radius: 0.5vw;
+    background-color: teal;
+    color: white;
 }
 
+.even {
+    min-height: 5vh;
+    background-color: rgba(0, 166, 166, 0.3);
+}
+
+.odd {
+    min-height: 5vh;
+    background-color: rgba(51, 225, 208, 0.3);
+}
+
+.left {
+    border-top-left-radius: 0.5vw;
+}
+
+.right {
+    border-bottom-right-radius: 0.5vw;
+}
+
+.gap {
+    margin-bottom: 0.5vh;
+}
+
+/*
 button {
     display: block;
     margin: 0 auto;
@@ -266,79 +306,15 @@ button {
     box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
 }
 
-
-.wishesList {
-    max-width:1300px;
-    width:80%;
-    height: auto;
-    margin: 20px auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 300px);
-    justify-content: center;
-    grid-gap: 10px;
-
-}
-
-.card {
-    width: auto;
-    height: auto;
-    border: 3px solid teal;
-    padding: 0.5em;
-    font-size: 1.2em;
-    font-family: 'PT Sans Narrow', sans-serif;
-}
-
-.middleBlock {
-    display: flex;
-    margin: 10%;
-    padding: 1em;
-}
-
-.noDecoration{
-    text-decoration: none;
-    color:black;
-}
-
-.border-color{
-    padding: 1em;
-    border: solid 5px teal;
-    border-radius: 5px;
-}
-
-.button {
-    display: inline-flex;
-    justify-content: space-around;
-    margin: 0 auto;
-    line-height: 2em;
-    padding: 0 20px;
-    background: teal;
-    letter-spacing: 2px;
-    transition: .2s all ease-in-out;
-    outline: none;
-    border: 1px solid rgba(0,0,0,1);
-    box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0,0,0,1);
-}
-
-.footer{
-    background-color: teal;
-    position: fixed;
-    width: 100vw;
-    height: 3rem;
-    bottom: 0;
-}
-
-
-
 /*
 CSS rules to specify families
 
-font-family: 'Barriecito', cursive;
-font-family: 'Freckle Face', cursive;
-font-family: 'Fredoka One', cursive;
-font-family: 'Indie Flower', cursive;
-font-family: 'Mountains of Christmas', cursive;
-font-family: 'Frijole', cursive;
-font-family: 'PT Sans Narrow', sans-serif;
+    font-family: 'Chicle', cursive;
+    font-family: 'Englebert', sans-serif;
+    font-family: 'IM Fell DW Pica SC', serif;
+    font-family: 'Mouse Memoirs', sans-serif;
+    font-family: 'Rum Raisin', sans-serif;
+    font-family: 'Stylish', sans-serif;
 */
 
 @media screen and (max-width: 1000px) {

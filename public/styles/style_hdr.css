@@ -26,7 +26,7 @@ header {
     grid-template-columns: 60px 200px 1fr;
     grid-template-rows: 1fr;
     justify-content: center;
-
+    font-family: 'Rum Raisin', sans-serif;
 }
 
 .logo {
@@ -47,7 +47,11 @@ header {
     justify-content: flex-end;
 }
 
-.admin-dashbord {
+.ulNav > li > a {
+    font-size: 1.5rem;
+}
+
+.admin-dashboard {
     width: 100%;
     text-align: left;
     border-radius: 2px;
@@ -57,27 +61,36 @@ header {
     max-height: 0;
 }
 
+/*
+.submenu:hover .admin-dashbord {
+    display: flex;
+    flex-direction: column;
+    overflow: no-content;
+    list-style: none;
+    max-height: 100%;
+}
+
+
+.submenu:active .admin-dashbord {
+    display: flex;
+    flex-direction: column;
+    overflow: no-content;
+    list-style: none;
+    max-height: 100%;
+}*/
+
 .submenu-checkbox {
     opacity: 0;
     position: absolute;
     top: -1000px;
 }
 
-.submenu-checkbox:checked ~ .admin-dashbord {
+.submenu-checkbox:checked ~ .admin-dashboard {
     display: flex;
     flex-direction: column;
     overflow: no-content;
     max-height: 100%;
 }
-
-/*
-.submenu:hover .admin-dashbord {
-    display: flex;
-    flex-direction: column;
-    overflow: no-content;
-    max-height: 100%;
-}*/
-
 
 /* Add a teal background color to the top navigation */
 .topnav {
@@ -140,4 +153,19 @@ header {
     .menu-checkbox:checked ~ .ulNav {
         display: block;
     }
+
+    .noDisplayOnSmartphone {
+        display: none;
+    }
 }
+
+/*
+CSS rules to specify families
+
+    font-family: 'Chicle', cursive;
+    font-family: 'Englebert', sans-serif;
+    font-family: 'IM Fell DW Pica SC', serif;
+    font-family: 'Mouse Memoirs', sans-serif;
+    font-family: 'Rum Raisin', sans-serif;
+    font-family: 'Stylish', sans-serif;
+*/

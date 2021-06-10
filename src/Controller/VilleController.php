@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
+use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\VilleFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -80,13 +82,34 @@ class VilleController extends AbstractController
     public function delete($ville_id, EntityManagerInterface $entityManager): Response
     {
         $villeToDelete = $entityManager->find(Ville::class, $ville_id);
+        $linkedLieux = $entityManager->getRepository(Lieu::class)->findBy(['ville' => $villeToDelete]);
 
-        $entityManager->remove($villeToDelete);
-        $entityManager->flush();
+        if($linkedLieux){
+            foreach ($linkedLieux as $linkedLieu) {
+                $linkedSorties = $entityManager->getRepository(Sortie::class)->findBy(['lieu' => $linkedLieu]);
 
-        $this->addFlash('success', 'La ville a été supprimée');
+                if ($linkedSorties) {
 
-        return $this->redirectToRoute('ville_add');
+                    //Suppression du lieu refusée si des sorties sont associées
+                    $this->addFlash('error', 'Le lieu associé à cette ville ne peut pas être supprimé');
+
+                    //Rechargement de la page, le reste du code n'est pas executé
+                    return $this->redirectToRoute('ville_add');
+
+                } else {
+                    $entityManager->remove($linkedLieu);
+                }
+                //Si tous les lieux associés ont été supprimés, on supprime la ville puis recharge la page
+                $entityManager->remove($villeToDelete);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'La ville a été supprimée');
+
+                return $this->redirectToRoute('ville_add');
+
+            }
+        }
+
     }
 
 

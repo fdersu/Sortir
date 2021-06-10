@@ -15,9 +15,9 @@
                     {% else %}
                     <div class="tableau-sites">
                         {% endif %}
-                    <div><strong>Nom</strong></div>
+                    <div><h3>Nom</h3></div>
                     {% if is_granted("ROLE_ADMIN") %}
-                        <div><strong>Actions</strong></div>
+                        <div><h3>Actions</h3></div>
                     {% endif %}
                 </div>
                     {% if is_granted("ROLE_ADMIN") %}
@@ -26,9 +26,9 @@
                         <div class="tableau-sites">
                             {% endif %}
                     {% for site in sites %}
-                        <div><span>{{ site.nom }}</span></div>
+                        <div {% if(loop.index is even) %} class="even left grid-item" {% else%} class="odd left grid-item" {% endif %}><span>{{ site.nom }}</span></div>
                         {% if is_granted("ROLE_ADMIN") %}
-                            <div class="block-case">
+                            <div  {% if(loop.index is even) %} class="flex-row even right grid-item links" {% else%} class="flex-row odd right grid-item links" {% endif %}>
                                 <a href="{{ path('site_update', {site_id: site.id}) }}">Modifier</a>
                                 <a href="{{ path('site_delete', {site_id: site.id }) }}">Supprimer</a>
                             </div>
@@ -46,8 +46,8 @@
 
                 {{ form_widget(siteForm)}}
 
-                <button type="submit" class="btn">Valider</button>
-                <button class="btn"><a href="{{ path('site_add') }}">Retour</a></button>
+                <button type="submit" class="btn-sortie">Valider</button>
+                <button class="btn-sortie"><a href="{{ path('site_add') }}">Retour</a></button>
                 {{ form_end(siteForm) }}
             </div>
             </div>

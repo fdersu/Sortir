@@ -58,6 +58,8 @@ class AppFixtures extends Fixture
             $lieu->setNom($generator->words(3, true));
             $lieu->setRue($generator->numberBetween(1,20).', rue de '.$generator->word);
             $lieu->setVille($generator->randomElement($villes));
+            $lieu->setLatitude($generator->latitude);
+            $lieu->setLongitude($generator->longitude);
 
             $manager->persist($lieu);
             $manager->flush();
@@ -88,7 +90,7 @@ class AppFixtures extends Fixture
             $user->setTelephone($generator->phoneNumber);
             $user->setActif($generator->boolean);
             $user->setSite($generator->randomElement($sites));
-            $user->setRoles($generator->randomElement(array(['ROLE_USER'])));
+            $user->setRoles($generator->randomElement(array(['ROLE_USER'], ['ROLE_USER'], ['ROLE_USER'], ['ROLE_ADMIN'])));
 
             $manager->persist($user);
             $manager->flush();
