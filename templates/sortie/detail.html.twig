@@ -124,7 +124,7 @@
                     <div class="col-6 col-lg-4
                         offset-0 offset-lg-4 even left
                         d-flex justify-content-center justify-content-lg-start"><a
-                                href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a>
+                                href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}" class="profileLink">{{ insc.participant.pseudo }}</a>
                     </div>
                     <div class="col-6 col-lg-2 even right
                                 d-flex justify-content-center justify-content-lg-start">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
@@ -134,7 +134,7 @@
                     <div class="col-6 col-lg-4
                         offset-0 offset-lg-4 odd left
                         d-flex justify-content-center justify-content-lg-start"><a
-                                href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}">{{ insc.participant.pseudo }}</a>
+                                href="{{ path('sortie_participant', {sortie_id: sortie.id, id: insc.participant.id}) }}" class="profileLink">{{ insc.participant.pseudo }}</a>
                     </div>
                     <div class="col-6 col-lg-2 odd right
                                 d-flex justify-content-center justify-content-lg-start">{{ insc.participant.prenom }} {{ insc.participant.nom }}</div>
@@ -210,6 +210,17 @@
             background-color: #ff7070;
         }
         .valider:hover{
+            color: white;
+        }
+        .profileLink{
+            text-decoration: none;
+            color: black;
+        }
+        .profileLink:hover{
+            padding-left: 0.2vw;
+            padding-right: 0.2vw;
+            border-radius: 0.5vw;
+            background-color: #668fad;
             color: white;
         }
     </style>
