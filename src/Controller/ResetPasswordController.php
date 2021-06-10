@@ -70,29 +70,12 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
-        if (isset($_POST['mail'])) {
-            $mail = $_POST['mail'];
-
-            $bool = false;
-            $users = $this->getDoctrine()->getRepository(User::class)->findAll();
-            foreach ($users as $user) {
-                if ($user->getMail() == $mail) {
-                    $bool = true;
-                }
-            }
-            if ($bool) {
-                return $this->render('reset_password/check_email.html.twig', [
-                    'resetToken' => $resetToken,
-                    'token' => $token
-                ]);
-            }
-        }
-
-        $error = "L'email utilisée n'existe pas, veuillez réessayer!";
-        return $this->render('security/login.html.twig', [
-            'error' => $error, 'messageError' => $error, 'last_username' => '',
-           ]);
+        return $this->render('reset_password/check_email.html.twig', [
+            'resetToken' => $resetToken,
+            'token' => $token
+        ]);
     }
+
 
     /**
      * Validates and process the reset URL that the user clicked in their email.

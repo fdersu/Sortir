@@ -7,20 +7,17 @@
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
     <h1>Reinitialiser votre mot de passe</h1>
+    {{ form_start(requestForm) }}
+    {{ form_row(requestForm.mail) }}
     <div>
         <small>
             Entrer votre adresse-mail, nous allons vous envoyer un lien de reinitialisation de votre mot de passe.
         </small>
     </div>
 
-    <form action="{{ path('app_check_email') }}" method="post">
-        <p>
-            <label for="mail">Votre adresse mail</label>
-            <input type="text" name="mail" id="mail">
-        </p>
-        <button class="btn btn-primary">Me renvoyer un nouveau mot de passe</button>
-        <a class="btn btn-danger"
-           href="{{ path('app_login') }}">Retourner à
-            la page de connexion</a>
-    </form>
+    <button class="btn btn-primary">Me renvoyer un nouveau mot de passe</button>
+    <a class="btn btn-danger"
+       href="{{ path('app_login') }}">Retourner à
+        la page de connexion</a>
+    {{ form_end(requestForm) }}
 {% endblock %}
