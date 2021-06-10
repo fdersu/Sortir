@@ -29,13 +29,17 @@
             {% endif %}
         {% endfor %}
         <div class="col-12 d-flex justify-content-center">
-            <button class="btn-sortie">Valider</button>
+            <button class="valider">Valider</button>
         </div>
         {{ form_end(formActive) }}
     </div>
 
     {% if is_granted("ROLE_ADMIN") %}
-        <button class="btn-sortie"><a href="{{ path('users_export') }}">Exporter tous les utilisateurs</a></button>
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <a href="{{ path('users_export') }}" class="export">Exporter tous les utilisateurs</a>
+            </div>
+        </div>
     {% endif %}
 
 {% endblock %}
@@ -51,11 +55,11 @@
             margin-left: 1vw;
         }
 
-        button {
+        .valider {
             border: 1px solid black;
             border-radius: 0.5vw;
         }
-        button:hover{
+        .valider:hover{
             background-color: teal;
             color: white;
         }
@@ -78,10 +82,10 @@
             padding: 3vh;
         }
         .odd{
-            background-color: rgba(51, 225, 208, 0.3);
+            background-color: rgb(199, 208, 224);
         }
         .even{
-            background-color: rgba(0, 166, 166, 0.3);
+            background-color: rgb(221, 237, 255);
         }
         .gap{
             margin-bottom: 1vh;
@@ -91,6 +95,18 @@
         }
         .right{
             border-bottom-right-radius: 1vw;
+        }
+        .export{
+            text-decoration: none;
+            border: 1px solid black;
+            padding-left: 0.2vw;
+            padding-right: 0.2vw;
+            border-radius: 0.5vw;
+            background-color: #28343d;
+            color: white;
+        }
+        .export:hover{
+            color: #03e8e8;
         }
     </style>
 {% endblock %}

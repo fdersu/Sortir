@@ -117,11 +117,13 @@
                                     <div><strong>Organisateur</strong></div>
                                     <div><span>{{ sortie.organisateur.pseudo }}</span></div>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-4 col-lg-2
-                                            offset-0 offset-xl-6 offset-xxl-0 links">
+                                <div class="col-12 col-sm-6 col-md-8 col-lg-6 col-xxl-2
+                                            offset-0 offset-xl-6 offset-xxl-0">
                                     <div><strong>Action</strong></div>
-                                    <div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6 col-lg-4 col-xxl-12 links">
                                         <a href="{{ path('sortie_detail', {sortie_id: sortie.id}) }}">Afficher</a>
+                                        </div>
                                         {% set bool = false %}
                                         {% for ins in sortie.inscriptions %}
                                             {% if ins.participant.id == app.user.id %}
@@ -130,22 +132,36 @@
                                         {% endfor %}
                                         {% if sortie.organisateur != app.user %}
                                             {% if bool and sortie.dateDebut > now %}
-                                                <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}">Se
-                                                    désister</a>
+                                                <div class="col-12 col-sm-6 col-lg-4 col-xxl-12 links">
+                                                    <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}"
+                                                       id="desist">Se désister</a>
+                                                </div>
                                             {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' and app.user.actif %}
-                                                <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
+                                                <div class="col-12 col-sm-6 col-lg-4 col-xxl-12 links">
+                                                    <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
+                                                </div>
                                             {% endif %}
                                         {% elseif sortie.organisateur == app.user and app.user.actif and not "ROLE_ADMIN" in app.user.roles %}
                                             {% if sortie.etat.libelle == 'Créée' %}
+                                                <div class="col-12 col-sm-6 col-lg-4 col-xxl-12 links">
                                                     <a href="{{ path('sortie_update', {sortie_id: sortie.id}) }}">Modifier</a>
+                                                </div>
+                                                <div class="col-12 col-sm-6 col-lg-4 col-xxl-12 links">
                                                     <a href="{{ path('sortie_publier', {sortie_id: sortie.id }) }}">Publier</a>
+                                                </div>
                                             {% elseif sortie.etat.libelle == 'Ouverte' or sortie.etat.libelle == 'Clôturée' %}
-                                                    <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">Annuler</a>
+                                                <div class="col-12 col-sm-6 col-lg-4 col-xxl-12 links">
+                                                    <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}"
+                                                       id="clx1">Annuler</a>
+                                                </div>
                                             {% endif %}
                                         {% endif %}
                                         {% if "ROLE_ADMIN" in app.user.roles and sortie.etat.libelle != 'Annulée' %}
-                                            <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}">Annuler</a>
-                                            {% endif %}
+                                            <div class="col-12 col-sm-6 col-lg-4 col-xxl-12 links">
+                                                <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}"
+                                                   id="clx2">Annuler</a>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -162,9 +178,10 @@
 
 {% block style %}
     <style type="text/css">
-        body{
+        body {
             background-color: rgb(199, 208, 224);
         }
+
         .main {
             margin-left: 5vw;
             margin-right: 5vw;
@@ -200,7 +217,8 @@
             border-radius: 0.5vw;
             background-color: rgb(199, 208, 224);
         }
-        button:hover{
+
+        button:hover {
             color: white;
             background-color: teal;
         }
@@ -230,11 +248,12 @@
         .etat:hover {
             cursor: pointer;
         }
-        #ajaxDisplay{
-            border: 1px solid black;
+
+        #ajaxDisplay {
             border-radius: 1vw;
         }
-        .links a{
+
+        .links a {
             text-decoration: none;
             border: 1px solid black;
             padding-left: 0.2vw;
@@ -242,6 +261,16 @@
             border-radius: 0.5vw;
             background-color: #28343d;
             color: white;
+        }
+
+        .links a:hover {
+            color: white;
+            background-color: teal;
+        }
+
+        #clx1:hover, #clx2:hover, #desist:hover {
+            color: #ff7070;
+            background-color: #28343d;
         }
     </style>
 {% endblock %}
