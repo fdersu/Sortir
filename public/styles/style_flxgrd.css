@@ -6,7 +6,7 @@
 
 body {
     padding: 1rem;
-    width: 98vw;
+    max-width: 98vw;
 }
 
 .mainBody {
@@ -104,6 +104,7 @@ main {
 .block {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     padding: 1em;
     margin-top: 1em;
 }
@@ -208,7 +209,8 @@ main {
 .form div {
     display: flex;
     flex-direction: column;
-    margin: 0.5em 2em 0.5em 0em;
+    max-width: 100%;
+    margin-bottom: 0.2em;
 }
 
 
@@ -268,6 +270,10 @@ form input:not([type="file"]), form textarea, form select{
     border-radius: 0.5vw;
     background-color: teal;
     color: white;
+}
+
+.displayWhenSmall {
+    display: none;
 }
 
 .even {
@@ -346,5 +352,37 @@ CSS rules to specify families
 
     .menu-checkbox:checked ~ .ulNav {
         display: block;
+    }
+
+    .displayWhenSmall {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 598px) {
+
+    .tableau-lieux-admin {
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto;
+        grid-row-gap: 3px;
+    }
+
+    .tableau-lieux {
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: auto;
+        grid-row-gap: 3px;
+    }
+
+    .hideWhenSmall {
+        display: none;
+    }
+
+    .displayWhenSmall {
+        display: flex;
+        font-weight: bold;
     }
 }
