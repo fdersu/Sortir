@@ -22,7 +22,7 @@ function displayReason() {
             divRow.appendChild(divCol);
             parent.appendChild(divRow);
         })
-        item.addEventListener('mouseenter', function () {
+        item.addEventListener('mouseover', function () {
             if(document.getElementById('ajax') != null) {
                 let toDelete = document.getElementById('ajax');
                 toDelete.remove();
