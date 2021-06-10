@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}Edit profil{% endblock %}
-{% block stylesheets %}<link rel="stylesheet" href="{{ asset('styles/style_flxgrd.css') }}">{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('styles/style_flxgrd.css') }}">{% endblock %}
 
 {% block body %}
     {% if error %}
@@ -21,7 +22,7 @@
             <div> Vous n'avez pas encore de photo photo de profil</div>
         </center>
     {% endif %}
-    <div class="form">
+    <div class="form sortie-form">
 
         {{ form_start(userForm) }}
 
@@ -37,13 +38,13 @@
 
     </div>
     <div class="col-12 col-sm-6 col-md-7 offset-4">
-        <button class="btn btn-lg btn-primary" type="submit">
+        <button class="btn-sortie" type="submit">
             Enregister
         </button>
 
-        <a class="btn btn-lg btn-danger"
-           href="{{ path('main_home') }}">Retourner à
+        <button class="btn-sortie"><a href="{{ path('main_home') }}">Retourner à
             la page d'accueil</a>
+        </button>
     </div>
 
     {{ form_end(userForm) }}

@@ -26,10 +26,10 @@
     {{ form_widget(sortieForm.publish) }}
 
     {% if(sortie.id!=null) %}
-        <button class="btn"><a href="{{ path('sortie_cancelReason', {'sortie_id' : sortie.id}) }}">Supprimer la sortie</a></button>
+        <button class="btn-sortie"><a href="{{ path('sortie_cancelReason', {'sortie_id' : sortie.id}) }}">Supprimer la sortie</a></button>
     {% endif %}
-    <button class="btn"><a href="{{ path('lieu_add') }}" id="eventTrigger">Ajouter un lieu</a></button>
-    <button class="btn" id="cancelBtnForAddSortie"><a href="{{ path('main_accueil') }}">Annuler</a></button>
+    <button class="btn-sortie"><a href="{{ path('lieu_add') }}" id="eventTrigger">Ajouter un lieu</a></button>
+    <button class="btn-sortie" id="cancelBtnForAddSortie"><a href="{{ path('main_accueil') }}">Annuler</a></button>
     
     {{ form_end(sortieForm) }}
     
