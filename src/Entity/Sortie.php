@@ -33,13 +33,13 @@ class Sortie
     private $dateDebut;
 
     /**
-     * @Assert\Type("float")
+     * @Assert\Type("integer")
      * @Assert\Range(
      *     min="1",
      *     max="36",
      *     notInRangeMessage="La durée doit être comprise entre 1h et 36h",
      * )
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      */
     private $duree;
 
