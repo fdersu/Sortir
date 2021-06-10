@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
+use App\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -37,22 +38,33 @@ class ResetPasswordController extends AbstractController
      *
      * @Route("", name="app_forgot_password_request")
      */
-    public function request(Request $request, MailerInterface $mailer): Response
+    public function request(Request $request, MailerInterface $mailer, UserRepository $userRepository): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->processSendingPasswordResetEmail(
-                $form->get('mail')->getData(),
-                $mailer
 
-            );
+            $givenMail = $form->get('mail')->getData();
+            $userExist = $userRepository->findOneBy(['mail'=>$givenMail]);
+
+            if($userExist!==null) {
+
+                return $this->processSendingPasswordResetEmail(
+                    $form->get('mail')->getData(),
+                    $mailer
+                );
+
+            } else {
+                $this->addFlash('error', 'Cet email n\'est associé à aucun compte');
+                return $this->redirectToRoute('app_forgot_password_request');
+            }
         }
-
+        $mailSended = $request->request->get('mail');
         return $this->render('reset_password/request.html.twig', [
-            'requestForm' => $form->createView()]);
+            'requestForm' => $form->createView(), 'mail' => $mailSended
+        ]);
     }
 
     /**
@@ -70,9 +82,22 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
-        return $this->render('reset_password/check_email.html.twig', [
-            'resetToken' => $resetToken,
-            'token' => $token
+        $bool = false;
+        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        foreach ($users as $user) {
+            if ($user->getMail()) {
+                $bool = true;
+            }
+        }
+        if ($bool) {
+            return $this->render('reset_password/check_email.html.twig', [
+                'resetToken' => $resetToken,
+                'token' => $token
+            ]);
+        }
+        $error = "L'email utilisée n'existe pas, veuillez réessayer!";
+        return $this->render('security/login.html.twig', [
+            'error' => $error, 'messageError' => $error, 'last_username' => ''
         ]);
     }
 
@@ -82,8 +107,7 @@ class ResetPasswordController extends AbstractController
      *
      * @Route("/reset/{token}", name="app_reset_password")
      */
-    public
-    function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null): Response
+    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null): Response
     {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
@@ -137,8 +161,7 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private
-    function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
+    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
     {
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
             'mail' => $emailFormData,
