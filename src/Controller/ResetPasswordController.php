@@ -50,10 +50,9 @@ class ResetPasswordController extends AbstractController
 
             );
         }
-        $mailSended = $request->request->get('mail');
+
         return $this->render('reset_password/request.html.twig', [
-            'requestForm' => $form->createView(), 'mail' => $mailSended
-        ]);
+            'requestForm' => $form->createView()]);
     }
 
     /**
@@ -71,33 +70,37 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
+        if (isset($_POST['mail'])) {
+            $mail = $_POST['mail'];
 
-        $bool = false;
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
-        foreach ($users as $user) {
-            if ($user->getMail()) {
-                $bool = true;
+            $bool = false;
+            $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+            foreach ($users as $user) {
+                if ($user->getMail() == $mail) {
+                    $bool = true;
+                }
+            }
+            if ($bool) {
+                return $this->render('reset_password/check_email.html.twig', [
+                    'resetToken' => $resetToken,
+                    'token' => $token
+                ]);
             }
         }
-        if ($bool) {
-            return $this->render('reset_password/check_email.html.twig', [
-                'resetToken' => $resetToken,
-                'token' => $token
-            ]);
-        }
+
         $error = "L'email utilisée n'existe pas, veuillez réessayer!";
         return $this->render('security/login.html.twig', [
-            'error' => $error, 'messageError' => $error, 'last_username' => ''
-        ]);
+            'error' => $error, 'messageError' => $error, 'last_username' => '',
+           ]);
     }
-
 
     /**
      * Validates and process the reset URL that the user clicked in their email.
      *
      * @Route("/reset/{token}", name="app_reset_password")
      */
-    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null): Response
+    public
+    function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null): Response
     {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
@@ -151,7 +154,8 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
+    private
+    function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
     {
         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy([
             'mail' => $emailFormData,
