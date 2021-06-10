@@ -29,13 +29,13 @@
             {% endif %}
         {% endfor %}
         <div class="col-12 d-flex justify-content-center">
-            <button>Valider</button>
+            <button class="btn-sortie">Valider</button>
         </div>
         {{ form_end(formActive) }}
     </div>
 
     {% if is_granted("ROLE_ADMIN") %}
-        <button class="btn"><a href="{{ path('users_export') }}">Exporter tous les utilisateurs</a></button>
+        <button class="btn-sortie"><a href="{{ path('users_export') }}">Exporter tous les utilisateurs</a></button>
     {% endif %}
 
 {% endblock %}
@@ -78,10 +78,10 @@
             padding: 3vh;
         }
         .odd{
-            background-color: rgb(199, 208, 224);
+            background-color: rgba(51, 225, 208, 0.3);
         }
         .even{
-            background-color: rgb(221, 237, 255);
+            background-color: rgba(0, 166, 166, 0.3);
         }
         .gap{
             margin-bottom: 1vh;

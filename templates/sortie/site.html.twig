@@ -28,7 +28,7 @@
                     {% for site in sites %}
                         <div {% if(loop.index is even) %} class="even left grid-item" {% else%} class="odd left grid-item" {% endif %}><span>{{ site.nom }}</span></div>
                         {% if is_granted("ROLE_ADMIN") %}
-                            <div  {% if(loop.index is even) %} class="flex-row even right grid-item" {% else%} class="flex-row odd right grid-item" {% endif %}>
+                            <div  {% if(loop.index is even) %} class="flex-row even right grid-item links" {% else%} class="flex-row odd right grid-item links" {% endif %}>
                                 <a href="{{ path('site_update', {site_id: site.id}) }}">Modifier</a>
                                 <a href="{{ path('site_delete', {site_id: site.id }) }}">Supprimer</a>
                             </div>
@@ -46,8 +46,8 @@
 
                 {{ form_widget(siteForm)}}
 
-                <button type="submit" class="btn">Valider</button>
-                <button class="btn"><a href="{{ path('site_add') }}">Retour</a></button>
+                <button type="submit" class="btn-sortie">Valider</button>
+                <button class="btn-sortie"><a href="{{ path('site_add') }}">Retour</a></button>
                 {{ form_end(siteForm) }}
             </div>
             </div>
@@ -55,32 +55,4 @@
     </div>
 
 
-{% endblock %}
-
-{% block style %}
-    <style type="text/css">
-
-        .even {
-            min-height: 5vh;
-            background-color: rgba(0, 166, 166, 0.3);
-        }
-
-        .odd {
-            min-height: 5vh;
-            background-color: rgba(51, 225, 208, 0.3);
-        }
-
-        .left {
-            border-top-left-radius: 0.5vw;
-        }
-
-        .right {
-            border-bottom-right-radius: 0.5vw;
-        }
-
-        .gap {
-            margin-bottom: 0.5vh;
-        }
-
-    </style>
 {% endblock %}

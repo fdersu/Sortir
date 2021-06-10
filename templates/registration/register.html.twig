@@ -9,7 +9,7 @@
 
     <h1>Ajouter un utilisateur</h1>
 
-    <div class="form">
+    <div class="form sortie-form">
         {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.pseudo) }}
         {{ form_row(registrationForm.prenom) }}
@@ -39,7 +39,7 @@
         <form enctype="multipart/form-data" action="{{ path('app_register_file') }}" method="post">
             <input accept="text/csv" type="hidden" name="MAX_FILE_SIZE" value="100000"/>
             Importer des utilisateurs via un fichier.csv<input accept="text/csv" type="file" name="monfichier"/>
-            <input type="submit"/>
+            <input class="btn-sortie" type="submit"/>
         </form>
     </div>
 

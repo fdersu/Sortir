@@ -9,9 +9,12 @@ body {
     width: 98vw;
 }
 
+.mainBody {
+    margin-left: 2em;
+}
 
-.bodyTitles {
-    font-family: 'Indie Flower', cursive;
+h1, h2, h3 {
+    font-family: 'Englebert', sans-serif;
 }
 
 .container-grille {
@@ -148,6 +151,7 @@ main {
 
 .grid-item a {
     padding: 0.5rem;
+    margin: 3px;
     text-decoration: none;
     color: black;
 }
@@ -210,13 +214,30 @@ main {
 
 .sortie-form {
    width: 70%;
+    margin-left: 1em;
 }
 
-form input :not(input[type="submit"]), form input, form textarea, form select{
+form input:not([type="file"]), form textarea, form select{
     border-radius: 10% 5%;
 }
 
-.btn a {
+.btn-sortie {
+    display: inline;
+    justify-content: space-around;
+    margin: 0 auto;
+    line-height: 2em;
+    min-height: 3em;
+    padding: 0 20px;
+    background: teal;
+    letter-spacing: 2px;
+    transition: .2s all ease-in-out;
+    outline: none;
+    border: 1px solid #00CCCC;
+    border-radius: 10px 10px 15px 10px;
+    box-shadow: 3px 2px 1px rgba(51, 225, 208, 0.3), 3px 3px 1px 1px #00CCCC;
+}
+
+.btn-sortie a {
     display: inline;
     flex-direction: column;
     width: 70%;
@@ -225,24 +246,12 @@ form input :not(input[type="submit"]), form input, form textarea, form select{
     color: black;
 }
 
-.btn a:hover {
+.btn-sortie:hover {
     color: white;
 }
 
-
-
-.btn {
-    display: inline;
-    justify-content: space-around;
-    margin: 0 auto;
-    line-height: 2em;
-    padding: 0 20px;
-    background: teal;
-    letter-spacing: 2px;
-    transition: .2s all ease-in-out;
-    outline: none;
-    border: 1px solid rgba(0, 0, 0, 1);
-    box-shadow: 3px 3px 1px #95a4ff, 3px 3px 1px 1px rgba(0, 0, 0, 1);
+.btn-sortie a:hover {
+    color: white;
 }
 
 .flash {
@@ -251,6 +260,37 @@ form input :not(input[type="submit"]), form input, form textarea, form select{
     color: teal;
 }
 
+.links a {
+    text-decoration: none;
+    border: 1px solid black;
+    padding-left: 0.2vw;
+    padding-right: 0.2vw;
+    border-radius: 0.5vw;
+    background-color: teal;
+    color: white;
+}
+
+.even {
+    min-height: 5vh;
+    background-color: rgba(0, 166, 166, 0.3);
+}
+
+.odd {
+    min-height: 5vh;
+    background-color: rgba(51, 225, 208, 0.3);
+}
+
+.left {
+    border-top-left-radius: 0.5vw;
+}
+
+.right {
+    border-bottom-right-radius: 0.5vw;
+}
+
+.gap {
+    margin-bottom: 0.5vh;
+}
 
 /*
 button {
