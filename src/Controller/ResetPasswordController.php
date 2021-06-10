@@ -42,10 +42,12 @@ class ResetPasswordController extends AbstractController
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
-
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //Ajout d'une condition pour vérifier si l'email existe,
+            // et renvoyer sur la page de saisie de l'email avec un message d'erreur
+            // si ce n'est pas le cas
             $givenMail = $form->get('mail')->getData();
             $userExist = $userRepository->findOneBy(['mail'=>$givenMail]);
 
