@@ -141,7 +141,7 @@
                                                     <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
                                                 </div>
                                             {% endif %}
-                                        {% elseif sortie.organisateur == app.user and app.user.actif and not "ROLE_ADMIN" in app.user.roles %}
+                                        {% elseif sortie.organisateur == app.user and app.user.actif %}
                                             {% if sortie.etat.libelle == 'Créée' %}
                                                 <div class="col-12 col-sm-6 col-lg-4 col-xxl-12 links">
                                                     <a href="{{ path('sortie_update', {sortie_id: sortie.id}) }}">Modifier</a>
@@ -156,7 +156,7 @@
                                                 </div>
                                             {% endif %}
                                         {% endif %}
-                                        {% if "ROLE_ADMIN" in app.user.roles and sortie.etat.libelle != 'Annulée' %}
+                                        {% if "ROLE_ADMIN" in app.user.roles and sortie.etat.libelle != 'Annulée' and sortie.organisateur != app.user %}
                                             <div class="col-12 col-sm-6 col-lg-4 col-xxl-12 links">
                                                 <a href="{{ path('sortie_cancelReason', {sortie_id: sortie.id}) }}"
                                                    id="clx2">Annuler</a>
