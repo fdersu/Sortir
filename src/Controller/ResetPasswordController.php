@@ -50,10 +50,9 @@ class ResetPasswordController extends AbstractController
 
             );
         }
-        $mailSended = $request->request->get('mail');
+
         return $this->render('reset_password/request.html.twig', [
-            'requestForm' => $form->createView(), 'mail' => $mailSended
-        ]);
+            'requestForm' => $form->createView()]);
     }
 
     /**
