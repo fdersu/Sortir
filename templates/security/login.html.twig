@@ -5,7 +5,9 @@
 {% block body %}
     <form method="post">
         {% if error %}
-            <center><div class="alert alert-danger">{{ messageError }}</div></center>
+            <center>
+                <div class="alert alert-danger">{{ messageError }}</div>
+            </center>
         {% endif %}
 
         {% if app.user %}
@@ -19,13 +21,13 @@
                autocomplete="pseudo" required autofocus>
         <br>
         <label class="offset-5" for="inputPassword">Mot de passe : </label>
-        <input  class="m-1" type="password" name="password" id="inputPassword" class="form-control"
-                autocomplete="current-password" required>
+        <input class="m-1" type="password" name="password" id="inputPassword" class="form-control"
+               autocomplete="current-password" required>
 
         <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}" >
+               value="{{ csrf_token('authenticate') }}">
 
-        <button class="btn-sortie btn-lg mb-4 btn-primary offset-5" type="submit">
+        <button class="btn-sortie offset-5" type="submit">
             Connexion
         </button>
 
@@ -33,9 +35,26 @@
         <label class="m-2 offset-5">
             <input class="checkbox" type="checkbox" name="_remember_me"> Se souvenir de moi <br>
 
-                <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+            <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
 
         </label>
 
     </form>
+
+    <style>
+        .btn-sortie {
+            display: inline;
+            justify-content: space-around;
+            line-height: 2em;
+            min-height: 3em;
+            padding: 0 20px;
+            background: teal;
+            letter-spacing: 2px;
+            transition: .2s all ease-in-out;
+            outline: none;
+            border: 1px solid #00CCCC;
+            border-radius: 10px 10px 15px 10px;
+            box-shadow: 3px 2px 1px rgba(51, 225, 208, 0.3), 3px 3px 1px 1px #00CCCC;
+        }
+    </style>
 {% endblock %}
