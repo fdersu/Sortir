@@ -58,7 +58,7 @@
         <div class="row align-items-center">
             <div class="col-12 col-md-4">
                 {% if sortie.urlPhoto %}
-                    <img class="photo" src="{{ asset('img/') ~ sortie.urlPhoto }}" alt="photo">
+                    <img class="photo" src="{{ asset('img/images/') ~ sortie.urlPhoto }}" alt="photo">
                 {% else %}
                     <img class="photo" src="{{ asset('img/default_picture.png') }}" alt="photo">
                 {% endif %}
@@ -149,10 +149,8 @@
         body {
 
         }
-
         .photo {
             width: 100%;
-            border-radius: 1vw;
         }
 
         .pad {
