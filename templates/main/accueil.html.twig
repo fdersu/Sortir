@@ -14,6 +14,14 @@
 
 
     <div class="main">
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <strong class="hello">Hello {{ app.user.pseudo }} ! {{ now|date('d-m-Y') }}</strong>
+            </div>
+        </div>
+
+
         {{ form_start(filterForm, {'attr': {'class': 'filterForm'}}) }}
         <div class="row align-items-center">
             <div class="col-12 col-md-5 col-lg-4 col-xl-6">
@@ -136,7 +144,8 @@
                                                     <a href="{{ path('inscription_desistement', {sortie_id: sortie.id}) }}"
                                                        id="desist">Se désister</a>
                                                 </div>
-                                            {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now and sortie.etat.libelle == 'Ouverte' and app.user.actif %}
+                                            {% elseif bool == false and sortie.inscriptions|length < sortie.nbInscriptionsMax and sortie.dateCloture > now
+                                                and sortie.etat.libelle == 'Ouverte' and app.user.actif %}
                                                 <div class="col-12 col-sm-6 col-lg-4 col-xxl-12 links">
                                                     <a href="{{ path('inscription_inscription', {sortie_id: sortie.id}) }}">S'inscrire</a>
                                                 </div>
@@ -185,6 +194,10 @@
         .main {
             margin-left: 5vw;
             margin-right: 5vw;
+        }
+        .hello{
+            font-size: 3vh;
+            margin-top: 3vh;
         }
 
         .sortie {
