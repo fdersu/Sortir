@@ -94,6 +94,16 @@ class SortieController extends AbstractController
     public function add(Request $request,SortieImages $images, UpdateEntity $updateEntity, EntityManagerInterface $entityManager, $sortie_id=null): Response
     {
 
+        //Si l'utilisateur en session est inactif, redirection vers l'accueil
+        /** @var User $user */
+        $user = $this->getUser();
+        $etatUser = $user->getActif();
+
+        if(!$etatUser){
+            $this->addFlash('error', 'Vous n\'avez pas accès à cette fonctionnalité !');
+            return $this->redirectToRoute('main_accueil');
+        }
+
         //Si aucun id de sortie en requete, creation de nouveaux objets sortie et lieu
         if($sortie_id!==null){
             $sortie = $entityManager->getRepository(Sortie::class)->find($sortie_id);
@@ -104,13 +114,8 @@ class SortieController extends AbstractController
         }
 
         //Récupération du site de rattachement de l'organisateur
-        /** @var User $user */
-        $user = $this->getUser();
         $siteUser = $user->getSite()->getNom();
         $sortie->setSite($user->getSite());
-
-        //Récupération de la longitude et latitude
-
 
         //Génération des formulaires Sortie et Lieu
         $sortieForm = $this->createForm(SortieFormType::class, $sortie, ['site'=>$siteUser]);
