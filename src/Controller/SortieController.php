@@ -93,6 +93,7 @@ class SortieController extends AbstractController
      */
     public function add(Request $request,SortieImages $images, UpdateEntity $updateEntity, EntityManagerInterface $entityManager, $sortie_id=null): Response
     {
+
         //Si aucun id de sortie en requete, creation de nouveaux objets sortie et lieu
         if($sortie_id!==null){
             $sortie = $entityManager->getRepository(Sortie::class)->find($sortie_id);
@@ -193,6 +194,27 @@ class SortieController extends AbstractController
 
         return $response;
 
+    }
+
+    /**
+     * @Route("/sortie_delete/{sortie_id}", name="sortie_delete")
+     */
+    public function delete($sortie_id, EntityManagerInterface $entityManager): Response
+    {
+        //Récupération en base du site et des users associés
+        $sortieToDelete = $entityManager->find(Sortie::class, $sortie_id);
+
+        //Suppression de la sortie si elle est en état "Créée"
+
+        if($sortieToDelete->getEtat()->getLibelle()=='Créée'){
+            $entityManager->remove($sortieToDelete);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'La sortie a été supprimée');
+        }
+
+        //Rechargement de la page de gestion des sites
+        return $this->redirectToRoute('main_accueil');
     }
 
 }

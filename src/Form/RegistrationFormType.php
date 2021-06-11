@@ -57,7 +57,7 @@ class RegistrationFormType extends AbstractType
                 'multiple' => true
             ])
             ->add('actif', CheckboxType::class, [
-                'label'    => 'actif',
+                'label'    => 'Actif',
                 'required' => false,
             ])
         ;

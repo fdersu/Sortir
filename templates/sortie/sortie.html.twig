@@ -20,16 +20,16 @@
     {{ form_row(sortieForm.site) }}
     {{ form_row(sortieForm.ville) }}
     {{ form_row(sortieForm.lieu) }}
+    <button class="btn-noStyle"><a href="{{ path('lieu_add') }}" id="eventTrigger">Ajouter un lieu</a></button>
     {{ form_row(sortieForm.urlPhoto) }}
     <div style="display: inline-flex; "></div>
     {{ form_widget(sortieForm.save) }}
     {{ form_widget(sortieForm.publish) }}
 
-    {% if(sortie.id!=null) %}
-        <button class="btn-sortie"><a href="{{ path('sortie_cancelReason', {'sortie_id' : sortie.id}) }}">Supprimer la sortie</a></button>
+    {% if(sortie.id!=null and sortie.etat.libelle == 'Créée') %}
+        <button class="btn-sortie"><a href="{{ path('sortie_delete', {'sortie_id' : sortie.id}) }}">Supprimer la sortie</a></button>
     {% endif %}
-    <button class="btn-sortie"><a href="{{ path('lieu_add') }}" id="eventTrigger">Ajouter un lieu</a></button>
-    <button class="btn-sortie" id="cancelBtnForAddSortie"><a href="{{ path('main_accueil') }}">Annuler</a></button>
+    <button class="btn-sortie" id="cancelBtnForAddSortie"><a href="{{ path('main_accueil') }}">Retour</a></button>
     
     {{ form_end(sortieForm) }}
     

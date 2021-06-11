@@ -20,7 +20,10 @@ function reloadLieux(){
 
         //S'il y a un nombre dans l'url : split de l'url pour retirer ce nombre, puis envoi d'une
         //requete POST vers la route /lieu qui permet de récupérer la liste de lieux
-        if(location.href.match(/\d+/)){
+        if(location.href.includes('?bool=1')){
+            let url = location.href.replace('?bool=1', '');
+            req.open('POST', url + '/lieu');
+        } else if (location.href.match(/\d+/)){
             let arrayLocation = location.href.split("/");
             arrayLocation.pop();
             let newLocation = arrayLocation.join("/");

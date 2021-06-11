@@ -256,6 +256,18 @@ form input:not([type="file"]), form textarea, form select{
     color: white;
 }
 
+.btn-noStyle {
+    border-radius: 5px;
+    border: grey solid 1px;
+    padding: 0.1em;
+}
+
+.btn-noStyle a {
+    text-decoration: none;
+    color: black;
+}
+
+
 .flash {
     font-size : 1em;
     font-style: oblique;
