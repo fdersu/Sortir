@@ -41,11 +41,18 @@ security:
   # Note: Only the *first* access control that matches will be used
 
   access_control:
-    - { path: ^/create, roles: ROLE_USER }
-    - { path: ^/edit, roles: ROLE_USER }
-    - { path: ^/update, roles: ROLE_ADMIN }
+    - {path: ^/lieu_update, roles: ROLE_ADMIN}
+    - {path: ^/lieu_delete, roles: ROLE_ADMIN}
+    - {path: ^/ville_update, roles: ROLE_ADMIN}
+    - {path: ^/ville_delete, roles: ROLE_ADMIN}
+    - {path: ^/site_add, roles: ROLE_ADMIN}
+    - {path: ^/site_update, roles: ROLE_ADMIN}
+    - {path: ^/site_delete, roles: ROLE_ADMIN}
     - { path: ^/register, roles: ROLE_ADMIN }
-    - { path: ^/admin, roles: ROLE_ADMIN }
+    - { path: ^/update, roles: ROLE_ADMIN }
+    - { path: ^/gestion, roles: ROLE_ADMIN }
+
+
 
   role_hierarchy:
     ROLE_ADMIN: ROLE_USER
